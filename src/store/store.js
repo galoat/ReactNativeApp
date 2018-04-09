@@ -3,9 +3,13 @@ import {Provider} from "react-redux"
 
 import thunk from "redux-thunk";
 import registerScreens from '../components/screens.js';
-import * as reducers from "../reducers/index";
-const reducer = combineReducers(reducers);
+import {loginReducer} from "../reducers/loginReducer";
+import {rootReducer} from "../reducers/rootReducer";
 
-registerScreens(store, Provider);
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-export store = createStoreWithMiddleware(reducer);
+export const store = createStoreWithMiddleware(combineReducers({
+  rootReducer,
+  loginReducer
+
+}));
+registerScreens(store, Provider);

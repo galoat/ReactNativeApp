@@ -11,15 +11,22 @@ export function changeAppRoot(root) {
   };
 }
 
+
+export function incrementNb(nb) {
+  return {
+    type: types.INCREMENT,
+    nb: nb
+  };
+}
 /*
 dispatch the actionCreators
 */
 
 export function appInitialized() {
   return async function(dispatch, getState) {
-    // since all business logic should be inside redux actions
-    // this is a good place to put your app initialization code
+    console.log("initialization request")
     dispatch(changeAppRoot('login'));
+    dispatch(incrementNb(0));
   };
 }
 
@@ -27,5 +34,13 @@ export function login() {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
     dispatch(changeAppRoot('after-login'));
+  };
+}
+
+
+export function increment() {
+  return async function(dispatch, getState) {
+    // login logic would go here, and when it's done, we switch app roots
+    dispatch(incrementNb(state.nb));
   };
 }

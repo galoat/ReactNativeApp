@@ -1,6 +1,6 @@
 import { Navigation } from 'react-native-navigation';
-import Login from './Login';
-import HomeTab from './homeTab';
+import Login from './screens/Login';
+import HomeTab from './screens/homeTab';
 
 export default (store, Provider) =>  {
 	Navigation.registerComponent('SkiUt.Login', () => Login, store, Provider);

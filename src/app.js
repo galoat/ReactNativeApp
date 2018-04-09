@@ -9,31 +9,38 @@ import { Navigation } from 'react-native-navigation';
 import * as appActions from "./actions/index";
 
 
-import store from "./store/store"
+import {store} from "./store/store"
 
 
 export default class  App extends Component {
 
   constructor(props) {
     super(props);
+    console.log("store ",store)
     store.subscribe(this.onStoreUpdate.bind(this));
     store.dispatch(appActions.appInitialized());
   }
 
   onStoreUpdate() {
-      let {root} = store.getState().root;
-
+      console.log("on Store update")
+      console.log(store.getState())
+      console.log(store.getState().rootReducer.root)
+      let {root} = store.getState().rootReducer.root;
+      console.log("currentRoot",this.currentRoot, "new root ",root )
       // handle a root change
       // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
       if (this.currentRoot != root) {
+        console.log("root changed current ", this.currentRoot, " => ", root)
         this.currentRoot = root;
         this.startApp(root);
       }
     }
 
   startApp(root) {
+    console.log("start App")
     switch (root) {
         case 'login':
+          console.log("start Login")
           Navigation.startSingleScreenApp({
                     screen: {
                     screen: 'SkiUt.Login', // unique ID registered with Navigation.registerScreen
