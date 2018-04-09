@@ -3,17 +3,14 @@ import {
  Platform,
  AppRegistry
 } from 'react-native';
-import {createStore, applyMiddleware, combineReducers} from "redux";
-import {Provider} from "react-redux";
+
 import { Navigation } from 'react-native-navigation';
-import registerScreens from './components/screens/screens.js';
-import * as reducers from "./reducers/index";
+
 import * as appActions from "./actions/index";
-import thunk from "redux-thunk";
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-const reducer = combineReducers(reducers);
-const store = createStoreWithMiddleware(reducer);
-registerScreens(store, Provider);
+
+
+import store from "./store/store"
+
 
 export default class  App extends Component {
 
