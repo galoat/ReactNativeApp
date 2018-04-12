@@ -14,10 +14,23 @@ import * as  appActions from '../../actions/index';
 import {store} from "../../store/store"
 
 export class Login extends Component {
+  constructor(props) {
+    super(props);
+     this.state = { nb: 0 };
+    store.subscribe(this.onStoreLoginUpdate.bind(this));
+
+  }
+onStoreLoginUpdate(){
+  console.log("Login: on store update : new state ", store.getState().loginReducer)
+  if(this.state != store.getState().loginReducer){
+    this.setState({
+        nb : store.getState().loginReducer.nb
+    });
+  }
+}
 
   render() {
-    console.log("teste");
-    console.debug("state ",this.state)
+    console.log("=========",this.state)
     return (
        <Provider store={store}>
         <View>

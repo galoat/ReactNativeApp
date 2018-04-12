@@ -7,9 +7,8 @@ const initialState = Immutable({
 });
 
 export function loginReducer(state = initialState, action = {}) {
-console.log("login reducer" )
-  switch (action.type) {
 
+  switch (action.type) {
     case types.INCREMENT:
       console.log("action type increment" )
       return state.merge({
