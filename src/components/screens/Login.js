@@ -29,19 +29,21 @@ onStoreLoginUpdate(){
   }
 }
 
+/*<Button large onPress={ () => this.()} title="addNb">
+<Text> TEST</Text>
+</Button>*/
   render() {
     console.log("=========",this.state)
     return (
        <Provider store={store}>
         <View>
-            <Button large onPress={ () => this.onLoginPress()} title="Continue">
+            <Button large onPress={ () => this.onIncrementPress()} title="Continue">
                 <Text> TEST</Text>
             </Button>
-            <Button large onPress={ () => this.onIncrementPress()} title={this.state.nb}>
 
-            </Button>
+            <p>   {this.state.nb}</p>
         </View>
-      </Provider>
+        </Provider>
 
     );
   }
