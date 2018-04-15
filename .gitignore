@@ -1,6 +1,7 @@
 # OSX
 #
 .DS_Store
+server/mongodb/db/
 
 # Xcode
 #
