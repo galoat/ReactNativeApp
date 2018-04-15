@@ -8,16 +8,17 @@ const initialStateRoot = Immutable({
 
 //root reducer
 export function rootReducer(state = initialStateRoot, action = {}) {
-  console.log("root reducer")
+
   switch (action.type) {
 
     case types.ROOT_CHANGED:
-    console.log("root changed")
+    console.log("Root Reducer : Root has changed")
       return state.merge({
         root: action.root
       });
 
     default:
+    console.log("Root Reducer : default")
       return state;
   }
 }

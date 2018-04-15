@@ -15,20 +15,16 @@ import {store} from "../../store/store"
 
 export class Login extends Component {
   constructor(props) {
-    super(props);
+      super(props);
      this.state = { nb: 0 };
-    store.subscribe(this.onStoreLoginUpdate.bind(this));
 
+     store.dispatch(appActions.loginInitialized());
   }
-onStoreLoginUpdate(){
-  console.log("Login: on store update : new state ", store.getState().loginReducer)
-  if(this.state != store.getState().loginReducer){
-    this.setState({
-        nb : store.getState().loginReducer.nb
-    });
-  }
-}
 
+ componentWillReceiveProps(nextProps){
+   console.log("LoginComponent: will recive props");
+   this.state = nextProps
+ }
 /*<Button large onPress={ () => this.()} title="addNb">
 <Text> TEST</Text>
 </Button>*/
@@ -37,11 +33,13 @@ onStoreLoginUpdate(){
     return (
        <Provider store={store}>
         <View>
-            <Button large onPress={ () => this.onIncrementPress()} title="Continue">
+            <Button large onPress={ () => this.onLoginPress()} title="Continue">
                 <Text> TEST</Text>
             </Button>
-
-            <p>   {this.state.nb}</p>
+            <Button large onPress={ () => this.onIncrementPress()} title="increment">
+                <Text> TEST</Text>
+            </Button>
+              <Text>  {this.state.nb}    </Text>
         </View>
         </Provider>
 
@@ -59,9 +57,19 @@ onStoreLoginUpdate(){
   }
 
   onIncrementPress(){
-    this.props.dispatch(appActions.onIncrementPress())
+
+    this.props.dispatch(appActions.increment())
   }
+
 }
 
 
-export default connect()(Login);
+
+const mapStateToProps = (state) => {
+  console.log("LoginComponent: map state to props");
+  return Object.assign({}, state, {
+    nb : state.loginReducer.nb
+  });
+};
+
+export default connect(mapStateToProps)(Login);

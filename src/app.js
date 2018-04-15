@@ -22,13 +22,12 @@ export default class  App extends Component {
   }
 
   onStoreUpdate() {
-      console.log("App: on Store update")
+
       var root = store.getState().rootReducer.root;
-      console.log("App: currentRoot",this.currentRoot, "new root ",root )
       // handle a root change
       // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
       if (this.currentRoot != root) {
-        console.log("root changed current ", this.currentRoot, " => ", root)
+        console.log("App root changed current ", this.currentRoot, " => ", root)
         this.currentRoot = root;
         this.startApp(root);
       }

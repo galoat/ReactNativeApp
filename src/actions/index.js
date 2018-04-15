@@ -24,11 +24,18 @@ dispatch the actionCreators
 
 export function appInitialized() {
   return async function(dispatch, getState) {
-    console.log("initialization request")
+    console.log("initialization App request")
     dispatch(changeAppRoot('login'));
     dispatch(incrementNb(0));
   };
 }
+export function loginInitialized() {
+  return async function(dispatch, getState) {
+    console.log("initialization Login request")
+    dispatch(incrementNb(0));
+  };
+}
+
 
 export function login() {
   return async function(dispatch, getState) {
@@ -41,6 +48,7 @@ export function login() {
 export function increment() {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
-    dispatch(incrementNb(state.nb));
+    console.log("dispatch increment action", getState().loginReducer)
+    dispatch(incrementNb(getState().loginReducer.nb));
   };
 }
