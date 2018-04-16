@@ -18,21 +18,27 @@ export function incrementNb(nb) {
     nb: nb
   };
 }
+
+export function initNb(nb) {
+  return {
+    type: types.INITNB,
+    nb: nb
+  };
+}
 /*
 dispatch the actionCreators
 */
 
 export function appInitialized() {
   return async function(dispatch, getState) {
-    console.log("initialization App request")
+    console.log("Action: initialization App request")
     dispatch(changeAppRoot('login'));
-    dispatch(incrementNb(0));
   };
 }
-export function loginInitialized() {
+export function loginInitialized(nb) {
   return async function(dispatch, getState) {
-    console.log("initialization Login request")
-    dispatch(incrementNb(0));
+    console.log("Action: initialization Login request")
+    dispatch(initNb(nb));
   };
 }
 
@@ -48,7 +54,7 @@ export function login() {
 export function increment() {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
-    console.log("dispatch increment action", getState().loginReducer)
+    console.log("Action: increment action", getState().loginReducer)
     dispatch(incrementNb(getState().loginReducer.nb));
   };
 }

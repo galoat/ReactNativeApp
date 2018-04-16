@@ -18,7 +18,6 @@ export function rootReducer(state = initialStateRoot, action = {}) {
       });
 
     default:
-    console.log("Root Reducer : default")
       return state;
   }
 }

@@ -15,21 +15,20 @@ import {store} from "../../store/store"
 
 export class Login extends Component {
   constructor(props) {
-      super(props);
+     super(props);
      this.state = { nb: 0 };
-
-     store.dispatch(appActions.loginInitialized());
+     store.dispatch(appActions.loginInitialized(this.state.nb));
   }
 
  componentWillReceiveProps(nextProps){
    console.log("LoginComponent: will recive props");
-   this.state = nextProps
+   this.setState(nextProps)
  }
 /*<Button large onPress={ () => this.()} title="addNb">
 <Text> TEST</Text>
 </Button>*/
   render() {
-    console.log("=========",this.state)
+
     return (
        <Provider store={store}>
         <View>
