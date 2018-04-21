@@ -1,5 +1,6 @@
 package com.skiut.personneclient.restController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.skiut.personneclient.entity.Personne;
 import com.skiut.personneclient.restController.feignClient.FeignPersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -25,10 +27,14 @@ public class PersonneApiAdapterRestController {
         this.feignPersonneService = feignPersonneService;
     }
 
+    public Collection<String> fallbackNames(){
+        return new ArrayList<>();
+    }
 
+
+    @HystrixCommand(fallbackMethod = "fallbackNames")
     @GetMapping("/names")
     public Collection<String> names() {
-        System.out.println("==================="+feignPersonneService);
         return feignPersonneService.read()
                 .getContent()
                 .stream()
