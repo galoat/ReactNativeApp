@@ -1,12 +1,11 @@
 package com.skiut.personneclient.restController;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.oracle.tools.packager.Log;
 import com.skiut.personneclient.entity.Personne;
 import com.skiut.personneclient.restController.feignClient.FeignPersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,14 +30,21 @@ public class PersonneApiAdapterRestController {
         return new ArrayList<>();
     }
 
+    public Boolean callbackLogIn(){ return false;}
 
     @HystrixCommand(fallbackMethod = "fallbackNames")
     @GetMapping("/names")
     public Collection<String> names() {
-        return feignPersonneService.read()
+        return feignPersonneService.getPersonne()
                 .getContent()
                 .stream()
                 .map(Personne::getName)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/login")
+    public Boolean canLogIn(@RequestHeader("name")String name, @RequestHeader("password")String password){
+        Log.info("request log In with "+name+" password "+password);
+        return feignPersonneService.canLogIn(name, password);
     }
 }
