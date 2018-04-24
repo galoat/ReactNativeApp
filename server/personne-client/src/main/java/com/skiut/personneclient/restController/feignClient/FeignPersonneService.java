@@ -14,8 +14,8 @@ public interface FeignPersonneService {
     @RequestMapping(method =  RequestMethod.GET, value = "/personnes")
     Resources<Personne> getPersonne();
 
-    @RequestMapping(method =  RequestMethod.GET, value = "/logIn")
+    @RequestMapping(method =  RequestMethod.GET, value = "/personne/canlogin")
     @ResponseBody
-    Boolean canLogIn(@RequestParam("name")String name, @RequestParam("password")String password);
+    Boolean canLogIn(@RequestParam(value = "name") String name, @RequestParam(value = "password") String password);
 
 }

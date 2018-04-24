@@ -1,7 +1,7 @@
 package com.skiut.personneclient.restController;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.oracle.tools.packager.Log;
+
 import com.skiut.personneclient.entity.Personne;
 import com.skiut.personneclient.restController.feignClient.FeignPersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +43,7 @@ public class PersonneApiAdapterRestController {
     }
 
     @GetMapping("/login")
-    public Boolean canLogIn(@RequestHeader("name")String name, @RequestHeader("password")String password){
-        Log.info("request log In with "+name+" password "+password);
+    public Boolean canLogIn(@RequestParam(value = "name") String name, @RequestParam(value = "password") String password) {
         return feignPersonneService.canLogIn(name, password);
     }
 }
