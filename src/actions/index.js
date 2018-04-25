@@ -55,6 +55,12 @@ export function increment() {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
     console.log("Action: increment action", getState().loginReducer)
+    function fetchData(){
+    const url = 'http://localhost:9999/personnes/login?name="fref"&password=d"éeé"e'
+    fetch(url)
+    .then (response ) => {console.log(response)}
+    .catch( error) => {console.log("error")}
+}
     dispatch(incrementNb(getState().loginReducer.nb));
   };
 }
