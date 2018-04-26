@@ -41,7 +41,12 @@ export default class  App extends Component {
           Navigation.startSingleScreenApp({
                     screen: {
                     screen: 'SkiUt.Login', // unique ID registered with Navigation.registerScree
-                    headerMode: 'screen',
+                    headerMode: 'none',
+                    navigationOptions: {
+                        headerVisible: false,
+                    },
+                    navNarHidden: true,
+                    tabBarHidden: true,
                     navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
                     navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
                     },
