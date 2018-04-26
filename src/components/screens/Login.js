@@ -1,74 +1,25 @@
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  TouchableOpacity,
-  Text,
-  Button,
-  View
-} from 'react-native';
-import {Navigation} from 'react-native-navigation';
-import {connect} from 'react-redux';
-import { Provider } from 'react-redux';
-import * as  appActions from '../../actions/index';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import Logo from './loginScreen/Logo';
+import Form from './loginScreen/Form';
+import ButtonSubmit from './loginScreen/ButtonSubmit';
+import Wallpaper from './loginScreen//Wallpaper';
+import SignupSection from './loginScreen/SignupSection';
 
-import {store} from "../../store/store"
-
-export class Login extends Component {
-  constructor(props) {
-     super(props);
-     this.state = { nb: 0 };
-     store.dispatch(appActions.loginInitialized(this.state.nb));
-  }
-
- componentWillReceiveProps(nextProps){
-   console.log("LoginComponent: will recive props");
-   this.setState(nextProps)
- }
-/*<Button large onPress={ () => this.()} title="addNb">
-<Text> TEST</Text>
-</Button>*/
+export default class LoginScreen extends Component {
+  static navigationOptions = {
+     header: {
+       visible: false,
+     }
+   };
   render() {
-
     return (
-       <Provider store={store}>
-        <View>
-            <Button large onPress={ () => this.onLoginPress()} title="Continue">
-                <Text> TEST</Text>
-            </Button>
-            <Button large onPress={ () => this.onIncrementPress()} title="increment">
-                <Text> TEST</Text>
-            </Button>
-              <Text>  {this.state.nb}    </Text>
-        </View>
-        </Provider>
-
+      <Wallpaper>
+        <Logo />
+        <Form />
+        <SignupSection />
+        <ButtonSubmit />
+      </Wallpaper>
     );
   }
-
-  /*
-  onLoginPress:
-    Changes the root value of the app to be 'after-login', changing it to tab view
-  */
-  onLoginPress() {
-
-    this.props.dispatch(appActions.login());
-
-  }
-
-  onIncrementPress(){
-
-    this.props.dispatch(appActions.increment())
-  }
-
 }
-
-
-
-const mapStateToProps = (state) => {
-  console.log("LoginComponent: map state to props");
-  return Object.assign({}, state, {
-    nb : state.loginReducer.nb
-  });
-};
-
-export default connect(mapStateToProps)(Login);
