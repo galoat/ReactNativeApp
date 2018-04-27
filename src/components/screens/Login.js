@@ -7,7 +7,10 @@ import Wallpaper from './loginScreen//Wallpaper';
 import SignupSection from './loginScreen/SignupSection';
 
 export default class LoginScreen extends Component {
-
+  static navigationOptions = {
+  header: null,
+  }
+  
   render() {
     return (
       <Wallpaper>
