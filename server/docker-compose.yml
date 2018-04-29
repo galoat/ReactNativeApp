@@ -7,4 +7,8 @@ services:
             - ./mongodb/db:/data/db
         ports:
             - "27017:27017"
+    eurecka:
+        image: "galoat/eurecka-service"
+        ports:
+            - "8761:8761"
 
