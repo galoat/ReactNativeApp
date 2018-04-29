@@ -44,20 +44,22 @@ export default class Form extends Component {
           returnKeyType={'done'}
           autoCorrect={false}
         />
-        <UserInput
-          source={passwordImg}
-          secureTextEntry={this.state.showPass}
-          placeholder="Password"
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          autoCorrect={false}
-        />
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.btnEye}
-          onPress={this.showPass}>
-          <Image source={eyeImg} style={styles.iconEye} />
+        <View style={styles.containerPassword}>
+          <UserInput
+            source={passwordImg}
+            secureTextEntry={this.state.showPass}
+            placeholder="Password"
+            returnKeyType={'done'}
+            autoCapitalize={'none'}
+            autoCorrect={false}
+          />
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.btnEye}
+            onPress={this.showPass}>
+            <Image source={eyeImg} style={styles.iconEye} />
         </TouchableOpacity>
+      </View>
       </KeyboardAvoidingView>
     );
   }
@@ -71,10 +73,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  containerPassword:{
+    flexDirection: 'row',
+  },
   btnEye: {
-    position: 'absolute',
-    top: 55,
-    right: 28,
+    flex: 0.25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconEye: {
     width: 25,

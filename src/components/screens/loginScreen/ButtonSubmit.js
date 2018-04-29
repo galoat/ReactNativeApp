@@ -90,6 +90,7 @@ export default class ButtonSubmit extends Component {
             style={[styles.circle, {transform: [{scale: changeScale}]}]}
           />
         </Animated.View>
+
       </View>
     );
   }
@@ -98,7 +99,7 @@ export default class ButtonSubmit extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: -95,
+    marginTop: 30,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
@@ -117,8 +118,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F035E0',
     borderRadius: 100,
-    alignSelf: 'center',
-    zIndex: 99,
+    alignSelf: 'flex-end',
+    zIndex: -10,
+
     backgroundColor: '#F035E0',
   },
   text: {
