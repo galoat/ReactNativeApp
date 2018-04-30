@@ -1,10 +1,27 @@
 
 version: '3'
 services:
-    mongo:
-        image: "mongo:latest"
-        volumes:
-            - ./mongodb/db:/data/db
+#    mongo:
+#        image: "mongo:latest"
+#        volumes:
+#            - ./mongodb/db:/data/db
+#        ports:
+#            - "27017:27017"
+    config-server:
+        image: "galoat/config-service"
         ports:
-            - "27017:27017"
+            - "8888:8888"
+        networks:
+            - spring-cloud-network
+    eurecka-service:
+        image: "galoat/eurecka-service"
+        ports:
+            - "8761:8761"
+        networks:
+            - spring-cloud-network
+        depends_on:
+            - config-server
 
+networks:
+    spring-cloud-network:
+        driver: bridge
