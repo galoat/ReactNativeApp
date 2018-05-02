@@ -9,6 +9,9 @@ services:
 #            - "27017:27017"
     config-server:
         image: "galoat/config-service"
+        container_name: "configService"
+        expose:
+            - "8888"
         ports:
             - "8888:8888"
         networks:
@@ -17,10 +20,12 @@ services:
         image: "galoat/eurecka-service"
         ports:
             - "8761:8761"
+        expose:
+            - "8761"
         networks:
             - spring-cloud-network
-        depends_on:
-            - config-server
+        links:
+            - config-server:config-server
 
 networks:
     spring-cloud-network:
