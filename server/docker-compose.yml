@@ -9,23 +9,23 @@ services:
 #            - "27017:27017"
     config-server:
         image: "galoat/config-service"
-        container_name: "configService"
+        container_name: config-server
         expose:
             - 8888
         ports:
            - 8888:8888
-        networks:
-            - spring-cloud-network
+
+
     eurecka-service:
         image: "galoat/eurecka-service"
         ports:
             - 8761:8761
         expose:
             - 8761
-        networks:
-            - spring-cloud-network
+        links:
+          - config-server
         depends_on:
-           - config-server
+          - config-server
         entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
