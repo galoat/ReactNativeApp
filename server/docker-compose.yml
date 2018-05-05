@@ -15,9 +15,9 @@ services:
         ports:
            - 8888:8888
 
-
-    eurecka-service:
+    discovery-server:
         image: "galoat/eurecka-service"
+        container_name: discovery-server
         ports:
             - 8761:8761
         expose:
@@ -28,18 +28,17 @@ services:
           - config-server
         entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
-
-
-  #  personne-service:
-  #    image: "galoat/personne-service"
-  #    container_name: "personne-service"
-  #    expose:
-  #        - "8001"
-  #    ports:
-  #       - "8001:8001"
-  #    networks:
-  #        - spring-cloud-network
-
-networks:
-    spring-cloud-network:
-        driver: bridge
+    personne-service:
+      image: galoat/personne-service
+      container_name: personne-service
+      ports:
+            - 8001:8001
+      links:
+        - discovery-server
+        - config-server
+      depends_on:
+        - config-server
+        - discovery-server
+      expose:
+        - 8001
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
