@@ -4,4 +4,4 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/galoat/SkiUtConfig/
+          uri: https://github.com/galoat/SkiUtConfig
