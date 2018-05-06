@@ -1,5 +1,13 @@
-remote_user: root
+- hosts: all
+  become: true
+  remote_user: root
   roles:
-        tasks:
-            docker_service:
-                    project_src: ../../ 
+  tasks:
+     - file: path=/app/docker state=directory
+     - copy:
+           src: ../../docker-compose.yml
+           dest: /app/docker
+     -  name: execute docker commpose
+        shell: docker-compose up -d
+        args:
+            chdir: /app/docker
