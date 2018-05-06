@@ -1,0 +1,5 @@
+remote_user: root
+  roles:
+        tasks:
+            docker_service:
+                    project_src: ../../ 
