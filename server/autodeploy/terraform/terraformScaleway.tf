@@ -14,7 +14,7 @@ provisioner "local-exec" {
     }
 
 provisioner "local-exec" {
-      command = "ansible-playbook -i ${var.inventory_path} ${var.path_ansible}"
+      command = "ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i ${var.inventory_path} ${var.path_ansible}"
 
     }
 
