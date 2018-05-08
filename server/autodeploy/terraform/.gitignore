@@ -1,3 +1,5 @@
 *.tfstate
 .*/
 *.backup
+hosts
+ip_address.txt
