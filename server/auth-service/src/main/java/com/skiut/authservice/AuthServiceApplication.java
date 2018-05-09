@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -54,7 +55,7 @@ class OAuthConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
+		System.out.println("=====nin client");
 		clients.inMemory()
 				.withClient("html5")
 				.secret("secret")
@@ -64,7 +65,7 @@ class OAuthConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.authenticationManager(this.authenticationManager);
+		endpoints.authenticationManager(this.authenticationManager).allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);;
 	}
 
 	@Configuration
@@ -101,7 +102,7 @@ class simplAccountCLR implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Stream.of("Florian,admin", "Anael,user", "bidule,user", "test,user")
+		Stream.of("florian,admin", "anael,user", "bidule,user", "jlong,spring")
 				.map(x ->x.split(","))
 				.forEach(tuple -> accountRepository.save(new Account(tuple[0], tuple[1], true)));
 
@@ -122,6 +123,7 @@ class simplAccountCLR implements CommandLineRunner {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("=======================");
 		return accountRepository.findByUserName(username)
 				.map(account -> new User(account.getUserName(), account.getPassword()
 						, account.isActive()
