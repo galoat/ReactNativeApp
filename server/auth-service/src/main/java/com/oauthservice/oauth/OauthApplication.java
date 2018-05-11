@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -21,6 +23,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,12 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.security.Principal;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-@EnableResourceServer
 @EnableDiscoveryClient
+@EnableResourceServer
 public class OauthApplication {
 
 	public static void main(String[] args) {
@@ -41,128 +45,141 @@ public class OauthApplication {
 	}
 }
 
+
 @RestController
-class Principal {
-	@RequestMapping("/user")
-	Principal p(Principal principal){
-		return  principal;
+class PrincipalRestControler {
+
+
+	@RequestMapping ("/user")
+	Principal principal (Principal p){
+		return p;
 	}
 
 }
 
-
-@Configuration
 @EnableAuthorizationServer
-class OAuthCOnfig extends AuthorizationServerConfigurerAdapter {
+@Configuration
+class OAuthConfiguration extends AuthorizationServerConfigurerAdapter{
+	private final AuthenticationManager authenticationManager;
+
+
+	@Autowired
+	public OAuthConfiguration(AuthenticationManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory()
-				.withClient("html5")
+		clients.inMemory().withClient("html5")
 				.secret("secret")
-				.scopes("openid")
-				.authorizedGrantTypes("password");
+				.authorizedGrantTypes("password")
+				.scopes("openid");
+
+
+
+
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(this.authenticationManager);
 	}
-
-	private final AuthenticationManager authenticationManager;
-
-	@Autowired
-	public OAuthCOnfig(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
-	}
 }
 
+
 @Component
-class SampleAccountCli implements CommandLineRunner{
-
-	private final AccountRepository accountRepository;
-
-	@Autowired
-	public SampleAccountCli(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
-	}
-
+class AccountCLR implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
-		Stream.of("jlong,spring")
-				.map(x ->  x.split(","))
-				.forEach(tuple -> accountRepository.save(new Account( tuple[0], tuple[1], true )));
+		Stream.of("jlong,spring","test,test","test2,test2" ).map(t->t.split(",")).
+				forEach(t->{this.accountRepository.save(new Account(t[0],t[1],true));
+
+				});
+	}
+
+
+	private AccountRepository accountRepository;
+	@Autowired
+	public AccountCLR(AccountRepository repo) {
+		this.accountRepository = repo;
 	}
 }
 
 
 @Service
-class AccountUserDetailsService implements UserDetailsService {
+class AccountUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		  return accountRepository.findByUsername(username)
-				  .map(account -> new User(account.getUsername(), account.getPassword(),
-						  account.isActive(), account.isActive(), account.isActive(), account.isActive()
-						  , AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER")))
-				  .orElseThrow(()-> new UsernameNotFoundException("AIE"));
+		return this.repo.findByUsername(username).
+				map(account ->new User(
+						account.getUsername(),
+						account.getPassword(),
+						account.isActive(),account.isActive(),account.isActive(),account.isActive(),
+						AuthorityUtils.createAuthorityList("ROLE_ADMIN","ROLE_USER")
+				)  ).orElseThrow(()-> new UsernameNotFoundException("no user add "+username ));
 	}
 
 
-	private final AccountRepository accountRepository;
-
+	private AccountRepository repo;
 	@Autowired
-	public AccountUserDetailsService(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
+	public AccountUserDetailsService(AccountRepository repo) {
+		this.repo = repo;
 	}
 }
 
-interface AccountRepository extends JpaRepository<Account, Long>{
+@Repository
+interface AccountRepository extends JpaRepository<Account,Long> {
 
-	Optional<Account> findByUsername(String  username);
+
+	Optional<Account> findByUsername(String username);
 }
+
 
 @Entity
-class Account {
+class Account{
+
+	@GeneratedValue
+	@Id
+	private Long Id;
+
 	private String username;
 	private String password;
+
 	private boolean active;
-	@Id
-	@GeneratedValue
-	private Long id;
+
+	public Account( String username, String password, boolean active) {
+
+		this.username = username;
+		this.password = password;
+		this.active = active;
+	}
+
+	public Account(Long id, String username, String password, boolean active) {
+		Id = id;
+		this.username = username;
+		this.password = password;
+		this.active = active;
+	}
 
 	@Override
 	public String toString() {
 		return "Account{" +
-				"username='" + username + '\'' +
+				"Id=" + Id +
+				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				", active=" + active +
-				", id=" + id +
 				'}';
 	}
 
-	public Account(){
-
-	}
-
-	public Account(String username, String password, boolean active) {
-		this.username = username;
-		this.password = password;
-		this.active = active;
-	}
-
-	public Account(String username, String password, boolean active, Long id) {
-		this.username = username;
-		this.password = password;
-		this.active = active;
-		this.id = id;
+	public Account() {
 	}
 
 	public Long getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		Id = id;
 	}
 
 	public String getUsername() {

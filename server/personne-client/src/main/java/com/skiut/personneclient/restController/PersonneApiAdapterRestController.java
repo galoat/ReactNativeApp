@@ -5,11 +5,13 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.skiut.personneclient.entity.Personne;
 import com.skiut.personneclient.restController.feignClient.FeignPersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/personnes")
