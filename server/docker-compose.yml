@@ -41,6 +41,7 @@ services:
       depends_on:
         - config-server
         - discovery-server
+        - auth-service  
       expose:
         - 8001
       restart: always
@@ -59,9 +60,27 @@ services:
       depends_on:
         - config-server
         - discovery-server
+        - auth-service  
       restart: always
       expose:
         - 9999
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+    auth-service :
+      image: galoat/oauth
+      container_name: auth-service
+      mem_limit: 256M
+      ports:
+          - 9191:9191
+      links:
+        - discovery-server
+        - config-server
+      depends_on:
+        - config-server
+        - discovery-server
+      restart: always
+      expose:
+        - 9191
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
