@@ -1,0 +1,11 @@
+docker run --name mysql-standalone -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password
+-e MYSQL_DATABASE=test -e MYSQL_USER=sa -e MYSQL_PASSWORD=password -d mysql
+
+
+# Backup
+docker exec CONTAINER /usr/bin/mysqldump -u root --password=root DATABASE >
+backup.sql
+
+# Restore
+cat backup.sql | docker exec -i CONTAINER /usr/bin/mysql -u root --password=root
+DATABASE

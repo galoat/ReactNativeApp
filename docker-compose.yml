@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql
+        container_name: mysql-user 
+        volumes:
+            - ./server/autodeploy/data/auth/db:/var/lib/mysql
+              #            - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: test
+            MYSQL_PASSWORD: password
+            MYSQL_USER: sa
+        ports:
+                - "3306:3306"
+

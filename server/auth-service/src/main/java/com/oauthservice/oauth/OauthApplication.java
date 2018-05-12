@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -86,7 +87,7 @@ class OAuthConfiguration extends AuthorizationServerConfigurerAdapter{
 	}
 }
 
-
+/*
 @Component
 class AccountCLR implements CommandLineRunner{
 	@Override
@@ -103,7 +104,7 @@ class AccountCLR implements CommandLineRunner{
 	public AccountCLR(AccountRepository repo) {
 		this.accountRepository = repo;
 	}
-}
+}*/
 
 
 @Service
@@ -136,6 +137,8 @@ interface AccountRepository extends JpaRepository<Account,Long> {
 
 
 @Entity
+
+@Table(name = "users")
 class Account{
 
 	@GeneratedValue
@@ -166,7 +169,6 @@ class Account{
 		return "Account{" +
 				"Id=" + Id +
 				", username='" + username + '\'' +
-				", password='" + password + '\'' +
 				", active=" + active +
 				'}';
 	}
