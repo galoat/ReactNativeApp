@@ -1,0 +1,1 @@
+INSERT INTO user.users (id, active, password, username) VALUES (1, true, 'spring', 'jlong');

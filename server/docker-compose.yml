@@ -51,7 +51,6 @@ services:
     personne-client:
       image: galoat/personne-client
       container_name: personne-client
-      mem_limit: 256M
       ports:
           - 9999:9999
       links:
@@ -69,7 +68,6 @@ services:
     auth-service :
       image: galoat/oauth
       container_name: auth-service
-      mem_limit: 256M
       ports:
           - 9191:9191
       links:
@@ -85,11 +83,11 @@ services:
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     mysql-auth:
-        image: mysql
+        image: mariadb
         container_name: mysql-auth 
-     #   volumes:
-    #        - ./autodeploy/data/auth/db:/var/lib/mysql
-              #            - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        volumes:
+ #           - ./autodeploy/data/auth//var/lib/mysql
+            - ./autodeploy/data/auth/dump.sql:/docker-entrypoint-initdb.d/dump.sql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: user

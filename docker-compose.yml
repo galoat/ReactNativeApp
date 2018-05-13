@@ -2,7 +2,7 @@ version: '3'
 
 services:
     mysql:
-        image: mysql
+        image: mariadb
         container_name: mysql-user 
         volumes:
             - ./server/autodeploy/data/auth/db:/var/lib/mysql
