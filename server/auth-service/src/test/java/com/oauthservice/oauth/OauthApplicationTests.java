@@ -1,5 +1,7 @@
 package com.oauthservice.oauth;
 
+import com.oauthservice.oauth.entity.Account;
+import com.oauthservice.oauth.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,6 @@ public class OauthApplicationTests {
 	@Autowired
 	private AccountRepository accountRepository;
 
-
-
 	@Autowired
 	private WebApplicationContext wac;
 
@@ -49,9 +49,10 @@ public class OauthApplicationTests {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 
 		Stream.of("jlong,spring","test,test","test2,test2" ).map(t->t.split(",")).
-						forEach(t->this.accountRepository.save(new Account(t[0],t[1],true)););
+						forEach(t->this.accountRepository.save(new Account(t[0],t[1],true)));
 	}
-	private String obtainAccessToken(String username, String password) throws Exception {
+
+	/*private String obtainAccessToken(String username, String password) throws Exception {
 		final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "password");
 		params.add("client_id", CLIENT_ID);
@@ -73,5 +74,5 @@ public class OauthApplicationTests {
 
 		JacksonJsonParser jsonParser = new JacksonJsonParser();
 		return jsonParser.parseMap(resultString).get("access_token").toString();
-	}
+	}*/
 }
