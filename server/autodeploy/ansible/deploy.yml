@@ -7,12 +7,10 @@
      - copy:
            src: ../../docker-compose.yml
            dest: /app/docker
-     - name: copy data files
-         command: cp -r ../data /app/autodeploy/data
-    
+     - copy:
+          src: ../data/dump.sql
+          dest: /app/docker/autodeploy/data/
      -  name: execute docker commpose
         shell: docker-compose up -d
         args:
             chdir: /app/docker
-
-  copy: src=/home/vagrant/dist/ dest=/usr/share/nginx/html directory_mode=yes

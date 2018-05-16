@@ -41,7 +41,7 @@ services:
       depends_on:
         - config-server
         - discovery-server
-        - auth-service  
+        - auth-service
       expose:
         - 8001
       restart: always
@@ -59,7 +59,7 @@ services:
       depends_on:
         - config-server
         - discovery-server
-        - auth-service  
+        - auth-service
       restart: always
       expose:
         - 9999
@@ -84,10 +84,10 @@ services:
 
     mysql-auth:
         image: mariadb
-        container_name: mysql-auth 
+        container_name: mysql-auth
         volumes:
  #           - ./autodeploy/data/auth//var/lib/mysql
-            - ./autodeploy/data/auth/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+            - ./autodeploy/data/dump.sql:/docker-entrypoint-initdb.d/dump.sql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: user
