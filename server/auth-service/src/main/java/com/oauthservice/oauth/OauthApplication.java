@@ -1,5 +1,7 @@
 package com.oauthservice.oauth;
 
+import com.oauthservice.oauth.entity.Account;
+import com.oauthservice.oauth.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -49,7 +51,7 @@ public class OauthApplication {
 
 
 
-/*
+
 @Component
 class AccountCLR implements CommandLineRunner{
 	@Override
@@ -66,7 +68,7 @@ class AccountCLR implements CommandLineRunner{
 	public AccountCLR(AccountRepository repo) {
 		this.accountRepository = repo;
 	}
-}*/
+}
 
 
 

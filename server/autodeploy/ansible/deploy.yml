@@ -9,7 +9,7 @@
            dest: /app/docker
      - copy:
           src: ../data/dump.sql
-          dest: /app/docker/autodeploy/data/
+          dest: /app/docker/dautodeploy/data/
      -  name: execute docker commpose
         shell: docker-compose up -d
         args:
