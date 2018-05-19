@@ -87,7 +87,7 @@ services:
         container_name: mysql-auth
         volumes:
  #           - ./autodeploy/data/auth//var/lib/mysql
-            - ./autodeploy/data/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+            - ./autodeploy/data:/docker-entrypoint-initdb.d
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: user
