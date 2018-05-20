@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dimensions from 'Dimensions';
+import {store} from "../../../store/store"
 import {
   StyleSheet,
   TouchableOpacity,
@@ -32,11 +33,13 @@ export default class ButtonSubmit extends Component {
     this.growAnimated = new Animated.Value(0);
     this._onPress = this._onPress.bind(this);
   }
-
   _onPress() {
     if (this.state.isLoading) return;
+    console.log("nijnini")
+    store.dispatch(appActions.login());
+    console.log("nijnini")
 
-    this.setState({isLoading: true});
+    /*this.setState({isLoading: true});
     Animated.timing(this.buttonAnimated, {
       toValue: 1,
       duration: 200,
@@ -48,11 +51,10 @@ export default class ButtonSubmit extends Component {
     }, 2000);
 
     setTimeout(() => {
-      this.props.dispatch(appActions.login());
       this.setState({isLoading: false});
       this.buttonAnimated.setValue(0);
       this.growAnimated.setValue(0);
-    }, 2300);
+    }, 2300);*/
   }
 
   _onGrow() {
