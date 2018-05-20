@@ -1,5 +1,5 @@
 variable "commercial_type" {
-  default = "VC1S"
+  default = "VC1M"
 }
 
 

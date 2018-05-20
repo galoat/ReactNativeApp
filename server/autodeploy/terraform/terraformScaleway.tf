@@ -25,6 +25,10 @@ resource "scaleway_server" "test"{
     name = "testToDestroy"
     type = "${var.commercial_type}"
     image = "${data.scaleway_image.docker.id}"
+    volume {
+      size_in_gb = 50
+      type = "l_ssd"
+    }
 }
 
 
