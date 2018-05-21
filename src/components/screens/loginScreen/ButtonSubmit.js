@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dimensions from 'Dimensions';
 import {store} from "../../../store/store"
+import {connect} from 'react-redux';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -21,22 +22,27 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 
-export default class ButtonSubmit extends Component {
+class ButtonSubmit extends Component {
   constructor() {
     super();
 
     this.state = {
       isLoading: false,
+      nb_try: 0
     };
 
     this.buttonAnimated = new Animated.Value(0);
     this.growAnimated = new Animated.Value(0);
     this._onPress = this._onPress.bind(this);
   }
+  componentWillReceiveProps(nextProps){
+   console.log("LoginComponent: will receive props");
+   this.setState(nextProps)
+  }
   _onPress() {
     if (this.state.isLoading) return;
-    console.log("nijnini")
-    store.dispatch(appActions.login());
+    console.log("nijnini ",this.state.nb_try)
+    store.dispatch(appActions.login(this.state.nb_try));
     console.log("nijnini")
 
     /*this.setState({isLoading: true});
@@ -64,6 +70,7 @@ export default class ButtonSubmit extends Component {
       easing: Easing.linear,
     }).start();
   }
+
 
   render() {
     const changeWidth = this.buttonAnimated.interpolate({
@@ -134,3 +141,6 @@ const styles = StyleSheet.create({
     height: 24,
   },
 });
+
+
+export default ButtonSubmit;

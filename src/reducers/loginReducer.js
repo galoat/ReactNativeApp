@@ -14,11 +14,21 @@ export function loginReducer(state = initialState, action = {}) {
       return state.merge({
         nb: action.nb + 1
       });
-      case  types.INITNB:
-      console.log("LoginReducer: action type INITNB")
-      return state.merge({
-        nb: action.nb
-      });
+      case  types.INIT_LOGIN:
+          console.log("LoginReducer: action type INITNB")
+          return state.merge({
+               login_try: action.login_try
+           });
+      case types.CHANGETOKEN:
+        console.log("LoginReducer: action type ChangeToken")
+         return state.merge({
+               token: action.token
+           });
+      case types.LOGIN_ERROR:
+         console.log("LoginReducer: action type Login Error ( try : ", action.login_try,' )')
+          return state.merge({
+               login_try: action.login_try
+           });
     default:
       return state;
   }
