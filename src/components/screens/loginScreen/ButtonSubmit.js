@@ -35,10 +35,12 @@ class ButtonSubmit extends Component {
     this.growAnimated = new Animated.Value(0);
     this._onPress = this._onPress.bind(this);
   }
+
   componentWillReceiveProps(nextProps){
    console.log("LoginComponent: will receive props");
    this.setState(nextProps)
   }
+
   _onPress() {
     if (this.state.isLoading) return;
     console.log("nijnini ",this.state.nb_try)
