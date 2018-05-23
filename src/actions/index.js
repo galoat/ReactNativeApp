@@ -62,14 +62,14 @@ export function loginInitialized(nb) {
 export function login(nb_try) {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
-   // 
-    
+   //
+
     var formData = new FormData();
     formData.append('password', 'spring');
     formData.append('grant_type', 'password');
     formData.append('username', 'jlongx');
 
-    fetch('http://51.15.235.44:9191/uaa/oauth/token', {  
+    fetch('http://51.15.235.44:9191/uaa/oauth/token', {
      method: 'POST',
      headers: {
         'Authorization': 'Basic aHRtbDU6c2VjcmV0',
@@ -77,7 +77,14 @@ export function login(nb_try) {
       },
       body: formData
      })
-     .then(function(response) { return response.json(); })
+     .then(function(response){
+       console.log("response ",response)
+       if(!response.ok) {
+         return new Error(response);
+        }else{
+          return response.json();
+        }
+       })
      .then(function(json) {
         console.log("index.js: login - serverResponse ", json)
         if(json.hasOwnProperty('error')){
@@ -90,7 +97,12 @@ export function login(nb_try) {
           dispatch(changeToken(json.access_token))
           dispatch(changeAppRoot('after-login'));
         }
-     
-    });    
+
+    })
+    .catch(function(err){
+          console.log("index.js: login - ERROR -serverResponse ", err)
+          nb_try += 1
+          dispatch(loginError(nb_try));
+    });
   }
 }

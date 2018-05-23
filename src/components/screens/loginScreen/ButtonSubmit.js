@@ -143,4 +143,11 @@ const styles = StyleSheet.create({
 });
 
 
-export default ButtonSubmit;
+const mapStateToProps = (state) => {
+  console.log("Button Submit: map state to props:  try ", state.loginReducer.login_try);
+  return Object.assign({}, state, {
+    nb_try : state.loginReducer.login_try
+  });
+};
+
+export default connect(mapStateToProps) ButtonSubmit;
