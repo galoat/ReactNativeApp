@@ -1,6 +1,6 @@
 import * as types from './Actionstypes';
 import FormData from 'FormData';
-
+import fetch from './fetchWithTimeout'
 /*
 Action Creators
 */
@@ -71,38 +71,33 @@ export function login(nb_try) {
 
     fetch('http://51.15.235.44:9191/uaa/oauth/token', {
      method: 'POST',
+     timeout: 500,
      headers: {
         'Authorization': 'Basic aHRtbDU6c2VjcmV0',
         'Content-Type': 'multipart/form-data',
       },
       body: formData
-     })
-     .then(function(response){
-       console.log("response ",response)
-       if(!response.ok) {
-         return new Error(response);
-        }else{
+    }, 1000 )
+     .then(response => {
           return response.json();
-        }
        })
-     .then(function(json) {
+     .then(json => {
         console.log("index.js: login - serverResponse ", json)
         if(json.hasOwnProperty('error')){
             nb_try += 1
             dispatch(loginError(nb_try));
           /*if(json.error_description === "Bad credentials"){
           }*/
-        }
-        else{
+        } else{
           dispatch(changeToken(json.access_token))
           dispatch(changeAppRoot('after-login'));
         }
 
     })
-    .catch(function(err){
-          console.log("index.js: login - ERROR -serverResponse ", err)
+    .catch(error => {
+          console.log("index.js: login - ERROR -serverResponse ", error)
           nb_try += 1
-          dispatch(loginError(nb_try));
+          dispatch(loginError(nb_try))
     });
   }
 }

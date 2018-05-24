@@ -37,15 +37,15 @@ class ButtonSubmit extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-   console.log("LoginComponent: will receive props");
+   console.log("ButtonSubmit: will receive props");
    this.setState(nextProps)
   }
 
   _onPress() {
     if (this.state.isLoading) return;
-    console.log("nijnini ",this.state.nb_try)
+
     store.dispatch(appActions.login(this.state.nb_try));
-    console.log("nijnini")
+
 
     /*this.setState({isLoading: true});
     Animated.timing(this.buttonAnimated, {
@@ -152,4 +152,4 @@ const mapStateToProps = (state) => {
   });
 };
 
-export default connect(mapStateToProps) ButtonSubmit;
+export default connect(mapStateToProps)(ButtonSubmit);
