@@ -8,7 +8,7 @@ import SignupSection from './loginScreen/SignupSection';
 import {connect} from 'react-redux';
 import {store} from "../../store/store"
 import * as appActions from '../../actions/index';
-import {Alert} from 'react-native';
+import {Alert, Vibration} from 'react-native';
 
  class LoginScreen extends Component {
   static navigationOptions = {
@@ -28,10 +28,12 @@ import {Alert} from 'react-native';
           console.log("Login: will recive props");
           if (nextProps.try !== this.props.try) {
               if(nextProps.try != 0){
+                Vibration.vibrate(500)
                 Alert.alert(
                   'Wrong password',
                   'Wrong password',
-                  {
+                  [
+
                     {text: 'OK', onPress: () => console.log('OK Pressed')},
                   ],
                   { cancelable: false }

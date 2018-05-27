@@ -37,6 +37,7 @@ export default class Form extends Component {
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        
         <UserInput
           source={usernameImg}
           placeholder="Username"
