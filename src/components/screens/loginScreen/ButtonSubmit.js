@@ -40,6 +40,17 @@ class ButtonSubmit extends Component {
    console.log("ButtonSubmit: will receive props");
    this.setState(nextProps)
   }
+  componentWillUpdate(nextProps) {
+        console.log("ButtonSubmit: will update");
+        if (this.state.isLoading == true) {
+          if (nextProps.nb_try !== this.props.nb_try) {
+            console.log("cefv,foid,voifd,io,")
+            this.setState({isLoading: false});
+            this.buttonAnimated.setValue(0);
+            this.growAnimated.setValue(0);
+          }
+        }
+  }
 
   _onPress() {
     if (this.state.isLoading) return;
@@ -47,21 +58,19 @@ class ButtonSubmit extends Component {
     store.dispatch(appActions.login(this.state.nb_try));
 
 
-    /*this.setState({isLoading: true});
+    this.setState({isLoading: true});
     Animated.timing(this.buttonAnimated, {
       toValue: 1,
       duration: 200,
       easing: Easing.linear,
     }).start();
 
-    setTimeout(() => {
+  /*  setTimeout(() => {
       this._onGrow();
-    }, 2000);
+    }, 2000);*/
 
-    setTimeout(() => {
-      this.setState({isLoading: false});
-      this.buttonAnimated.setValue(0);
-      this.growAnimated.setValue(0);
+  /*  setTimeout(() => {
+
     }, 2300);*/
   }
 
