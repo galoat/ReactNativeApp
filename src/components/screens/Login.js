@@ -8,6 +8,7 @@ import SignupSection from './loginScreen/SignupSection';
 import {connect} from 'react-redux';
 import {store} from "../../store/store"
 import * as appActions from '../../actions/index';
+import {Alert} from 'react-native';
 
  class LoginScreen extends Component {
   static navigationOptions = {
@@ -16,12 +17,29 @@ import * as appActions from '../../actions/index';
   constructor(props){
      super(props);
      this.state = { try: 0 };
-    store.dispatch(appActions.loginInitialized(this.state.try));
+     store.dispatch(appActions.loginInitialized(this.state.try));
   }
   componentWillReceiveProps(nextProps){
     console.log("LoginComponent: will recive props");
     this.setState(nextProps)
   }
+
+    componentWillUpdate(nextProps) {
+          console.log("Login: will recive props");
+          if (nextProps.try !== this.props.try) {
+              if(nextProps.try != 0){
+                Alert.alert(
+                  'Wrong password',
+                  'Wrong password',
+                  {
+                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                  ],
+                  { cancelable: false }
+                )
+              }
+          }
+      }
+
 
   render() {
     return (
