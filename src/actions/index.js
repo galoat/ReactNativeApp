@@ -27,6 +27,13 @@ export function loginError(login_try) {
   };
 }
 
+export function loginSucess() {
+  console.log("inuinuinuin")
+  return {
+    type: types.LOGIN_SUCESS
+  };
+}
+
 export function changeToken(token) {
   return {
     type: types.CHANGETOKEN,
@@ -59,6 +66,7 @@ export function loginInitialized(nb) {
 }
 
 
+
 export function login(nb_try) {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
@@ -67,30 +75,30 @@ export function login(nb_try) {
     var formData = new FormData();
     formData.append('password', 'spring');
     formData.append('grant_type', 'password');
-    formData.append('username', 'jlongx');
+    formData.append('username', 'jlong');
 
     fetch('http://51.15.235.44:9191/uaa/oauth/token', {
      method: 'POST',
-     timeout: 500,
      headers: {
         'Authorization': 'Basic aHRtbDU6c2VjcmV0',
         'Content-Type': 'multipart/form-data',
       },
       body: formData
-    }, 1000 )
+    }, 10000 )
      .then(response => {
           return response.json();
        })
      .then(json => {
         console.log("index.js: login - serverResponse ", json)
         if(json.hasOwnProperty('error')){
+          console.log("server respond an Error")
             nb_try += 1
             dispatch(loginError(nb_try));
           /*if(json.error_description === "Bad credentials"){
           }*/
         } else{
           dispatch(changeToken(json.access_token))
-          dispatch(changeAppRoot('after-login'));
+          dispatch(loginSucess())
         }
 
     })
@@ -100,4 +108,8 @@ export function login(nb_try) {
           dispatch(loginError(nb_try))
     });
   }
+}
+
+export function afterAnimationSucess(){
+    dispatch(changeAppRoot('after-login'));
 }

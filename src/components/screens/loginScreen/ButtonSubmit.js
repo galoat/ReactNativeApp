@@ -28,7 +28,8 @@ class ButtonSubmit extends Component {
 
     this.state = {
       isLoading: false,
-      nb_try: 0
+      nb_try: 0,
+      sucess:false
     };
 
     this.buttonAnimated = new Animated.Value(0);
@@ -40,15 +41,22 @@ class ButtonSubmit extends Component {
    console.log("ButtonSubmit: will receive props");
    this.setState(nextProps)
   }
-  componentWillUpdate(nextProps) {
+  componentWillUpdate() {
         console.log("ButtonSubmit: will update");
         if (this.state.isLoading == true) {
-          if (nextProps.nb_try !== this.props.nb_try) {
-            console.log("cefv,foid,voifd,io,")
+          if (his.state.nb_try != 0) {
             this.setState({isLoading: false});
             this.buttonAnimated.setValue(0);
             this.growAnimated.setValue(0);
           }
+        }
+        if(this.state.sucess){
+          console.log("ButtonSubmit - login Sucess - apply _onGrow")
+          this._onGrow()
+          setTimeout(() => {
+              console.log("ButtonSubmit - OnGrow finsh go to next page")
+             afterAnimationSucess();
+           }, 300);
         }
   }
 
@@ -65,13 +73,6 @@ class ButtonSubmit extends Component {
       easing: Easing.linear,
     }).start();
 
-  /*  setTimeout(() => {
-      this._onGrow();
-    }, 2000);*/
-
-  /*  setTimeout(() => {
-
-    }, 2300);*/
   }
 
   _onGrow() {
@@ -155,9 +156,10 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => {
-  console.log("Button Submit: map state to props:  try ", state.loginReducer.login_try);
+  console.log("Button Submit: map state to props:  try ", state.loginReducer.login_try, " - sucess -", state.loginReducer.login_sucess);
   return Object.assign({}, state, {
-    nb_try : state.loginReducer.login_try
+    nb_try : state.loginReducer.login_try,
+    sucess: state.loginReducer.login_sucess
   });
 };
 
