@@ -27,8 +27,7 @@ export function loginError(login_try) {
   };
 }
 
-export function loginSucess() {
-  console.log("inuinuinuin")
+export function loginOK() {
   return {
     type: types.LOGIN_SUCESS
   };
@@ -97,8 +96,8 @@ export function login(nb_try) {
           /*if(json.error_description === "Bad credentials"){
           }*/
         } else{
+          dispatch(loginOK())
           dispatch(changeToken(json.access_token))
-          dispatch(loginSucess())
         }
 
     })

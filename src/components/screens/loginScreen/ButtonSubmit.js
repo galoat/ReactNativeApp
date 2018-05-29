@@ -43,8 +43,8 @@ class ButtonSubmit extends Component {
   }
   componentWillUpdate() {
         console.log("ButtonSubmit: will update");
-        if (this.state.isLoading == true) {
-          if (his.state.nb_try != 0) {
+        if (this.state.isLoading == true && this.state.sucess == false) {
+          if (this.state.nb_try != 0) {
             this.setState({isLoading: false});
             this.buttonAnimated.setValue(0);
             this.growAnimated.setValue(0);
@@ -55,7 +55,7 @@ class ButtonSubmit extends Component {
           this._onGrow()
           setTimeout(() => {
               console.log("ButtonSubmit - OnGrow finsh go to next page")
-             afterAnimationSucess();
+             appActions.afterAnimationSucess();
            }, 300);
         }
   }
