@@ -10,8 +10,8 @@ export function loginReducer(state = initialState, action = {}) {
 
   switch (action.type) {
 
-      case  types.INIT_LOGIN:
-          console.log("LoginReducer: action type INITNB")
+      case  types.INIT_LOGIN  :
+          console.log("LoginReducer: action type INIT Login")
           return state.merge({
                login_try: action.login_try,
                login_sucess: false

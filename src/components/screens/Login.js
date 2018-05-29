@@ -17,11 +17,15 @@ import {Alert, Vibration} from 'react-native';
   constructor(props){
      super(props);
      this.state = { try: 0 };
-     store.dispatch(appActions.loginInitialized(this.state.try));
+
   }
   componentWillReceiveProps(nextProps){
     console.log("LoginComponent: will recive props");
     this.setState(nextProps)
+  }
+  componentWillMount(){
+    console.log("LoginComponent - componentWillMount ")
+    store.dispatch(appActions.loginInitialized(this.state.try));
   }
 
     componentWillUpdate(nextProps) {
@@ -31,9 +35,7 @@ import {Alert, Vibration} from 'react-native';
                 Vibration.vibrate(500)
                 Alert.alert(
                   'Wrong password',
-                  'Wrong password',
                   [
-
                     {text: 'OK', onPress: () => console.log('OK Pressed')},
                   ],
                   { cancelable: false }

@@ -43,7 +43,7 @@ export function changeToken(token) {
 
 export function initLogin(nb) {
   return {
-    type: types.InitLogin,
+    type: types.INIT_LOGIN,
     login_try: nb
   };
 }
