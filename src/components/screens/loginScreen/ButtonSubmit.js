@@ -53,10 +53,7 @@ class ButtonSubmit extends Component {
         if(this.state.sucess){
           console.log("ButtonSubmit - login Sucess - apply _onGrow")
           this._onGrow()
-          setTimeout(() => {
-              console.log("ButtonSubmit - OnGrow finsh go to next page")
-             appActions.afterAnimationSucess();
-           }, 300);
+
         }
   }
 
@@ -80,7 +77,11 @@ class ButtonSubmit extends Component {
       toValue: 1,
       duration: 200,
       easing: Easing.linear,
-    }).start();
+    }).start(async function(){
+      console.log("jiojojo")
+      appActions.afterAnimationSucess()
+    });
+
   }
 
 

@@ -6,6 +6,7 @@ Action Creators
 */
 
 export function changeAppRoot(root) {
+  console.log("appRoot")
   return {
     type: types.ROOT_CHANGED,
     root: root
@@ -110,5 +111,9 @@ export function login(nb_try) {
 }
 
 export function afterAnimationSucess(){
+  console.log("ioj")
+return async function(dispatch, getState) {
+    console.log("adterAnim")
     dispatch(changeAppRoot('after-login'));
+  }
 }
