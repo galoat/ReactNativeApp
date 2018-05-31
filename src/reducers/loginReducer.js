@@ -31,6 +31,13 @@ export function loginReducer(state = initialState, action = {}) {
             return state.merge({
                  login_sucess: true
              });
+
+    case types.ROOT_CHANGED:
+        if(action.root !=== "login"){
+          return state.merge({
+               login_sucess: false
+           });
+        }
     default:
       return state;
   }

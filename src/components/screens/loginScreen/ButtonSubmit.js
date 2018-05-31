@@ -72,7 +72,7 @@ class ButtonSubmit extends Component {
 
   }
 
-  _onGrow() {
+  async _onGrow() {
     Animated.timing(this.growAnimated, {
       toValue: 1,
       duration: 200,

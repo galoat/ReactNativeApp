@@ -1,6 +1,7 @@
 import * as types from './Actionstypes';
 import FormData from 'FormData';
 import fetch from './fetchWithTimeout'
+import {store} from "../store/store"
 /*
 Action Creators
 */
@@ -111,9 +112,8 @@ export function login(nb_try) {
 }
 
 export function afterAnimationSucess(){
-  console.log("ioj")
-return async function(dispatch, getState) {
-    console.log("adterAnim")
-    dispatch(changeAppRoot('after-login'));
-  }
+  store.dispatch(changeAppRoot('after-login'));
+}
+export function returnLogin(){
+  store.dispatch(changeAppRoot('login'));
 }

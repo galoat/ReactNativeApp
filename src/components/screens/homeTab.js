@@ -9,8 +9,13 @@ import {Navigation} from 'react-native-navigation';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as  appActions from '../../actions/index';
+import { Button } from 'react-native';
 
 export default class Hometab extends Component {
+
+onPressLearnMore(){
+  appActions.returnLogin()
+}
 
   render() {
     return (
@@ -18,10 +23,17 @@ export default class Hometab extends Component {
         <Text style={styles.welcome}>
             HOME
         </Text>
+        <Button
+          onPress={this.onPressLearnMore}
+          title="Back"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+          />
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
