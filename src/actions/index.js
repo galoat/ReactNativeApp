@@ -1,4 +1,5 @@
 import * as types from './Actionstypes';
+import * as serverConst from '../const/server';
 import FormData from 'FormData';
 import fetch from './fetchWithTimeout'
 import {store} from "../store/store"
@@ -77,11 +78,14 @@ export function login(nb_try) {
     formData.append('password', 'spring');
     formData.append('grant_type', 'password');
     formData.append('username', 'jlong');
+    console.log("+++++")
 
-    fetch('http://51.15.235.44:9191/uaa/oauth/token', {
+    var encodeBase64 =btoa((serverConst.SERVER_OAUTH_ID+":"+.serverConst.SERVER_OAUTH_SECRET));
+    console.log("+++++",encodeBase64)
+    fetch("http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_OAUTH+serverConst.SERVER_OAUTH_PATH, {
      method: 'POST',
      headers: {
-        'Authorization': 'Basic aHRtbDU6c2VjcmV0',
+        'Authorization': "Basic "+ encodeBase64,
         'Content-Type': 'multipart/form-data',
       },
       body: formData

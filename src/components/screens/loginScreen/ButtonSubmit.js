@@ -41,16 +41,16 @@ class ButtonSubmit extends Component {
    console.log("ButtonSubmit: will receive props");
    this.setState(nextProps)
   }
-  componentWillUpdate() {
-        console.log("ButtonSubmit: will update");
-        if (this.state.isLoading == true && this.state.sucess == false) {
+  componentWillUpdate(nextProps, nextState) {
+        console.log("ButtonSubmit: will update", this.state);
+        if (nextState.isLoading == true && nextState.sucess == false) {
           if (this.state.nb_try != 0) {
             this.setState({isLoading: false});
             this.buttonAnimated.setValue(0);
             this.growAnimated.setValue(0);
           }
         }
-        if(this.state.sucess){
+        if(nextState.sucess){
           console.log("ButtonSubmit - login Sucess - apply _onGrow")
           this._onGrow()
 
