@@ -33,17 +33,25 @@ export default class Form extends Component {
       ? this.setState({showPass: false, press: true})
       : this.setState({showPass: true, press: false});
   }
+  handlePassword(even){
+    console.log("handle password "+even)
+  }
+  handleUserInput(even){
+    console.log("handle user input "+even)
+  }
 
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        
+
         <UserInput
           source={usernameImg}
           placeholder="Username"
           autoCapitalize={'none'}
           returnKeyType={'done'}
           autoCorrect={false}
+          inputValue= {this.props.username}
+          handleChange={this.handleUserInput}
         />
         <View style={styles.containerPassword}>
           <UserInput
@@ -52,6 +60,8 @@ export default class Form extends Component {
             placeholder="Password"
             returnKeyType={'done'}
             autoCapitalize={'none'}
+            inputValue= {this.props.password}
+            handleChange={this.handlePassword}
             autoCorrect={false}
           />
           <TouchableOpacity

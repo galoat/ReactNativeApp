@@ -49,7 +49,9 @@ import {Alert, Vibration} from 'react-native';
     return (
       <Wallpaper>
         <Logo />
-        <Form />
+        <Form
+        username="monUser"
+        password="" />
         <ButtonSubmit  />
         <SignupSection />
       </Wallpaper>

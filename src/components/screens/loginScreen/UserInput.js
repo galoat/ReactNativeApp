@@ -5,6 +5,7 @@ import {StyleSheet, View, TextInput, Image} from 'react-native';
 
 export default class UserInput extends Component {
   render() {
+    
     return (
       <View style={styles.inputWrapper}>
         <Image source={this.props.source} style={styles.inlineImg} />
@@ -15,6 +16,8 @@ export default class UserInput extends Component {
           autoCorrect={this.props.autoCorrect}
           autoCapitalize={this.props.autoCapitalize}
           returnKeyType={this.props.returnKeyType}
+          value={this.props.inputValue}
+          onChange={(e) => this.props.handleChange(e)}
           placeholderTextColor="white"
           underlineColorAndroid="transparent"
         />
