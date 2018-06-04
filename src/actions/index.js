@@ -3,6 +3,7 @@ import * as serverConst from '../const/server';
 import FormData from 'FormData';
 import fetch from './fetchWithTimeout'
 import {store} from "../store/store"
+
 /*
 Action Creators
 */
@@ -80,8 +81,9 @@ export function login(nb_try) {
     formData.append('username', 'jlong');
     console.log("+++++")
 
-    var encodeBase64 =btoa((serverConst.SERVER_OAUTH_ID+":"+.serverConst.SERVER_OAUTH_SECRET));
-    console.log("+++++",encodeBase64)
+
+    var encodeBase64 = serverConst.SERVER_BASE64
+
     fetch("http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_OAUTH+serverConst.SERVER_OAUTH_PATH, {
      method: 'POST',
      headers: {
