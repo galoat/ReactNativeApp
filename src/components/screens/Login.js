@@ -50,7 +50,7 @@ import {Alert, Vibration} from 'react-native';
       <Wallpaper>
         <Logo />
         <Form
-        username="monUser"
+        username= {this.state.username}
         password="" />
         <ButtonSubmit  />
         <SignupSection />
@@ -64,7 +64,8 @@ import {Alert, Vibration} from 'react-native';
 const mapStateToProps = (state) => {
   console.log("LoginScreenComponent: map state to props:  try ", state.loginReducer.login_try);
   return Object.assign({}, state, {
-    try : state.loginReducer.login_try
+    try : state.loginReducer.login_try,
+    username: state.loginReducer.userName
   });
 };
 

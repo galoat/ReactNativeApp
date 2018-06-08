@@ -17,6 +17,7 @@ import SignupSection from './SignupSection';
 import usernameImg from '../../../img/username.png';
 import passwordImg from '../../../img/password.png';
 import eyeImg from '../../../img/eye_black.png';
+import * as  appActions from '../../../actions/index';
 
 export default class Form extends Component {
   constructor(props) {
@@ -37,7 +38,8 @@ export default class Form extends Component {
     console.log("handle password "+even)
   }
   handleUserInput(even){
-    console.log("handle user input "+even)
+    console.log("handle user input "+even.value)
+    appActions.inputChangeUser(even.value)
   }
 
   render() {

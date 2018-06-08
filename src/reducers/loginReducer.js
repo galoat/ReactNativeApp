@@ -1,5 +1,6 @@
 import * as types from '../actions/Actionstypes';
 import Immutable from 'seamless-immutable';
+import * as constLogin from '../const/server';
 
 const initialState = Immutable({
   nb: 0 // 'login' / 'after-login'
@@ -14,7 +15,8 @@ export function loginReducer(state = initialState, action = {}) {
           console.log("LoginReducer: action type INIT Login")
           return state.merge({
                login_try: action.login_try,
-               login_sucess: false
+               login_sucess: false,
+               userName : constLogin.DEFAULT_USER_NAME
            });
       case types.CHANGETOKEN:
         console.log("LoginReducer: action type ChangeToken")
@@ -38,6 +40,12 @@ export function loginReducer(state = initialState, action = {}) {
                login_try: 0
            });
         }
+
+    case  types.USER_INPUT  :
+          console.log("LoginReducer: action type USER_INPUT Login")
+          return state.merge({
+                userName :action.userInput
+          });
     default:
       return state;
   }
