@@ -21,10 +21,22 @@
 	"devDependencies": {
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
+		"detox": "^7.4.2",
 		"jest": "21.2.1",
+		"mocha": "^5.2.0",
 		"react-test-renderer": "16.0.0-alpha.12"
 	},
 	"jest": {
 		"preset": "react-native"
+	},
+	"detox": {
+  	"configurations": {
+    	"ios.sim.debug": {
+      	"binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SkiUt.app",
+      	"build": "xcodebuild -project ios/SkiUt.xcodeproj -scheme SkiUt -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+      	"type": "ios.simulator",
+      	"name": "iPhone 7"
+    	}
+  	}
 	}
 }

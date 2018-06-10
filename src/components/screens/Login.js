@@ -47,7 +47,7 @@ import {Alert, Vibration} from 'react-native';
 
   render() {
     return (
-      <Wallpaper>
+      <Wallpaper  testID='welcome' >
         <Logo />
         <Form
         username= {this.state.username}
