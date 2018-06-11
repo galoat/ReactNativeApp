@@ -28,7 +28,7 @@ import {Alert, Vibration} from 'react-native';
     store.dispatch(appActions.loginInitialized(this.state.try));
   }
 
-    componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps) {
           console.log("Login: will recive props");
           if (nextProps.try !== this.props.try) {
               if(nextProps.try != 0){
@@ -50,22 +50,31 @@ import {Alert, Vibration} from 'react-native';
       <Wallpaper  testID='welcome' >
         <Logo />
         <Form
+        handleUserInput = {this.handleUserInput}
         username= {this.state.username}
-        password="" />
+        password = {this.state.password} />
         <ButtonSubmit  />
         <SignupSection />
       </Wallpaper>
     );
   }
 
+
+  handleUserInput(even){
+    appActions.inputChangeUser(even.value)
+  }
+  
+  handlePassword(even){
+    appActions.inputChangePassowrd(even.value)
+  }
 }
 
-
 const mapStateToProps = (state) => {
-  console.log("LoginScreenComponent: map state to props:  try ", state.loginReducer.login_try);
+  console.log("LoginScreenComponent: map state to props:  try ",state.loginReducer.password);
   return Object.assign({}, state, {
     try : state.loginReducer.login_try,
-    username: state.loginReducer.userName
+    username: state.loginReducer.userName,
+    password: state.loginReducer.password
   });
 };
 

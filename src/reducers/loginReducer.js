@@ -16,7 +16,8 @@ export function loginReducer(state = initialState, action = {}) {
           return state.merge({
                login_try: action.login_try,
                login_sucess: false,
-               userName : constLogin.DEFAULT_USER_NAME
+               userName : constLogin.DEFAULT_USER_NAME,
+               password: constLogin.DEFAULT_PASSWORD
            });
       case types.CHANGETOKEN:
         console.log("LoginReducer: action type ChangeToken")
@@ -45,6 +46,11 @@ export function loginReducer(state = initialState, action = {}) {
           return state.merge({
                 userName :action.userInput
           });
+  case  types.USER_PASSWORD  :
+        console.log("LoginReducer: action type PASSSWORD_INPUT ")
+        return state.merge({
+            password :action.passwd
+        });
     default:
       return state;
   }

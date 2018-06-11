@@ -35,11 +35,9 @@ export default class Form extends Component {
       : this.setState({showPass: true, press: false});
   }
   handlePassword(even){
-    console.log("handle password "+even)
+    appActions.inputChangePassowrd(even.value)
   }
-  handleUserInput(even){
-    appActions.inputChangeUser(even.value)
-  }
+
 
   render() {
     return (
@@ -52,7 +50,7 @@ export default class Form extends Component {
           returnKeyType={'done'}
           autoCorrect={false}
           inputValue= {this.props.username}
-          handleChange={this.handleUserInput}
+          handleChange={this.props.handleUserInput}
         />
         <View style={styles.containerPassword}>
           <UserInput

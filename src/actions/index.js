@@ -57,6 +57,14 @@ export function loginInputUserName(name) {
   };
 }
 
+export function loginInputPassword(passwd) {
+  return {
+    type: types.USER_PASSWORD,
+    password: passwd
+  };
+}
+
+
 /*
 dispatch the actionCreators
 */
@@ -131,4 +139,8 @@ export function returnLogin(){
 
 export function inputChangeUser(name){
   store.dispatch(loginInputUserName(name));
+}
+
+export function inputChangePassowrd(password){
+  store.dispatch(loginInputPassword(password));
 }
