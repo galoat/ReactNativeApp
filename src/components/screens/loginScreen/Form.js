@@ -38,7 +38,6 @@ export default class Form extends Component {
     console.log("handle password "+even)
   }
   handleUserInput(even){
-    console.log("handle user input "+even.value)
     appActions.inputChangeUser(even.value)
   }
 

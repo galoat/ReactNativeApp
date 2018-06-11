@@ -40,7 +40,6 @@ export function loginReducer(state = initialState, action = {}) {
                login_try: 0
            });
         }
-
     case  types.USER_INPUT  :
           console.log("LoginReducer: action type USER_INPUT Login")
           return state.merge({

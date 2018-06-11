@@ -9,7 +9,6 @@ Action Creators
 */
 
 export function changeAppRoot(root) {
-  console.log("appRoot")
   return {
     type: types.ROOT_CHANGED,
     root: root
@@ -50,6 +49,14 @@ export function initLogin(nb) {
     login_try: nb
   };
 }
+
+export function loginInputUserName(name) {
+  return {
+    type: types.USER_INPUT,
+    userInput: name
+  };
+}
+
 /*
 dispatch the actionCreators
 */
@@ -79,8 +86,6 @@ export function login(nb_try) {
     formData.append('password', 'spring');
     formData.append('grant_type', 'password');
     formData.append('username', 'jlong');
-    console.log("+++++")
-
 
     var encodeBase64 = serverConst.SERVER_BASE64
 
@@ -122,4 +127,8 @@ export function afterAnimationSucess(){
 }
 export function returnLogin(){
   store.dispatch(changeAppRoot('login'));
+}
+
+export function inputChangeUser(name){
+  store.dispatch(loginInputUserName(name));
 }

@@ -78,7 +78,6 @@ class ButtonSubmit extends Component {
       duration: 200,
       easing: Easing.linear,
     }).start(async function(){
-      console.log("jiojojo")
       appActions.afterAnimationSucess()
     });
 
