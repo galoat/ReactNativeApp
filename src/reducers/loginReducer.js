@@ -17,7 +17,8 @@ export function loginReducer(state = initialState, action = {}) {
                login_try: action.login_try,
                login_sucess: false,
                userName : constLogin.DEFAULT_USER_NAME,
-               password: constLogin.DEFAULT_PASSWORD
+               password: constLogin.DEFAULT_PASSWORD,
+               isLoading: false
            });
       case types.CHANGETOKEN:
         console.log("LoginReducer: action type ChangeToken")

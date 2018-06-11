@@ -44,37 +44,50 @@ import {Alert, Vibration} from 'react-native';
           }
       }
 
-
   render() {
     return (
       <Wallpaper  testID='welcome' >
         <Logo />
         <Form
         handleUserInput = {this.handleUserInput}
-        username= {this.state.username}
+        username = {this.state.username}
+        handlePassword = {this.handlePassword}
         password = {this.state.password} />
-        <ButtonSubmit  />
+        <ButtonSubmit
+         nb_try = {this.state.try}
+         suces = { this.state.sucess}
+         onPushLogin = {this.onPushLogin}
+         isLoading = {this.state.isLoading}
+        />
         <SignupSection />
       </Wallpaper>
     );
   }
 
 
+  onPushLogin(){
+        if (this.state.isLoading) return
+        store.dispatch(appActions.login(this.state.nb_try));
+        this.setState({isLoading: true});
+  }
+
   handleUserInput(even){
     appActions.inputChangeUser(even.value)
   }
-  
+
   handlePassword(even){
     appActions.inputChangePassowrd(even.value)
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log("LoginScreenComponent: map state to props:  try ",state.loginReducer.password);
+  console.log("LoginScreenComponent: map state to props: ", state.loginReducer  )
   return Object.assign({}, state, {
     try : state.loginReducer.login_try,
     username: state.loginReducer.userName,
-    password: state.loginReducer.password
+    password: state.loginReducer.password,
+    sucess : state.loginReducer.login_sucess,
+    isLoading : state.loginReducer.isLoading
   });
 };
 

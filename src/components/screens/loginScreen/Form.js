@@ -34,9 +34,7 @@ export default class Form extends Component {
       ? this.setState({showPass: false, press: true})
       : this.setState({showPass: true, press: false});
   }
-  handlePassword(even){
-    appActions.inputChangePassowrd(even.value)
-  }
+
 
 
   render() {
@@ -60,7 +58,7 @@ export default class Form extends Component {
             returnKeyType={'done'}
             autoCapitalize={'none'}
             inputValue= {this.props.password}
-            handleChange={this.handlePassword}
+            handleChange={this.props.handlePassword}
             autoCorrect={false}
           />
           <TouchableOpacity

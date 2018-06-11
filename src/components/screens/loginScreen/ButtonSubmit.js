@@ -22,55 +22,38 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 
-class ButtonSubmit extends Component {
+export default class ButtonSubmit extends Component {
   constructor() {
     super();
 
-    this.state = {
-      isLoading: false,
-      nb_try: 0,
-      sucess:false
-    };
-
     this.buttonAnimated = new Animated.Value(0);
     this.growAnimated = new Animated.Value(0);
-    this._onPress = this._onPress.bind(this);
+  //  this._onPress = this._onPress.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
    console.log("ButtonSubmit: will receive props");
-   this.setState(nextProps)
-  }
-  componentWillUpdate(nextProps, nextState) {
-        console.log("ButtonSubmit: will update", this.state);
-        if (nextState.isLoading == true && nextState.sucess == false) {
-          if (this.state.nb_try != 0) {
-            this.setState({isLoading: false});
-            this.buttonAnimated.setValue(0);
-            this.growAnimated.setValue(0);
-          }
-        }
-        if(nextState.sucess){
-          console.log("ButtonSubmit - login Sucess - apply _onGrow")
-          this._onGrow()
+   if (nextProps.isLoading == true && nextProps.sucess == false) {
+     if (this.props.nb_try != 0) {
+       this.buttonAnimated.setValue(0);
+       this.growAnimated.setValue(0);
+     }
+   }
+   if (nextProps.isLoading == true){
+     Animated.timing(this.buttonAnimated, {
+       toValue: 1,
+       duration: 200,
+       easing: Easing.linear,
+     }).start();
+   }
 
-        }
-  }
-
-  _onPress() {
-    if (this.state.isLoading) return;
-
-    store.dispatch(appActions.login(this.state.nb_try));
+   if(nextProps.sucess){
+     console.log("ButtonSubmit - login Sucess - apply _onGrow")
+     this._onGrow()
+   }
+ }
 
 
-    this.setState({isLoading: true});
-    Animated.timing(this.buttonAnimated, {
-      toValue: 1,
-      duration: 200,
-      easing: Easing.linear,
-    }).start();
-
-  }
 
   async _onGrow() {
     Animated.timing(this.growAnimated, {
@@ -99,7 +82,7 @@ class ButtonSubmit extends Component {
         <Animated.View style={{width: changeWidth}}>
           <TouchableOpacity
             style={styles.button}
-            onPress={this._onPress}
+            onPress={this.props.onPushLogin}
             activeOpacity={1}>
             {this.state.isLoading ? (
               <Image source={spinner} style={styles.image} />
@@ -153,14 +136,3 @@ const styles = StyleSheet.create({
     height: 24,
   },
 });
-
-
-const mapStateToProps = (state) => {
-  console.log("Button Submit: map state to props:  try ", state.loginReducer.login_try, " - sucess -", state.loginReducer.login_sucess);
-  return Object.assign({}, state, {
-    nb_try : state.loginReducer.login_try,
-    sucess: state.loginReducer.login_sucess
-  });
-};
-
-export default connect(mapStateToProps)(ButtonSubmit);
