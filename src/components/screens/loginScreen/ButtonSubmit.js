@@ -84,7 +84,7 @@ export default class ButtonSubmit extends Component {
             style={styles.button}
             onPress={this.props.onPushLogin}
             activeOpacity={1}>
-            {this.state.isLoading ? (
+            {this.props.isLoading ? (
               <Image source={spinner} style={styles.image} />
             ) : (
               <Text style={styles.text}>LOGIN</Text>

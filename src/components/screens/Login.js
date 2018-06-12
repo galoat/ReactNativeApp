@@ -16,7 +16,8 @@ import {Alert, Vibration} from 'react-native';
   }
   constructor(props){
      super(props);
-     this.state = { try: 0 };
+     this.state = { try: 0,isLoading:false };
+     this.props.try = 0
 
   }
   componentWillReceiveProps(nextProps){
@@ -29,7 +30,7 @@ import {Alert, Vibration} from 'react-native';
   }
 
   componentWillUpdate(nextProps) {
-          console.log("Login: will recive props");
+          console.log("Login: will recive props oltry",this.props.try ,"new :",nextProps.try);
           if (nextProps.try !== this.props.try) {
               if(nextProps.try != 0){
                 Vibration.vibrate(500)
@@ -48,6 +49,7 @@ import {Alert, Vibration} from 'react-native';
     return (
       <Wallpaper  testID='welcome' >
         <Logo />
+        ///TODO display an cross error
         <Form
         handleUserInput = {this.handleUserInput}
         username = {this.state.username}
@@ -55,7 +57,7 @@ import {Alert, Vibration} from 'react-native';
         password = {this.state.password} />
         <ButtonSubmit
          nb_try = {this.state.try}
-         suces = { this.state.sucess}
+         sucess = { this.state.sucess}
          onPushLogin = {this.onPushLogin}
          isLoading = {this.state.isLoading}
         />
@@ -65,9 +67,9 @@ import {Alert, Vibration} from 'react-native';
   }
 
 
-  onPushLogin(){
+  onPushLogin = () => {
         if (this.state.isLoading) return
-        store.dispatch(appActions.login(this.state.nb_try));
+        store.dispatch(appActions.login(this.state.try));
         this.setState({isLoading: true});
   }
 
@@ -81,7 +83,7 @@ import {Alert, Vibration} from 'react-native';
 }
 
 const mapStateToProps = (state) => {
-  console.log("LoginScreenComponent: map state to props: ", state.loginReducer  )
+  console.log("LoginScreenComponent: map state to props: ", state.loginReducer )
   return Object.assign({}, state, {
     try : state.loginReducer.login_try,
     username: state.loginReducer.userName,
