@@ -2,24 +2,22 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dimensions from 'Dimensions';
 import {StyleSheet, View, TextInput, Image} from 'react-native';
+import { TextField } from 'react-native-material-textfield';
 
 export default class UserInput extends Component {
   render() {
-    
+
     return (
-      <View style={styles.inputWrapper}>
-        <Image source={this.props.source} style={styles.inlineImg} />
-        <TextInput
-          style={styles.input}
-          placeholder={this.props.placeholder}
-          secureTextEntry={this.props.secureTextEntry}
-          autoCorrect={this.props.autoCorrect}
-          autoCapitalize={this.props.autoCapitalize}
-          returnKeyType={this.props.returnKeyType}
+      <View style={styles.container}>
+        <TextField
           value={this.props.inputValue}
-          onChange={(e) => this.props.handleChange(e)}
-          placeholderTextColor="white"
-          underlineColorAndroid="transparent"
+          label={this.props.label}
+          secureTextEntry={this.props.password}
+          autoCapitalize='none'
+          autoCorrect={false}
+          onChangeText={(e) => this.props.handleChange(e)}
+          textColor="white"
+          baseColor="white"
         />
       </View>
     );
@@ -27,36 +25,21 @@ export default class UserInput extends Component {
 }
 
 UserInput.propTypes = {
-  source: PropTypes.number.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  secureTextEntry: PropTypes.bool,
-  autoCorrect: PropTypes.bool,
-  autoCapitalize: PropTypes.string,
-  returnKeyType: PropTypes.string,
+  password: PropTypes.bool,
+  label: PropTypes.string,
 };
+
+UserInput.defaultProp = {
+  password : false,
+  label : ""
+}
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    width: DEVICE_WIDTH - 40,
-    height: 40,
-    marginHorizontal: 20,
-    paddingLeft: 45,
-    borderRadius: 20,
-    color: '#ffffff',
-  },
-  inputWrapper: {
-    flex: 1,
-  },
-  inlineImg: {
-    position: 'absolute',
-    zIndex: 99,
-    width: 22,
-    height: 22,
-    left: 35,
-    top: 9,
-  },
+  container: {
+   margin: 15,
+   marginTop: 20,
+  }
 });

@@ -1,42 +1,43 @@
 {
-	"name": "SkiUt",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest",
-		"android-linux": "react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
-		"android-dev": "adb reverse tcp:8081 tcp:8081 && react-native run-android"
-	},
-	"dependencies": {
-		"react": "16.0.0-alpha.12",
-		"react-native": "0.47.1",
-		"react-native-navigation": "^1.1.235",
-		"react-redux": "^5.0.6",
-		"redux": "^3.7.2",
-		"redux-thunk": "^2.2.0",
-		"seamless-immutable": "^7.1.2",
-		"form-data": "2.3.2"
-	},
-	"devDependencies": {
-		"babel-jest": "21.2.0",
-		"babel-preset-react-native": "4.0.0",
-		"detox": "^7.4.2",
-		"jest": "21.2.1",
-		"mocha": "^5.2.0",
-		"react-test-renderer": "16.0.0-alpha.12"
-	},
-	"jest": {
-		"preset": "react-native"
-	},
-	"detox": {
-  	"configurations": {
-    	"ios.sim.debug": {
-      	"binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SkiUt.app",
-      	"build": "xcodebuild -project ios/SkiUt.xcodeproj -scheme SkiUt -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
-      	"type": "ios.simulator",
-      	"name": "iPhone 7"
-    	}
-  	}
-	}
+  "name": "SkiUt",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "android-linux": "react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
+    "android-dev": "adb reverse tcp:8081 tcp:8081 && react-native run-android"
+  },
+  "dependencies": {
+    "form-data": "2.3.2",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.47.1",
+    "react-native-material-textfield": "^0.12.0",
+    "react-native-navigation": "^1.1.235",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "seamless-immutable": "^7.1.2"
+  },
+  "devDependencies": {
+    "babel-jest": "21.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "detox": "^7.4.2",
+    "jest": "21.2.1",
+    "mocha": "^5.2.0",
+    "react-test-renderer": "16.0.0-alpha.12"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SkiUt.app",
+        "build": "xcodebuild -project ios/SkiUt.xcodeproj -scheme SkiUt -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 7"
+      }
+    }
+  }
 }

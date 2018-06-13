@@ -49,12 +49,12 @@ import {Alert, Vibration} from 'react-native';
     return (
       <Wallpaper  testID='welcome' >
         <Logo />
-        ///TODO display an cross error
+
         <Form
-        handleUserInput = {this.handleUserInput}
-        username = {this.state.username}
-        handlePassword = {this.handlePassword}
-        password = {this.state.password} />
+          handleUserInput = {this.handleUserInput}
+          username = {this.state.username}
+          handlePassword = {this.handlePassword}
+          password = {this.state.password} />
         <ButtonSubmit
          nb_try = {this.state.try}
          sucess = { this.state.sucess}
