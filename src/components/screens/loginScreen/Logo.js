@@ -27,9 +27,10 @@ const styles = StyleSheet.create({
   },
 
   picture: {
-    flex: 0.8,
-    height: DEVICE_HEIGHT,
-    width:DEVICE_WIDTH / 2,
+    flex:0.8,
+    paddingTop:40,
+    height: DEVICE_HEIGHT*20/100,
+    width:DEVICE_WIDTH *70 / 100,
     resizeMode: 'contain',
   },
 });
