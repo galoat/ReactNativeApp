@@ -47,8 +47,8 @@ import {Alert, Vibration} from 'react-native';
 
   render() {
     return (
-      <Wallpaper  testID='welcome' >
-        <Logo />
+      <Wallpaper   >
+        <Logo testID='welcome'/>
 
         <Form
           handleUserInput = {this.handleUserInput}

@@ -9,7 +9,7 @@ export default class Wallpaper extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <Image style={styles.picture} source={bgSrc}>
+      <Image style={styles.picture} source={bgSrc}  testID='welcome'>
         {this.props.children}
       </Image>
     </View>
