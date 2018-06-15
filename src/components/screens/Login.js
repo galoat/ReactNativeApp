@@ -34,13 +34,13 @@ import {Alert, Vibration} from 'react-native';
           if (nextProps.try !== this.props.try) {
               if(nextProps.try != 0){
                 Vibration.vibrate(500)
-                Alert.alert(
+                /*Alert.alert(
                   'Wrong password',
                   [
                     {text: 'OK', onPress: () => console.log('OK Pressed')},
                   ],
                   { cancelable: false }
-                )
+                )*/
               }
           }
       }
@@ -69,16 +69,18 @@ import {Alert, Vibration} from 'react-native';
 
   onPushLogin = () => {
         if (this.state.isLoading) return
-        store.dispatch(appActions.login(this.state.try));
+        store.dispatch(appActions.login(this.state.try, this.state.username, this.state.password));
         this.setState({isLoading: true});
   }
 
   handleUserInput(even){
-    appActions.inputChangeUser(even.value)
+
+    appActions.inputChangeUser(even)
   }
 
   handlePassword(even){
-    appActions.inputChangePassowrd(even.value)
+
+    appActions.inputChangePassowrd(even)
   }
 }
 

@@ -65280,17 +65280,18 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     };
   }
 
-  function login(nb_try) {
+  function login(nb_try, username, password) {
     return function _callee3(dispatch, getState) {
       var formData, encodeBase64;
       return regeneratorRuntime.async(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
+              console.log("Login with username ", username, " password ", password);
               formData = new _FormData2.default();
-              formData.append('password', 'spring');
+              formData.append('password', password);
               formData.append('grant_type', 'password');
-              formData.append('username', 'jlong');
+              formData.append('username', username);
               encodeBase64 = serverConst.SERVER_BASE64;
               (0, _fetchWithTimeout2.default)("http://" + serverConst.IP_SERVER + ":" + serverConst.SERVER_PORT_OAUTH + serverConst.SERVER_OAUTH_PATH, {
                 method: 'POST',
@@ -65318,7 +65319,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 dispatch(loginError(nb_try));
               });
 
-            case 6:
+            case 7:
             case "end":
               return _context3.stop();
           }
@@ -67411,7 +67412,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
       _this.onPushLogin = function () {
         if (_this.state.isLoading) return;
 
-        _store.store.dispatch(appActions.login(_this.state.try));
+        _store.store.dispatch(appActions.login(_this.state.try, _this.state.username, _this.state.password));
 
         _this.setState({
           isLoading: true
@@ -67465,13 +67466,13 @@ __d(function (global, _require, module, exports, _dependencyMap) {
         return _react2.default.createElement(
           _Wallpaper2.default,
           {
-            testID: "welcome",
             __source: {
               fileName: _jsxFileName,
               lineNumber: 50
             }
           },
           _react2.default.createElement(_Logo2.default, {
+            testID: "welcome",
             __source: {
               fileName: _jsxFileName,
               lineNumber: 51
@@ -67508,6 +67509,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     }, {
       key: "handleUserInput",
       value: function handleUserInput(even) {
+        console.log(JSON.stringify(even));
         appActions.inputChangeUser(even.value);
       }
     }, {
@@ -67585,6 +67587,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             {
               style: styles.picture,
               source: _logo2.default,
+              testID: "welcome",
               __source: {
                 fileName: _jsxFileName,
                 lineNumber: 12
@@ -67612,8 +67615,9 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     },
     picture: {
       flex: 0.8,
-      height: DEVICE_HEIGHT,
-      width: DEVICE_WIDTH / 2,
+      paddingTop: 40,
+      height: DEVICE_HEIGHT * 20 / 100,
+      width: DEVICE_WIDTH * 70 / 100,
       resizeMode: 'contain'
     }
   });
@@ -69695,7 +69699,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
       key: "render",
       value: function render() {
         return _react2.default.createElement(
-          _reactNative.Image,
+          _reactNative.ImageBackground,
           {
             style: styles.picture,
             source: _wallpaper2.default,
@@ -69895,7 +69899,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 });
 
             case types.USER_PASSWORD:
-                console.log("LoginReducer: action type PASSSWORD_INPUT ");
+                console.log("LoginReducer: action type PASSSWORD_INPUT ", action.passwd);
                 return state.merge({
                     password: action.passwd
                 });

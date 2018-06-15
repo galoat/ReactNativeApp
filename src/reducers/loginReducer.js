@@ -48,9 +48,9 @@ export function loginReducer(state = initialState, action = {}) {
                 userName :action.userInput
           });
   case  types.USER_PASSWORD  :
-        console.log("LoginReducer: action type PASSSWORD_INPUT ")
+        console.log("LoginReducer: action type PASSSWORD_INPUT ", action.passwd)
         return state.merge({
-            password :action.passwd
+            password : action.password
         });
     default:
       return state;

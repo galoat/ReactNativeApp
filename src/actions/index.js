@@ -58,6 +58,7 @@ export function loginInputUserName(name) {
 }
 
 export function loginInputPassword(passwd) {
+  console.log("dnuieznuin", passwd)
   return {
     type: types.USER_PASSWORD,
     password: passwd
@@ -85,15 +86,14 @@ export function loginInitialized(nb) {
 
 
 
-export function login(nb_try) {
+export function login(nb_try, username, password) {
   return async function(dispatch, getState) {
-    // login logic would go here, and when it's done, we switch app roots
-   //
-
+    console.log("Login with username ", username, " password ", password)
+    // user jlong password spring
     var formData = new FormData();
-    formData.append('password', 'spring');
+    formData.append('password', password);
     formData.append('grant_type', 'password');
-    formData.append('username', 'jlong');
+    formData.append('username', username);
 
     var encodeBase64 = serverConst.SERVER_BASE64
 
