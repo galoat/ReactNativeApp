@@ -22,6 +22,7 @@ import {Alert, Vibration} from 'react-native';
   }
   componentWillReceiveProps(nextProps){
     console.log("LoginComponent: will recive props");
+
     this.setState(nextProps)
   }
   componentWillMount(){
@@ -54,7 +55,9 @@ import {Alert, Vibration} from 'react-native';
           handleUserInput = {this.handleUserInput}
           username = {this.state.username}
           handlePassword = {this.handlePassword}
-          password = {this.state.password} />
+          password = {this.state.password}
+          nbTry = {this.state.try}
+          />
         <ButtonSubmit
          nb_try = {this.state.try}
          sucess = { this.state.sucess}

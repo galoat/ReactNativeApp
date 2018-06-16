@@ -6,7 +6,13 @@ import { TextField } from 'react-native-material-textfield';
 
 export default class UserInput extends Component {
   render() {
-
+    var errorValue
+    if (this.props.nbTry !=0 ){
+      errorValue = this.props.error
+    }
+    else {
+      errorValue = ""
+    }
     return (
       <View style={styles.container}>
         <TextField
@@ -18,6 +24,7 @@ export default class UserInput extends Component {
           onChangeText={(e) => this.props.handleChange(e)}
           textColor="white"
           baseColor="white"
+          error = {errorValue}
         />
       </View>
     );
@@ -27,11 +34,15 @@ export default class UserInput extends Component {
 UserInput.propTypes = {
   password: PropTypes.bool,
   label: PropTypes.string,
+  error: PropTypes.string,
+  nbTry:  PropTypes.number,
 };
 
 UserInput.defaultProp = {
   password : false,
-  label : ""
+  label : "",
+  error: "Eror",
+  nbTry: 0,
 }
 
 const DEVICE_WIDTH = Dimensions.get('window').width;

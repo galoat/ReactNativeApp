@@ -42,7 +42,9 @@ export default class Form extends Component {
         <UserInput
           inputValue= {this.props.username}
           handleChange={this.props.handleUserInput}
+          nbTry = {this.props.nbTry}
           label={"Username"}
+          error={"Can't authenticate"}
         />
 
           <UserInput
@@ -51,6 +53,7 @@ export default class Form extends Component {
             inputValue= {this.props.password}
             handleChange={this.props.handlePassword}
             label={"Password"}
+
           />
 
       </KeyboardAvoidingView>
