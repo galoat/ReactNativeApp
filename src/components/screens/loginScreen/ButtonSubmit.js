@@ -32,13 +32,14 @@ export default class ButtonSubmit extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-   console.log("ButtonSubmit: will receive props");
-   if (nextProps.isLoading == true && nextProps.sucess == false) {
-     if (this.props.nb_try != 0) {
+   console.log("ButtonSubmit: will receive props", nextProps);
+   if (nextProps.isLoading == false && nextProps.sucess == false) {
+     if (nextProps.nb_try != 0) {
        this.buttonAnimated.setValue(0);
        this.growAnimated.setValue(0);
      }
    }
+
    if (nextProps.isLoading == true){
      Animated.timing(this.buttonAnimated, {
        toValue: 1,
@@ -51,6 +52,7 @@ export default class ButtonSubmit extends Component {
      console.log("ButtonSubmit - login Sucess - apply _onGrow")
      this._onGrow()
    }
+
  }
 
 
