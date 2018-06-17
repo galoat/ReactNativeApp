@@ -36,7 +36,7 @@ export default class  App extends Component {
   startApp(root) {
     console.log("start App")
     switch (root) {
-        case 'login':
+        case 'after-login':
           console.log("start Login")
           Navigation.startSingleScreenApp({
                     screen: {
@@ -46,14 +46,14 @@ export default class  App extends Component {
                     navNarHidden: true,
                     tabBarHidden: true,
                     navigatorStyle: {
-                      navBarHidden: true  
+                      navBarHidden: true
                     }, // override the navigator style for the screen, see "Styling the navigator" below (optional)
                     navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
                     },
                 });
                 return;
 
-        case 'after-login':
+        case 'login':
             Navigation.startSingleScreenApp({
                 screen :
                 {
