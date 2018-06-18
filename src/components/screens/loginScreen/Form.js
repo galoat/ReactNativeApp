@@ -18,27 +18,10 @@ import SignupSection from './SignupSection';
 import * as  appActions from '../../../actions/index';
 
 export default class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showPass: true,
-      press: false,
-    };
-    this.showPass = this.showPass.bind(this);
-  }
-
-  showPass() {
-    this.state.press === false
-      ? this.setState({showPass: false, press: true})
-      : this.setState({showPass: true, press: false});
-  }
-
-
-
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" >
-
+    <View>
+      <View>
         <UserInput
           inputValue= {this.props.username}
           handleChange={this.props.handleUserInput}
@@ -47,17 +30,18 @@ export default class Form extends Component {
           errorLabel={"Can't authenticate"}
           error= {this.props.error}
         />
-
+      </View>
+        <View>
           <UserInput
 
-            secureTextEntry={this.state.showPass}
+            secureTextEntry={true}
             inputValue= {this.props.password}
             handleChange={this.props.handlePassword}
             label={"Password"}
 
           />
-
-      </KeyboardAvoidingView>
+  </View>
+</View>
     );
   }
 }
