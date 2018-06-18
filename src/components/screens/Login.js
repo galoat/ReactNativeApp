@@ -8,7 +8,7 @@ import SignupSection from './loginScreen/SignupSection';
 import {connect} from 'react-redux';
 import {store} from "../../store/store"
 import * as appActions from '../../actions/index';
-import {Alert, Vibration} from 'react-native';
+import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions} from 'react-native';
 
  class LoginScreen extends Component {
   static navigationOptions = {
@@ -45,6 +45,8 @@ import {Alert, Vibration} from 'react-native';
       <Wallpaper   >
         <Logo testID='welcome'/>
 
+        <KeyboardAvoidingView behavior="padding" enabled>
+
         <Form
           handleUserInput = {this.handleUserInput}
           username = {this.state.username}
@@ -53,6 +55,7 @@ import {Alert, Vibration} from 'react-native';
           nbTry = {this.state.try}
           error = {this.state.error}
           />
+        </KeyboardAvoidingView>
         <ButtonSubmit
          nb_try = {this.state.try}
          sucess = { this.state.sucess}
@@ -93,5 +96,4 @@ const mapStateToProps = (state) => {
     error: state.loginReducer.error
   });
 };
-
 export default connect(mapStateToProps)(LoginScreen);
