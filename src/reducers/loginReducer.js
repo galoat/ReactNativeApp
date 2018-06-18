@@ -28,18 +28,22 @@ export function loginReducer(state = initialState, action = {}) {
       case types.LOGIN_ERROR:
          console.log("LoginReducer: action type Login Error ( try : ", action.login_try,' )')
           return state.merge({
-               login_try: action.login_try
+               login_try: action.login_try,
+               password: "",
+               error: true
            });
       case types.LOGIN_SUCESS:
            console.log("LoginReducer: action type Login SUCESS")
             return state.merge({
-                 login_sucess: true
+                 login_sucess: true,
+                 error: false
              });
     case types.ROOT_CHANGED:
         if(action.root !== "login"){
           return state.merge({
                login_sucess: false,
-               login_try: 0
+               login_try: 0,
+               error: false
            });
         }
     case  types.USER_INPUT  :

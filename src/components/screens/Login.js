@@ -35,13 +35,7 @@ import {Alert, Vibration} from 'react-native';
           if (nextProps.try !== this.props.try) {
               if(nextProps.try != 0){
                 Vibration.vibrate(500)
-                /*Alert.alert(
-                  'Wrong password',
-                  [
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                  ],
-                  { cancelable: false }
-                )*/
+
               }
           }
       }
@@ -57,6 +51,7 @@ import {Alert, Vibration} from 'react-native';
           handlePassword = {this.handlePassword}
           password = {this.state.password}
           nbTry = {this.state.try}
+          error = {this.state.error}
           />
         <ButtonSubmit
          nb_try = {this.state.try}
@@ -94,7 +89,8 @@ const mapStateToProps = (state) => {
     username: state.loginReducer.userName,
     password: state.loginReducer.password,
     sucess : state.loginReducer.login_sucess,
-    isLoading : state.loginReducer.isLoading
+    isLoading : state.loginReducer.isLoading,
+    error: state.loginReducer.error
   });
 };
 

@@ -44,7 +44,8 @@ export default class Form extends Component {
           handleChange={this.props.handleUserInput}
           nbTry = {this.props.nbTry}
           label={"Username"}
-          error={"Can't authenticate"}
+          errorLabel={"Can't authenticate"}
+          error= {this.props.error}
         />
 
           <UserInput
