@@ -3,7 +3,10 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Animated,
+  StatusBar,
   View,
+  Platform,
   Button,
   ScrollView,
 } from 'react-native';
@@ -11,49 +14,126 @@ import {Navigation} from 'react-native-navigation';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as  appActions from '../../actions/index';
+import cat from '../../img/cat.jpg';
+
+
+const HEADER_MAX_HEIGHT = 300;
+const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export default class Hometab extends Component {
+  static navigationOptions = {
+      header: null,
+  }
+  constructor(props) {
+      super(props);
 
+      this.state = {
+        scrollY: new Animated.Value(0),
+      };
+  }
 onPressLearnMore(){
   appActions.returnLogin()
 }
-state = {
-      names: [
-         {'name': 'Ben', 'id': 1},
-         {'name': 'Susan', 'id': 2},
-         {'name': 'Robert', 'id': 3},
-         {'name': 'Mary', 'id': 4},
-         {'name': 'Daniel', 'id': 5},
-         {'name': 'Laura', 'id': 6},
-         {'name': 'John', 'id': 7},
-         {'name': 'Debra', 'id': 8},
-         {'name': 'Aron', 'id': 9},
-         {'name': 'Ann', 'id': 10},
-         {'name': 'Steve', 'id': 11},
-         {'name': 'Olivia', 'id': 12}
-      ]
-   }
-  render() {
+
+_renderScrollViewContent() {
+    const data = Array.from({ length: 30 });
     return (
-      <View >
-        <Text style={styles.welcome}>
-            HOME
-        </Text>
-        <Button
-          onPress={this.onPressLearnMore}
-          title="Back"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-          />
-          <ScrollView>
+      <View style={styles.scrollViewContent}>
+        {data.map((_, i) => (
+          <View key={i} style={styles.row}>
+            <Text>{i}</Text>
+          </View>
+        ))}
+      </View>
+    );
+}
+
+  render() {
+    const headerTranslate = this.state.scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE],
+      outputRange: [0, -HEADER_SCROLL_DISTANCE],
+      extrapolate: 'clamp',
+    });
+
+    const imageOpacity = this.state.scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+      outputRange: [1, 1, 0],
+      extrapolate: 'clamp',
+    });
+    const imageTranslate = this.state.scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE],
+      outputRange: [0, 100],
+      extrapolate: 'clamp',
+    });
+
+    const titleScale = this.state.scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+      outputRange: [1, 1, 0.8],
+      extrapolate: 'clamp',
+    });
+    const titleTranslate = this.state.scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+      outputRange: [0, 0, -8],
+      extrapolate: 'clamp',
+    });
+
+    return (
+     <View style={styles.fill}>
+       <StatusBar
+       translucent
+       barStyle="light-content"
+       backgroundColor="rgba(0, 0, 0, 0.251)"
+      />
+
+        <Animated.ScrollView
+          style={styles.fill}
+          scrollEventThrottle={1}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            { useNativeDriver: true },
+          )}
+        >
+
+
+            {this._renderScrollViewContent()}
+            <Button
+              onPress={this.onPressLearnMore}
+              title="Back"
+              color="#841584"
+              accessibilityLabel="Learn more about this purple button"
+              />
+        </Animated.ScrollView>
+        <Animated.View
+         style={[
+           styles.header,
+           { transform: [{ translateY: headerTranslate }] },
+         ]}
+       >
+         <Animated.Image
+           style={[
+             styles.backgroundImage,
              {
-                this.state.names.map((item, index) => (
-                   <View key = {item.id} style = {styles.item}>
-                      <Text>{item.name}</Text>
-                   </View>
-                ))
-             }
-          </ScrollView>
+               opacity: imageOpacity,
+               transform: [{ translateY: imageTranslate }],
+             },
+           ]}
+           source={cat}
+         />
+       </Animated.View>
+       <Animated.View
+        style={[
+          styles.bar,
+          {
+            transform: [
+              { scale: titleScale },
+              { translateY: titleTranslate },
+            ],
+          },
+        ]}
+      >
+        <Text style={styles.title}>Title</Text>
+      </Animated.View>
       </View>
     );
   }
@@ -61,20 +141,53 @@ state = {
 
 
 const styles = StyleSheet.create({
-
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 30,
-    margin: 2,
-    borderColor: '#2a4944',
-    borderWidth: 1,
-    backgroundColor: '#d2f7f1'
- },
+  fill: {
+    flex: 1,
+},
+content: {
+ flex: 1,
+},
+header: {
+ position: 'absolute',
+ top: 0,
+ left: 0,
+ right: 0,
+ backgroundColor: '#03A9F4',
+ overflow: 'hidden',
+ height: HEADER_MAX_HEIGHT,
+},
+backgroundImage: {
+ position: 'absolute',
+ top: 0,
+ left: 0,
+ right: 0,
+ width: null,
+ height: HEADER_MAX_HEIGHT,
+ resizeMode: 'cover',
+},
+bar: {
+ backgroundColor: 'transparent',
+ marginTop: Platform.OS === 'ios' ? 28 : 38,
+ height: 32,
+ alignItems: 'center',
+ justifyContent: 'center',
+ position: 'absolute',
+ top: 0,
+ left: 0,
+ right: 0,
+},
+title: {
+ color: 'white',
+ fontSize: 18,
+},
+scrollViewContent: {
+ marginTop: HEADER_MAX_HEIGHT,
+},
+row: {
+ height: 40,
+ margin: 16,
+ backgroundColor: '#D3D3D3',
+ alignItems: 'center',
+ justifyContent: 'center',
+},
 });

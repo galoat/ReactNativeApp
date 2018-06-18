@@ -57,15 +57,16 @@ export default class  App extends Component {
             Navigation.startSingleScreenApp({
                 screen :
                 {
-                    label: 'Home',
                     screen: 'SkiUt.HomeTab',
-                    icon: require('./img/checkmark.png'),
-                    selectedIcon: require('./img/checkmark.png'),
-                    title: 'Hey',
-                    overrideBackPress: false,
-                    navigatorStyle: {},
-                    navigatorStyle: {}
-                },
+                    headerMode: 'none',
+                    navigationOptions:{ headerVisible:false },
+                    navNarHidden: true,
+                    tabBarHidden: true,
+                    navigatorStyle: {
+                      navBarHidden: true
+                    }, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+                    navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
+                    },
             });
             return;
 
