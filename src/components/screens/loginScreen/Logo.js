@@ -21,16 +21,15 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop:20,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   picture: {
-    flex:0.8,
-    paddingTop:40,
-    height: DEVICE_HEIGHT*20/100,
-    width:DEVICE_WIDTH *70 / 100,
+    paddingTop: 50,
+    height: DEVICE_HEIGHT*30/100,
+    width:DEVICE_WIDTH *80 / 100,
     resizeMode: 'contain',
   },
 });
