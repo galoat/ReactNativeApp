@@ -41,6 +41,12 @@ export default class Form extends Component {
 
           />
   </View>
+  <ButtonSubmit
+   nb_try = {this.props.nbTry}
+   sucess = { this.props.sucess}
+   onPushLogin = {this.props.onPushLogin}
+   isLoading = {this.props.isLoading}/>
+
 </View>
     );
   }

@@ -45,7 +45,7 @@ import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions} from 
       <Wallpaper   >
         <Logo testID='welcome'/>
 
-        <KeyboardAvoidingView behavior="padding" enabled>
+
 
         <Form
           handleUserInput = {this.handleUserInput}
@@ -54,15 +54,12 @@ import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions} from 
           password = {this.state.password}
           nbTry = {this.state.try}
           error = {this.state.error}
+      sucess = {this.state.sucess}
+       onPushLogin = {this.onPushLogin}
+       isLoading = {this.state.isLoading}
           />
-        </KeyboardAvoidingView>
-        <ButtonSubmit
-         nb_try = {this.state.try}
-         sucess = { this.state.sucess}
-         onPushLogin = {this.onPushLogin}
-         isLoading = {this.state.isLoading}
-        />
-        <SignupSection />
+
+
       </Wallpaper>
     );
   }
