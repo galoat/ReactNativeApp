@@ -8,7 +8,7 @@ import SignupSection from './loginScreen/SignupSection';
 import {connect} from 'react-redux';
 import {store} from "../../store/store"
 import * as appActions from '../../actions/index';
-import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions} from 'react-native';
+import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions,Platform} from 'react-native';
 
  class LoginScreen extends Component {
   static navigationOptions = {
@@ -41,11 +41,13 @@ import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions} from 
       }
 
   render() {
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
     return (
       <Wallpaper   >
         <Logo testID='welcome'/>
 
-
+        <ScrollView>
+            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
 
         <Form
           handleUserInput = {this.handleUserInput}
@@ -54,12 +56,13 @@ import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions} from 
           password = {this.state.password}
           nbTry = {this.state.try}
           error = {this.state.error}
-      sucess = {this.state.sucess}
-       onPushLogin = {this.onPushLogin}
-       isLoading = {this.state.isLoading}
+          sucess = {this.state.sucess}
+          onPushLogin = {this.onPushLogin}
+       i  isLoading = {this.state.isLoading}
           />
 
-
+          </KeyboardAvoidingView>
+       </ScrollView>
       </Wallpaper>
     );
   }
