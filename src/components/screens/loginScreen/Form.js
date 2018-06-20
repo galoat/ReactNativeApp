@@ -10,9 +10,10 @@ import {
   Image,
 } from 'react-native';
 
-import UserInput from './UserInput';
+
 import ButtonSubmit from './ButtonSubmit';
 import SignupSection from './SignupSection';
+import { TextField } from 'react-native-material-textfield';
 
 
 import * as  appActions from '../../../actions/index';
@@ -25,30 +26,53 @@ export default class Form extends Component {
 
   }
   render() {
+    var errorValue
+    if (this.props.error){
+      errorValue = "Can't authenticate"
+    }
+    else {
+      errorValue = ""
+    }
     return (
-      <View>
-          <UserInput
-            inputValue= {this.props.username}
-            handleChange={this.props.handleUserInput}
-            nbTry = {this.props.nbTry}
-            label={"Username"}
-            errorLabel={"Can't authenticate"}
-            error= {this.props.error}
-            onSubmitEditing={this.onSubmitUser} />
+      <View style={styles.container}>
+        <View   style={styles.textInput}>
+          <TextField
 
-          <UserInput
-            ref={this.passwordRef}
-            secureTextEntry={true}
-            inputValue= {this.props.password}
-            handleChange={this.props.handlePassword}
-            label={"Password"}  />
+              value={this.props.username}
+              label={"Username"}
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={(e) => this.props.handleUserInput(e)}
+              textColor="white"
+              baseColor="white"
+              error = {errorValue}
+              onSubmitEditing = {this.onSubmitUser}
+            />
+          </View>
+          <View   style={styles.textInput}>
+            <TextField
+              value={this.props.password}
+              label={"Password"}
+              secureTextEntry={true}
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={(e) => this.props.handlePassword(e)}
+              textColor="white"
+              baseColor="white"
+              ref={this.passwordRef}
 
+            />
+          </View>
+      <View   style={styles.button}>
           <ButtonSubmit
+            style={styles.button}
             nb_try = {this.props.nbTry}
             sucess = { this.props.sucess}
             onPushLogin = {this.props.onPushLogin}
             isLoading = {this.props.isLoading}/>
+      </View>
     </View>
+
 
     );
   }
@@ -61,3 +85,22 @@ export default class Form extends Component {
       this.password.focus();
   }
 }
+
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+  container: {
+   margin: 15,
+   paddingTop: 10,
+},
+textInput: {
+  marginRight: 20,
+  marginLeft: 20,
+
+},
+button: {
+   paddingTop: 50,
+},
+});

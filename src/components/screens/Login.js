@@ -58,7 +58,7 @@ import {Alert, Vibration, KeyboardAvoidingView,ScrollView,View,Dimensions,Platfo
           error = {this.state.error}
           sucess = {this.state.sucess}
           onPushLogin = {this.onPushLogin}
-       i  isLoading = {this.state.isLoading}
+          isLoading = {this.state.isLoading}
           />
 
           </KeyboardAvoidingView>
