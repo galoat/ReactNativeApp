@@ -25,6 +25,7 @@ export default class UserInput extends Component {
           textColor="white"
           baseColor="white"
           error = {errorValue}
+          onSubmitEditing = {this.props.onSubmitEditing}
         />
       </View>
     );
@@ -37,6 +38,7 @@ UserInput.propTypes = {
   errorLabel: PropTypes.string,
   nbTry:  PropTypes.number,
   error:  PropTypes.bool,
+  onSubmitEditing: PropTypes.func,
 };
 
 UserInput.defaultProp = {
@@ -44,7 +46,8 @@ UserInput.defaultProp = {
   label : "",
   errorLabel: "Error",
   nbTry: 0,
-  error: false
+  error: false,
+  onSubmitEditing: () => null
 }
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
