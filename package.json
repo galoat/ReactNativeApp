@@ -14,6 +14,7 @@
     "react-native": "0.55.4",
     "react-native-material-textfield": "^0.12.0",
     "react-native-navigation": "^1.1.235",
+    "react-native-render-html": "^3.10.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",

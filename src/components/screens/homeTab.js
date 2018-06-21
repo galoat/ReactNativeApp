@@ -14,12 +14,17 @@ import {Navigation} from 'react-native-navigation';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as  appActions from '../../actions/index';
-import cat from '../../img/cat.jpg';
-
+import cat from '../../img/logo.png';
+import HTML from 'react-native-render-html';
 
 const HEADER_MAX_HEIGHT = 300;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
+const htmlContent = `<p>Bonjour Comm<strong>&nbsp;</strong></p>
+<p><strong>Tett</strong></p>
+<p style="text-align: center;"><em><strong>OtherTest</strong></em></p>
+<p><strong>&nbsp;</strong></p>`;
 
 export default class Hometab extends Component {
   static navigationOptions = {
@@ -37,12 +42,12 @@ onPressLearnMore(){
 }
 
 _renderScrollViewContent() {
-    const data = Array.from({ length: 30 });
+    const data = Array.from({ length: 2 });
     return (
       <View style={styles.scrollViewContent}>
         {data.map((_, i) => (
           <View key={i} style={styles.row}>
-            <Text>{i}</Text>
+              <HTML html={htmlContent} />
           </View>
         ))}
       </View>
@@ -132,7 +137,7 @@ _renderScrollViewContent() {
           },
         ]}
       >
-        <Text style={styles.title}>Title</Text>
+        <Text style={styles.title}>SkiUt</Text>
       </Animated.View>
       </View>
     );
@@ -184,8 +189,6 @@ scrollViewContent: {
  marginTop: HEADER_MAX_HEIGHT,
 },
 row: {
- height: 40,
- margin: 16,
  backgroundColor: '#D3D3D3',
  alignItems: 'center',
  justifyContent: 'center',
