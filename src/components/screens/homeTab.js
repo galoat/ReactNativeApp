@@ -9,6 +9,7 @@ import {
   Platform,
   Button,
   ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import PropTypes from 'prop-types';
@@ -40,15 +41,19 @@ export default class Hometab extends Component {
 onPressLearnMore(){
   appActions.returnLogin()
 }
+_onPressNews(i){
+  console.log("on press")
+  appActions.goNews(i)
+}
 
 _renderScrollViewContent() {
     const data = Array.from({ length: 2 });
     return (
-      <View style={styles.scrollViewContent}>
+      <View style={styles.scrollViewContent} key={i} >
         {data.map((_, i) => (
-          <View key={i} style={styles.row}>
+            <TouchableHighlight onPress = {() => this._onPressNews(i)} key={i}>
               <HTML html={htmlContent} />
-          </View>
+          </TouchableHighlight>
         ))}
       </View>
     );

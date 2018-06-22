@@ -16,7 +16,6 @@ export default class  App extends Component {
 
   constructor(props) {
     super(props);
-    console.log("store ",store)
     store.subscribe(this.onStoreUpdate.bind(this));
     store.dispatch(appActions.appInitialized());
   }
@@ -24,9 +23,10 @@ export default class  App extends Component {
   onStoreUpdate() {
 
       var root = store.getState().rootReducer.root;
+      console.log("",this.currentRoot," root ",root, " ", this.currentRoot != root)
       // handle a root change
       // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
-      if (this.currentRoot != root) {
+      if (this.currentRoot !== root) {
         console.log("App root changed current ", this.currentRoot, " => ", root)
         this.currentRoot = root;
         this.startApp(root);
@@ -34,7 +34,7 @@ export default class  App extends Component {
     }
 
   startApp(root) {
-    console.log("start App")
+    console.log("changeApp root")
     switch (root) {
         case 'after-login':
           console.log("start Login")
@@ -69,8 +69,23 @@ export default class  App extends Component {
                     },
             });
             return;
-
-          default:
+       case  'moreAboutNews':
+         Navigation.startSingleScreenApp({
+           screen :
+           {
+               screen: 'SkiUt.NewMoreInfo',
+               headerMode: 'none',
+               navigationOptions:{ headerVisible:false },
+               navNarHidden: true,
+               tabBarHidden: true,
+               navigatorStyle: {
+                 navBarHidden: true
+               }, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+               navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
+               },
+             });
+             return;
+        default:
             console.log("Not Root Found");
         }
     }

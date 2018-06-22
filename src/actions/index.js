@@ -58,7 +58,6 @@ export function loginInputUserName(name) {
 }
 
 export function loginInputPassword(passwd) {
-  console.log("dnuieznuin", passwd)
   return {
     type: types.USER_PASSWORD,
     password: passwd
@@ -135,6 +134,10 @@ export function afterAnimationSucess(){
 }
 export function returnLogin(){
   store.dispatch(changeAppRoot('login'));
+}
+
+export function goNews(id){
+  store.dispatch(changeAppRoot('moreAboutNews'));
 }
 
 export function inputChangeUser(name){
