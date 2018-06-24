@@ -50,6 +50,15 @@ export function initLogin(nb) {
   };
 }
 
+export function initHomeTab() {
+  console.log("======send init homeTab")
+  return {
+    type: types.INIT_NEW_MORE_INFO,
+  };
+}
+
+
+
 export function loginInputUserName(name) {
   return {
     type: types.USER_INPUT,
@@ -82,7 +91,12 @@ export function loginInitialized(nb) {
     dispatch(initLogin(nb));
   };
 }
-
+export function homeTabInit(){
+  return async function(dispatch, getState) {
+    console.log("Action: initialization homeTab requests")
+    dispatch(initHomeTab());
+  };
+}
 
 
 export function login(nb_try, username, password) {

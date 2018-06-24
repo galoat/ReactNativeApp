@@ -15,19 +15,17 @@ import {Navigation} from 'react-native-navigation';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as  appActions from '../../actions/index';
-import cat from '../../img/logo.png';
+import cat from '../../img/cat.jpg';
+import {store} from "../../store/store"
 import HTML from 'react-native-render-html';
 
 const HEADER_MAX_HEIGHT = 300;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-const htmlContent = `<p>Bonjour Comm<strong>&nbsp;</strong></p>
-<p><strong>Tett</strong></p>
-<p style="text-align: center;"><em><strong>OtherTest</strong></em></p>
-<p><strong>&nbsp;</strong></p>`;
+const htmlContent = ``;
 
-export default class Hometab extends Component {
+class Hometab extends Component {
   static navigationOptions = {
       header: null,
   }
@@ -36,8 +34,15 @@ export default class Hometab extends Component {
 
       this.state = {
         scrollY: new Animated.Value(0),
+        htmlContent:''
       };
-  }
+}
+
+componentWillMount(){
+  console.log("Hometab - componentWillMount ")
+  store.dispatch(appActions.homeTabInit());
+}
+
 onPressLearnMore(){
   appActions.returnLogin()
 }
@@ -49,10 +54,10 @@ _onPressNews(i){
 _renderScrollViewContent() {
     const data = Array.from({ length: 2 });
     return (
-      <View style={styles.scrollViewContent} key={i} >
+      <View style={styles.scrollViewContent}  >
         {data.map((_, i) => (
             <TouchableHighlight onPress = {() => this._onPressNews(i)} key={i}>
-              <HTML html={htmlContent} />
+              <HTML html={  this.props.htmlContent} />
           </TouchableHighlight>
         ))}
       </View>
@@ -199,3 +204,12 @@ row: {
  justifyContent: 'center',
 },
 });
+
+const mapStateToProps = (state) => {
+  console.log("homeTabComponent: map state to props: ", state.newMoreInfoReducer )
+  return Object.assign({}, state, {
+      htmlContent : state.newMoreInfoReducer.news
+  });
+};
+
+export default connect(mapStateToProps)(Hometab);
