@@ -151,6 +151,7 @@ export function returnLogin(){
 }
 
 export function goNews(id){
+  console.log("==== Go news")
   store.dispatch(changeAppRoot('moreAboutNews'));
 }
 

@@ -13,10 +13,18 @@ import {
 
 export default class NewsMoreInfo extends Component {
 
+  static navigationOptions = {
+      header: null,
+  }
+  constructor(props) {
+      super(props);
+console.log("uioiojjio")
+}
+
     render() {
       return(
       <View>
-        test
+         <Text>Hello World!</Text>
       </View>
     );
     }
