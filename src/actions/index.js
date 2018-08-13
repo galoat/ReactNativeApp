@@ -51,7 +51,6 @@ export function initLogin(nb) {
 }
 
 export function initHomeTab() {
-  console.log("======send init homeTab")
   return {
     type: types.INIT_NEW_MORE_INFO,
   };
@@ -151,7 +150,6 @@ export function returnLogin(){
 }
 
 export function goNews(id){
-  console.log("==== Go news")
   store.dispatch(changeAppRoot('moreAboutNews'));
 }
 

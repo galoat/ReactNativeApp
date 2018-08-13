@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
-
+import HTML from 'react-native-render-html';
 
 export default class NewsMoreInfo extends Component {
 
@@ -44,13 +44,34 @@ export default class NewsMoreInfo extends Component {
 
    render() {
      return (
+         <View style={styles.container}>
+        <HTML style = {styles.html} html={`<p>Bonjour Comm<strong>&nbsp;</strong></p>
+        <p><strong>Tett</strong></p>
+        <p style="text-align: center;"><em><strong>OtherTest</strong></em></p>
+        <p><strong>&nbsp;</strong></p>`} />
        <GiftedChat
+         style={styles.chat}
          messages={this.state.messages}
          onSend={messages => this.onSend(messages)}
          user={{
            _id: 1,
          }}
        />
+       </View>
      )
    }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  html: {
+    backgroundColor: '#D3D3D3',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  chat: {
+    flex:3,
+  }
+});
