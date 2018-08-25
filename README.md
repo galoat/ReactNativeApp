@@ -19,3 +19,28 @@ Responsable of the display of the feedInfo, ue mysql, and connect to the edge se
 
 2. API description:
  
+##### oAuth
+
+in order to get the token you need to send a post request to http://<serverIp>:9191/uaa/oauth/token
+with :
+1. In header
+* Authorization : aHRtbDU6c2VjcmV0
+2. In body:
+* password :< your user password >
+* username: < userName >
+* grant_type: password
+* scope: openid
+* client_id: html5
+* client_secret: secret
+
+Response :
+```json
+{
+    "access_token": "<your token>",
+    "token_type": "bearer",
+    "expires_in": 43199,
+    "scope": "openid"
+}
+```
+Then when you try to connect to a secure API you need to add this propertie to header   
+* Authorization : bearer < yourtoken >
