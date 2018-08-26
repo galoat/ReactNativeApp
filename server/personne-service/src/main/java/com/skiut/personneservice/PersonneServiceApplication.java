@@ -34,7 +34,7 @@ class SampleDataCLR implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception
 	{
-		Stream.of("Florian", "Anaël", "Solene", "Antho", "Fanny", "Marjo")
+		Stream.of("Florian", "Anaël")
 						.forEach(name -> personneRepository.save(new Personne(name)));
 		personneRepository.findAll().forEach(System.out::println);
 

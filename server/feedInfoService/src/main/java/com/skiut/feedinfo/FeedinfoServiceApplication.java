@@ -52,9 +52,4 @@ class SampleDataCLR implements CommandLineRunner {
 	}
 }
 
-@RepositoryRestResource
-interface FeedRepository extends JpaRepository<FeedInfo, Long> {
-	Collection<FeedInfo> findById(@Param("id") String name);
-
-}
 
