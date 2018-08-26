@@ -8,4 +8,4 @@ build:
     stage: build
     script:
         - cd server/personne-client
-        - ./mvnw clean package -DskipTests=true dockerfile:buil 
+        - ./mvnw clean package -DskipTests=true dockerfile:build 
