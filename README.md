@@ -44,3 +44,8 @@ Response :
 ```
 Then when you try to connect to a secure API you need to add this propertie to header   
 * Authorization : bearer < yourtoken >
+
+### PersonneService
+Contains all information about personnes: custome end point using repositoryRestResources:  
+
+* < yourIp > : < port>/personnes/search/existsByName?name=< NameToTest >
