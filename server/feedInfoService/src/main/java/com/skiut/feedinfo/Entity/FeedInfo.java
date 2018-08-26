@@ -18,8 +18,4 @@ public class FeedInfo {
     private Long id;
     private String feed;
 
-    public FeedInfo(String feed)
-    {
-        this.feed = feed;
-    }
 }
