@@ -1,6 +1,4 @@
-image: docker:latest
-services:
-    - docker:dind
+image: twalter/maven-docker
 variables:
       DOCKER_HOST: tcp://docker:2375
       DOCKER_DRIVER: overlay
@@ -11,13 +9,11 @@ stages:
     - build
     - deploy  
 build_personnoeClient:
-    image: maven:3-jdk-8
     stage: build
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
 deploy_personneClient:
-    image: maven:3-jdk-8
     stage: deploy
     script:
         - cd server/personne-client
