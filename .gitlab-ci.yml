@@ -12,28 +12,10 @@ build_personneClient:
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
+          ²
 deploy_personneClient:
     stage: deploy
     script:
         - cd server/personne-client
         - docker login -u "$user_docker" -p "$password_docker"
         - ./mvnw dockerfile:push
-
-
-build:
-    only:
-        - web
-        - master
-    except:
-        - triggers
-        - pushes
-        - external
-deploy:
-    only:
-        - web
-        - master
-    except:
-        - triggers
-        - pushes
-        - external
-        - api         - api  
