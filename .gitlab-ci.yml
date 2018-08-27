@@ -4,8 +4,20 @@ services:
 variables:
       DOCKER_HOST: tcp://docker:2375
       DOCKER_DRIVER: overlay2
-build:
+stages:
+    - build
+build_personneClient:
     stage: build
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
+
+build:
+    only:
+        - web
+        - master
+    except:
+        - triggers
+        - pushes
+        - external
+        - api  
