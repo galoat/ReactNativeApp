@@ -5,6 +5,12 @@ variables:
       DOCKER_HOST: tcp://docker:2375
       DOCKER_DRIVER: overlay
 
+cache:
+        key: '$CI_BUILD_REF'
+        untracked: true
+        paths:
+            - cache/
+
 before_script:
         - docker login -u "$user_docker" -p "$password_docker"
 stages:
