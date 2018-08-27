@@ -6,7 +6,6 @@ variables:
       DOCKER_DRIVER: overlay2
 
 before_script:
-        - docker login -u "$user_docker" -p "$password_docker"
 stages:
     - build
     - deploy  
@@ -19,4 +18,5 @@ deploy_personneClient:
     stage: deploy
     script:
         - cd server/personne-client
+        - 'docker login -u "$user_docker" -p "$password_docker"'
         - ./mvnw dockerfile:push
