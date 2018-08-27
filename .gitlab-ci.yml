@@ -16,7 +16,7 @@ build_personnoeClient:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
 deploy_personneClient:
-    image: o
+    image: docker:latest
     stage: deploy
     script:
         - cd server/personne-client
