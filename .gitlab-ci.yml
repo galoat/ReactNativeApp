@@ -6,11 +6,19 @@ variables:
       DOCKER_DRIVER: overlay2
 stages:
     - build
+    - deploy  
 build_personneClient:
     stage: build
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
+deploy_personneClient:
+    stage: deploy
+    script:
+        - cd server/personne-client
+        - docker login -u "$user_docker" -p "$password_docker"
+        - ./mvnw dockerfile:push
+
 
 build:
     only:
@@ -20,4 +28,12 @@ build:
         - triggers
         - pushes
         - external
-        - api  
+deploy:
+    only:
+        - web
+        - master
+    except:
+        - triggers
+        - pushes
+        - external
+        - api         - api  
