@@ -16,7 +16,7 @@ build_personnoeClient:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
 deploy_personneClient:
-    image: docker:latest
+    image: maven:3-jdk-8
     stage: deploy
     script:
         - cd server/personne-client
