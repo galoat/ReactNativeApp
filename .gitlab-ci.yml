@@ -9,12 +9,14 @@ before_script:
 stages:
     - build
     - deploy  
-build_personneClient:
+build_personnoeClient:
+    image: maven:3-jdk-8
     stage: build
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
 deploy_personneClient:
+    image: o
     stage: deploy
     script:
         - cd server/personne-client
