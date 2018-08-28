@@ -5,13 +5,18 @@ variables:
       DOCKER_HOST: tcp://docker:2375
       DOCKER_DRIVER: overlay
 
-
+cache:
+      key: ${CI_PROJECT_ID}
+      paths:
+          - .gradle/
+      
 before_script:
         - docker login -u "$user_docker" -p "$password_docker"
 stages:
     - build
-    - deploy  
-build_personnoeClient:
+    - deploy
+    - build_Android  
+build_personneClient:
     stage: build
     script:
         - cd server/personne-client
@@ -22,3 +27,12 @@ deploy_personneClient:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
         - ./mvnw dockerfile:push
+buildAndroid:
+    image: registry.gitlab.com/motorica-org/gitlab-ci-android:master
+    script:
+        - export GRADLE_USER_HOME=$(pwd)/.gradle
+        - chmod +x ./gradlew  
+        - ./gradlew assembleDebug
+    artifacts:
+        paths:
+                - app/build/outputs/apk/app-debug.apk
