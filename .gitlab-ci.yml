@@ -5,11 +5,6 @@ variables:
       DOCKER_HOST: tcp://docker:2375
       DOCKER_DRIVER: overlay
 
-cache:
-        key: '$CI_BUILD_REF'
-        untracked: true
-        paths:
-            - cache/
 
 before_script:
         - docker login -u "$user_docker" -p "$password_docker"
@@ -21,15 +16,9 @@ build_personnoeClient:
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
-    cache:
-            key: "$CI_BUILD_REF"
-            untracked: true
 deploy_personneClient:
     stage: deploy
     script:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
         - ./mvnw dockerfile:push
-    cache:
-            key: "$CI_BUILD_REF"
-            untracked: true
