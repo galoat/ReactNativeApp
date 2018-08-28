@@ -28,6 +28,7 @@ deploy_personneClient:
         - ./mvnw clean package -DskipTests=true dockerfile:build 
         - ./mvnw dockerfile:push
 buildAndroid:
+    stage: build_Android
     image: registry.gitlab.com/motorica-org/gitlab-ci-android:master
     script:
         - export GRADLE_USER_HOME=$(pwd)/.gradle
