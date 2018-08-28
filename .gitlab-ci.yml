@@ -9,9 +9,6 @@ cache:
       key: ${CI_PROJECT_ID}
       paths:
           - .gradle/
-      
-before_script:
-        - docker login -u "$user_docker" -p "$password_docker"
 stages:
     - build
     - deploy
@@ -19,11 +16,13 @@ stages:
 build_personneClient:
     stage: build
     script:
+        - docker login -u "$user_docker" -p "$password_docker"
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
 deploy_personneClient:
     stage: deploy
     script:
+        - docker login -u "$user_docker" -p "$password_docker"
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build 
         - ./mvnw dockerfile:push
