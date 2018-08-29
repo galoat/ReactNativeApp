@@ -34,6 +34,7 @@ buildAndroid:
         - export GRADLE_USER_HOME=$(pwd)/.gradle
         - chmod +x ./android/gradlew
         - npm install
+        - cd android && ./gradlew assembleDebug --stacktrace
         - mv ./app/build/outputs/apk/app-debug.apk ../../app-debug.apk
     artifacts:
         paths:
