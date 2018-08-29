@@ -37,4 +37,4 @@ buildAndroid:
         - cd android && ./gradlew assembleDebug --stacktrace
     artifacts:
         paths:
-            - - android/app/build/outputs/apk/app-debug.apk
+            - android/app/build/outputs/apk/app-debug.apk
