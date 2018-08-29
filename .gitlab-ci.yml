@@ -29,7 +29,7 @@ deploy_personneClient:
         - ./mvnw dockerfile:push
 buildAndroid:
     stage: build_Android
-    image: magiczvn/gitlab-ci-react-native-android
+    image: jpkrause/react-native-gitlab-ci-build
     script:
         - export GRADLE_USER_HOME=$(pwd)/.gradle
         - chmod +x ./android/gradlew
