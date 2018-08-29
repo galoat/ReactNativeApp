@@ -35,7 +35,6 @@ buildAndroid:
         - chmod +x ./android/gradlew
         - npm install
         - cd android && ./gradlew assembleDebug --stacktrace
-        - mv ./app/build/outputs/apk/app-debug.apk ../../app-debug.apk
     artifacts:
         paths:
-                - app-debug.apk
+            - - android/app/build/outputs/apk/app-debug.apk
