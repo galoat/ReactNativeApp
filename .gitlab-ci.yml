@@ -1,35 +1,40 @@
 image: twalter/maven-docker
 services:
-      - docker:dind
+    - docker:dind
 variables:
-      DOCKER_HOST: tcp://docker:2375
-      DOCKER_DRIVER: overlay
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay
 
 cache:
-        key: '$CI_BUILD_REF'
-        untracked: true
-        paths:
-            - cache/
-
-before_script:
-        - docker login -u "$user_docker" -p "$password_docker"
+    key: ${CI_PROJECT_ID}
+    paths:
+        - .gradle/
+        - node_modules/
 stages:
     - build
-    - deploy  
-build_personnoeClient:
+    - deploy
+    - build_Android
+build_personneClient:
     stage: build
     script:
+        - docker login -u "$user_docker" -p "$password_docker"
         - cd server/personne-client
-        - ./mvnw clean package -DskipTests=true dockerfile:build 
-    cache:
-            key: "$CI_BUILD_REF"
-            untracked: true
+        - ./mvnw clean package -DskipTests=true dockerfile:build
 deploy_personneClient:
     stage: deploy
     script:
+        - docker login -u "$user_docker" -p "$password_docker"
         - cd server/personne-client
-        - ./mvnw clean package -DskipTests=true dockerfile:build 
+        - ./mvnw clean package -DskipTests=true dockerfile:build
         - ./mvnw dockerfile:push
-    cache:
-            key: "$CI_BUILD_REF"
-            untracked: true
+buildAndroid:
+    stage: build_Android
+    image: jpkrause/react-native-gitlab-ci-build
+    script:
+        - export GRADLE_USER_HOME=$(pwd)/.gradle
+        - chmod +x ./android/gradlew
+        - npm install
+        - cd android && ./gradlew assembleDebug --stacktrace
+artifacts:
+    paths:
+        - android/app/build/outputs/apk/app-debug.apk
