@@ -20,6 +20,17 @@ build_personneClient:
         - docker login -u "$user_docker" -p "$password_docker"
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build
+
+
+build_auth-service:
+    stage: build
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/auth-service
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+
+
+
 deploy_personneClient:
     stage: deploy
     script:
@@ -27,6 +38,16 @@ deploy_personneClient:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build
         - ./mvnw dockerfile:push
+
+deploy_auth-service:
+    stage: deploy
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/auth-service
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+        - ./mvnw dockerfile:push
+
+
 buildAndroid:
     stage: build_Android
     image: jpkrause/react-native-gitlab-ci-build
