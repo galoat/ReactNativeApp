@@ -58,7 +58,7 @@ buildAndroid:
         - npm install
         - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/  
         - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
-        - mv app/build/outputs/apk/app-release-unsigned.apk ~/app.apk
     artifacts:
+        name: "Deploy-Test_${CI_BUILD_REF_NAME}_${CI_BUILD_ID}"
         paths:
-            - ~/app.apk
+            - android/app/build/outputs/
