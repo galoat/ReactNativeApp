@@ -59,7 +59,7 @@ buildAndroid:
         - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/  
         - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
         - jarsigner -verbose -storepass "$jarsignpassword" -keystore app/my-release-key.keystore app/build/outputs/apk/app-release-unsigned.apk  alias_name  
-        -ls /opt  
+        - ls /opt  
         - cd /opt/android-sdk-linux/build-tools
         - ls 
         - sudo su  
