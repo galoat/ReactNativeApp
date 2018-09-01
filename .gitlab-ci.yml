@@ -59,6 +59,9 @@ buildAndroid:
         - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/  
         - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
         - jarsigner -verbose -storepass "$jarsignpassword" -keystore app/my-release-key.keystore app/build/outputs/apk/app-release-unsigned.apk  alias_name  
+        - cd /opt/android-sdk/build-tools
+        - ls 
+        - sudo su  
         - ./zipalign -f -v 4 app/build/outputs/apk/app-release-unsigned.apk app.apk  
         - mkdir -p deliverables  
         - mv app.apk delivrables/app.apk  
