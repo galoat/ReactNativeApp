@@ -12,6 +12,7 @@
     "form-data": "2.3.2",
     "react": "16.3.1",
     "react-native": "0.55.4",
+    "react-native-gifted-chat": "^0.4.3",
     "react-native-material-textfield": "^0.12.0",
     "react-native-navigation": "^1.1.235",
     "react-native-render-html": "^3.10.0",

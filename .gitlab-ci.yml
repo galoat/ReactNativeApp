@@ -55,8 +55,9 @@ buildAndroid:
         - export GRADLE_USER_HOME=$(pwd)/.gradle
         - chmod +x ./android/gradlew
         - npm install
-        - cd android && ./gradlew assembleDebug --stacktrace
-        - mv   android/app/build/outputs/apk/app-debug.apk app.apk
+        - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/  
+        - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
+        - mv app/build/outputs/apk/a pp-release-unsigned.apk ~/app.apk
     artifacts:
         paths:
-            -  app.apk
+            - app.apk
