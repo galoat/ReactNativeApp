@@ -61,4 +61,4 @@ buildAndroid:
         - mv app/build/outputs/apk/app-release-unsigned.apk ~/app.apk
     artifacts:
         paths:
-            - app.apk
+            - ~/app.apk
