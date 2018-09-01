@@ -58,7 +58,18 @@ buildAndroid:
         - npm install
         - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/  
         - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
+        - jarsigner -verbose -storepass "$jarsignpassword" -keystore app/my-release-key.keystore app/build/outputs/apk/app-release-unsigned.apk  alias_name  
+        - zipalign -f -v 4 app/build/outputs/apk/app-release-unsigned.apk app.apk  
+        - mkdir -p deliverables  
+        - mv app.apk delivrables/app.apk  
+        - touch ./deliverables/info.txt
+        - echo "Build date          $(date)"                >> ./deliverables/info.txt
+        - echo "App version name    ${VERSION_NAME}"        >> ./deliverables/info.txt
+        - echo "App version code    ${VERSION_CODE}"        >> ./deliverables/info.txt
+        - echo "Git branch          ${CI_COMMIT_REF_NAME}"  >> ./deliverables/info.txt
+        - echo "Git commit          ${CI_COMMIT_SHA}"       >> ./deliverables/info.txt
+        - echo "Gitlab pipeline     ${CI_PIPELINE_ID}"      >> ./deliverables/info.txt
     artifacts:
         name: "Deploy-Test_${CI_BUILD_REF_NAME}_${CI_BUILD_ID}"
         paths:
-            - android/app/build/outputs/
+            - android/delivrables
