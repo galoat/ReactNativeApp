@@ -63,7 +63,7 @@ buildAndroid:
         - ls 
         - sudo ln -sf zipalign /usr/bin/
         - cd 
-        - ./zipalign -f -v 4 android/app/build/outputs/apk/app-release-unsigned.apk app.apk  
+        - zipalign -f -v 4 android/app/build/outputs/apk/app-release-unsigned.apk app.apk  
         - mkdir -p deliverables  
         - mv app.apk delivrables/app.apk  
         - touch ./deliverables/info.txt
