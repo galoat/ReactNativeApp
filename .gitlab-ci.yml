@@ -63,8 +63,8 @@ buildAndroid:
         - cd /opt/android-sdk-linux/build-tools/26.0.2
         - ls 
         - sudo ln -sf zipalign /usr/bin/
-        - ./zipalign -f -v 4 ~/android/app/build/outputs/apk/app-release-unsigned.apk ~/app.apk  
-        - cd   
+        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk /builds/galoat/ReactNativeApp/app.apk  
+        - cd  /builds/galoat/ReactNativeApp 
         - mkdir -p deliverables  
         - mv app.apk delivrables/app.apk  
         - touch ./deliverables/info.txt
