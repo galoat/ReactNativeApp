@@ -63,11 +63,11 @@ buildAndroid:
         - cd /opt/android-sdk-linux/build-tools/26.0.2
         - ls 
         - sudo ln -sf zipalign /usr/bin/
-        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk /builds/galoat/ReactNativeApp/app.apk  
+        - mkdir -p /builds/galoat/deliverables  
+        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk /builds/galoat/app.apk  
         - cd  /builds/galoat/ReactNativeApp 
-        - mkdir -p deliverables  
-        - mv app.apk delivrables/app.apk  
-        - touch ./deliverables/info.txt
+        - ls
+        - touch info.txt
         - echo "Build date          $(date)"                >> ./deliverables/info.txt
         - echo "App version name    ${VERSION_NAME}"        >> ./deliverables/info.txt
         - echo "App version code    ${VERSION_CODE}"        >> ./deliverables/info.txt
@@ -77,4 +77,4 @@ buildAndroid:
     artifacts:
         name: "Deploy-Test_${CI_BUILD_REF_NAME}_${CI_BUILD_ID}"
         paths:
-            - android/delivrables
+            - /builds/galoat/deliverables 
