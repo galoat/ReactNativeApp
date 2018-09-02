@@ -52,6 +52,7 @@ buildAndroid:
     stage: build_Android
     image: jpkrause/react-native-gitlab-ci-build
     script:
+        - pwd
         - export GRADLE_USER_HOME=$(pwd)/.gradle
         - chmod +x ./android/gradlew
         - npm config set registry https://registry.npmjs.org/  
@@ -62,8 +63,8 @@ buildAndroid:
         - cd /opt/android-sdk-linux/build-tools/26.0.2
         - ls 
         - sudo ln -sf zipalign /usr/bin/
-        - cd 
-        - zipalign -f -v 4 android/app/build/outputs/apk/app-release-unsigned.apk app.apk  
+        - zipalign -f -v 4 ~/android/app/build/outputs/apk/app-release-unsigned.apk ~/app.apk  
+        - cd   
         - mkdir -p deliverables  
         - mv app.apk delivrables/app.apk  
         - touch ./deliverables/info.txt
