@@ -61,11 +61,9 @@ buildAndroid:
         - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
         - jarsigner -verbose -storepass "$jarsignpassword" -keystore app/my-release-key.keystore app/build/outputs/apk/app-release-unsigned.apk  alias_name  
         - cd /opt/android-sdk-linux/build-tools/26.0.2
-        - ls 
-        - sudo ln -sf zipalign /usr/bin/
-        - mkdir -p /builds/galoat/deliverables  
-        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk /builds/galoat/deliverables/app.apk  
-        - cd  /builds/galoat/deliverables
+        - mkdir -p $CI_PROJECT_DIR/deliverables  
+        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk $CI_PROJECT_DIR/deliverables/app.apk  
+        - cd  $CI_PROJECT_DIR/deliverables
         - ls
         - touch info.txt
         - echo "Build date          $(date)"                >> info.txt
@@ -77,4 +75,4 @@ buildAndroid:
     artifacts:
         name: "Deploy-Test_${CI_BUILD_REF_NAME}_${CI_BUILD_ID}"
         paths:
-            - /builds/galoat/deliverables 
+            - deliverables
