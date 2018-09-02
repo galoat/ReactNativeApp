@@ -64,16 +64,16 @@ buildAndroid:
         - ls 
         - sudo ln -sf zipalign /usr/bin/
         - mkdir -p /builds/galoat/deliverables  
-        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk /builds/galoat/app.apk  
-        - cd  /builds/galoat/ReactNativeApp 
+        - ./zipalign -f -v 4 /builds/galoat/ReactNativeApp/android/app/build/outputs/apk/app-release-unsigned.apk /builds/galoat/deliverables/app.apk  
+        - cd  /builds/galoat/deliverables
         - ls
         - touch info.txt
-        - echo "Build date          $(date)"                >> ./deliverables/info.txt
-        - echo "App version name    ${VERSION_NAME}"        >> ./deliverables/info.txt
-        - echo "App version code    ${VERSION_CODE}"        >> ./deliverables/info.txt
-        - echo "Git branch          ${CI_COMMIT_REF_NAME}"  >> ./deliverables/info.txt
-        - echo "Git commit          ${CI_COMMIT_SHA}"       >> ./deliverables/info.txt
-        - echo "Gitlab pipeline     ${CI_PIPELINE_ID}"      >> ./deliverables/info.txt
+        - echo "Build date          $(date)"                >> info.txt
+        - echo "App version name    ${VERSION_NAME}"        >> info.txt
+        - echo "App version code    ${VERSION_CODE}"        >> info.txt
+        - echo "Git branch          ${CI_COMMIT_REF_NAME}"  >> info.txt
+        - echo "Git commit          ${CI_COMMIT_SHA}"       >> info.txt
+        - echo "Gitlab pipeline     ${CI_PIPELINE_ID}"      >> info.txt
     artifacts:
         name: "Deploy-Test_${CI_BUILD_REF_NAME}_${CI_BUILD_ID}"
         paths:
