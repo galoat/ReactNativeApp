@@ -2,7 +2,7 @@
 <html xmlns ="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Framework Guru</title>
+    <title>SkiUt Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
@@ -21,7 +21,7 @@
 
             <div class="panel-heading">
                 <div class="panel-title">Sign In</div>
-                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+
             </div>
             <div class="alert alert-danger" th:if="${loged!=null and loged ==false}">
                 <strong>Connection refused !</strong> Wrong password/username
@@ -54,16 +54,16 @@
                     </div>
 
 
-                    <div class="form-group">
-                        <div class="col-md-12 control">
-                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                Don't have an account!
-                                <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                                    Sign Up Here
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- <div class="form-group">
+                         <div class="col-md-12 control">
+                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                                 Don't have an account!
+                                 <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                     Sign Up Here
+                                 </a>
+                             </div>
+                         </div>
+                     </div>-->
                 </form>
 
 
