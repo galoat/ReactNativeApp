@@ -56,10 +56,10 @@ public class OauthApplication {
 class AccountCLR implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
-		Stream.of("jlong,spring","test,test","test2,test2" ).map(t->t.split(",")).
+	/*	Stream.of("jlong,spring","test,test","test2,test2" ).map(t->t.split(",")).
 				forEach(t->{this.accountRepository.save(new Account(t[0],t[1],true));
 
-				});
+				});*/
 	}
 
 

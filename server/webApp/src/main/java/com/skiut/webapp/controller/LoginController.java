@@ -72,15 +72,16 @@ public class LoginController
 
 			// Execute HTTP Post Request
 			HttpResponse response = httpclient.execute(httppost);
-
+			logger.info(response.getEntity().toString());
 			JSONObject json_auth = new JSONObject(EntityUtils.toString(response.getEntity()));
 			if(json_auth.has("access_token")) {
 				String token = json_auth.getString("access_token");
 				session.setAttribute("token",token);
 				session.setAttribute("name",personne.getName());
+				logger.info("got to mainPAge");
 				return  "mainPage";
 			}else if( json_auth.has("error")){
-				System.out.println("erreur authenification");
+				logger.info("erreur authenification", json_auth.getString("error"));
 				model.addAttribute("loged",false);
 				return "login";
 			}
