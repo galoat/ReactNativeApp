@@ -28,16 +28,27 @@
         $(function() {
             $('textarea').froalaEditor()
         });
-    </script>
 
+    </script>
+<script>
+    $(document).ready(function() {
+        $("#buttonsend").click(function () {
+            console.log("click on button send");
+
+            console.log("rich text content", $('#froala-editor').froalaEditor('html.get'));
+        })
+    })
+</script>
 </head>
 
     <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/header :: header">
     </nav>
-    <textarea></textarea>
+    <textarea id="froala-editor" ></textarea>
 
 
+
+    <button type="button" class="btn btn-primary" id="buttonsend">Send</button>
 
 </body>
 </html>
