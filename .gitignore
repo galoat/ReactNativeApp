@@ -64,3 +64,6 @@ buck-out/
 *.frm
 *.apk
 ibtmp1
+*.ibd
+*ib*log*
+server/autodeploy/data/auth/db/*
