@@ -74,6 +74,7 @@ public class LoginController
 			HttpResponse response = httpclient.execute(httppost);
 			logger.info(response.getEntity().toString());
 			JSONObject json_auth = new JSONObject(EntityUtils.toString(response.getEntity()));
+
 			if(json_auth.has("access_token")) {
 				String token = json_auth.getString("access_token");
 				session.setAttribute("token",token);
