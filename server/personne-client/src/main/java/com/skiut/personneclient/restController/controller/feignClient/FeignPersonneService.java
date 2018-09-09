@@ -1,4 +1,4 @@
-package com.skiut.personneclient.restController.feignClient;
+package com.skiut.personneclient.restController.controller.feignClient;
 
 import com.skiut.personneclient.entity.Personne;
 import org.springframework.cloud.openfeign.FeignClient;
