@@ -1,6 +1,7 @@
 package com.skiut.personneclient.restController.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.oracle.tools.packager.Log;
 import com.skiut.personneclient.entity.Feed;
 import com.skiut.personneclient.restController.controller.feignClient.FeignFeedService;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,4 +61,11 @@ public class FeedApiAdapterRestController {
 
     }
 
+
+    @PostMapping("/feed")
+    public void addFeed(@RequestBody Feed feed) {
+        System.out.println("-------ADD Feed "+feed.toString());
+        Log.info("ADD Feed "+feed);
+        feignFeedService.sendFeed(feed);
+    }
 }

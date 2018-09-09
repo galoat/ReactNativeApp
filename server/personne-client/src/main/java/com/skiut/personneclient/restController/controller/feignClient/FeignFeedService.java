@@ -4,8 +4,7 @@ import com.skiut.personneclient.entity.Feed;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.Resources;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -15,5 +14,9 @@ public interface FeignFeedService {
 
     @RequestMapping(method =  RequestMethod.GET, value = "/feed")
     Resources<Feed> getFeeds();
+
+    @RequestMapping(method =  RequestMethod.POST, value = "/feed")
+    void sendFeed(@RequestBody Feed feed);
+
 
 }
