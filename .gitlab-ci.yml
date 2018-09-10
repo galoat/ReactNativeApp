@@ -64,22 +64,12 @@ build_webApp:
         - cd server/webApp
         - ./mvnw clean package -DskipTests=true dockerfile:build
 
-
-
-
-
-
-
-
-
-
-
 deploy_auth-service:
     stage: deploy
     script:
         - docker login -u "$user_docker" -p "$password_docker"
         - cd server/auth-service
-       - ./mvnw clean package -DskipTests=true dockerfile:build
+        - ./mvnw clean package -DskipTests=true dockerfile:build
 
 deploy_configServer:
     stage: deploy
