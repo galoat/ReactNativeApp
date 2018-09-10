@@ -67,7 +67,7 @@ public class FeedApiAdapterRestController {
      * @param feed the feed
      */
     @PostMapping("/feed")
-    public void addFeed(@RequestBody Feed feed) {
+    public void addFeed(@RequestBody Feed feed) {   
         feignFeedService.sendFeed(feed);
     }
 }
