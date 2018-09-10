@@ -82,6 +82,42 @@ services:
         - 9191
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
+    webApp :
+      image: galoat/webapp
+      container_name: webapp
+      ports:
+          -8008:8008
+      links:
+        - discovery-server
+        - config-server
+      depends_on:
+        - config-server
+        - discovery-server
+        - mysql-auth
+      restart: always
+      expose:
+        - 8008
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+    feedInfo:
+      image: galoat/feedinfo
+      container_name: feedInfo
+      ports:
+          -7001:7001
+      links:
+        - discovery-server
+        - config-server
+      depends_on:
+        - config-server
+        - discovery-server
+        - mysql-auth
+      restart: always
+      expose:
+        - 7001
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+
+
     mysql-auth:
         image: mariadb
         container_name: mysql-auth
@@ -97,6 +133,22 @@ services:
                 - "3306:3306"
         expose:
                  - 3306
+    mysql-auth:
+        image: mariadb
+        container_name: mysql-feedinfo
+        volumes:
+ #           - ./autodeploy/data/auth//var/lib/mysql
+            - ./autodeploy/data:/docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: feedinfo
+            MYSQL_PASSWORD: password
+            MYSQL_USER: user
+        ports:
+                - "3308:3306"
+        expose:
+                 - 3308
+
     portainer:
         image:  portainer/portainer
         container_name: portainer
