@@ -14,6 +14,36 @@ stages:
     - build
     - deploy
     - build_Android
+
+build_auth-service:
+    stage: build
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/auth-service
+
+build_configServer:
+    stage: build
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/configServer
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+          
+build_eurecka:
+    stage: build
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/eureka-service
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+
+build_FeedInfoService:
+    stage: build
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/feedInfoService
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+
+
 build_personneClient:
     stage: build
     script:
@@ -21,15 +51,59 @@ build_personneClient:
         - cd server/personne-client
         - ./mvnw clean package -DskipTests=true dockerfile:build
 
-
-build_auth-service:
+build_personneService:
     stage: build
     script:
         - docker login -u "$user_docker" -p "$password_docker"
-        - cd server/auth-service
+        - cd server/personne-service
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+build_webApp:
+    stage: build
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/webApp
         - ./mvnw clean package -DskipTests=true dockerfile:build
 
 
+
+
+
+
+
+
+
+
+
+deploy_auth-service:
+    stage: deploy
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/auth-service
+       - ./mvnw clean package -DskipTests=true dockerfile:build
+
+deploy_configServer:
+    stage: deploy
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/configServer
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+
+
+deploy_eureckaServer:
+    stage: deploy
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/eureka-service
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+        - ./mvnw dockerfile:push
+
+deploy_feedInfoService:
+    stage: deploy
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/feedInfoService
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+        - ./mvnw dockerfile:push
 
 deploy_personneClient:
     stage: deploy
@@ -39,13 +113,25 @@ deploy_personneClient:
         - ./mvnw clean package -DskipTests=true dockerfile:build
         - ./mvnw dockerfile:push
 
-deploy_auth-service:
+deploy_personneService:
     stage: deploy
     script:
         - docker login -u "$user_docker" -p "$password_docker"
-        - cd server/auth-service
+        - cd server/personne-service
         - ./mvnw clean package -DskipTests=true dockerfile:build
         - ./mvnw dockerfile:push
+
+deploy_webApp:
+    stage: deploy
+    script:
+        - docker login -u "$user_docker" -p "$password_docker"
+        - cd server/webApp
+        - ./mvnw clean package -DskipTests=true dockerfile:build
+        - ./mvnw dockerfile:push
+
+
+
+
 
 
 buildAndroid:

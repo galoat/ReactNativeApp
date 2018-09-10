@@ -23,6 +23,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
+		<docker.image.prefix>galoat</docker.image.prefix>
+		<docker.image.exposed.port>7001</docker.image.exposed.port>
 	</properties>
 
 	<dependencies>
@@ -102,6 +104,19 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<buildArgs>
+						<ARTIFACT_NAME>target/${project.build.finalName}</ARTIFACT_NAME>
+						<EXPOSED_PORT>${docker.image.exposed.port}</EXPOSED_PORT>
+					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>
