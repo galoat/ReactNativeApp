@@ -124,11 +124,12 @@ services:
         volumes:
  #           - ./autodeploy/data/auth//var/lib/mysql
             - ./autodeploy/data:/docker-entrypoint-initdb.d
+            - ./autodeploy/data/auth/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: user
             MYSQL_PASSWORD: password
-            MYSQL_USER: user
+            MYSQL_USER: sa
         ports:
                 - "3306:3306"
         expose:
