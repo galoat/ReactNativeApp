@@ -86,7 +86,7 @@ services:
       image: galoat/webapp
       container_name: webapp
       ports:
-          -8008:8008
+          - 8008:8008
       links:
         - discovery-server
         - config-server
@@ -99,22 +99,22 @@ services:
         - 8008
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
-    feedInfo:
-      image: galoat/feedinfo
-      container_name: feedInfo
-      ports:
-          -7001:7001
-      links:
-        - discovery-server
-        - config-server
-      depends_on:
-        - config-server
-        - discovery-server
-        - mysql-auth
-      restart: always
-      expose:
-        - 7001
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      #feedInfo:
+      #feimage: galoat/feedinfo
+      #fecontainer_name: feedInfo
+      #feports:
+      #fe    - 7001:7001
+      #felinks:
+      #fe  - discovery-server
+      #fe  - config-server
+      #fedepends_on:
+      #fe  - config-server
+      #fe  - discovery-server
+      #fe  - mysql-auth
+      #ferestart: always
+      #feexpose:
+      #fe  - 7001
+      #feentrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
 
@@ -133,7 +133,7 @@ services:
                 - "3306:3306"
         expose:
                  - 3306
-    mysql-auth:
+    mysql-feedInfo:
         image: mariadb
         container_name: mysql-feedinfo
         volumes:
