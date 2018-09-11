@@ -99,22 +99,23 @@ services:
         - 8008
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
-      #feedInfo:
-      #feimage: galoat/feedinfo
-      #fecontainer_name: feedInfo
-      #feports:
-      #fe    - 7001:7001
-      #felinks:
-      #fe  - discovery-server
-      #fe  - config-server
-      #fedepends_on:
-      #fe  - config-server
-      #fe  - discovery-server
-      #fe  - mysql-auth
-      #ferestart: always
-      #feexpose:
-      #fe  - 7001
-      #feentrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    feedInfo:
+      image: galoat/feedinfo
+      container_name: feedInfo
+      ports:
+          - 7001:7001
+      links:
+        - discovery-server
+        - config-server
+        - mysql-feedinfo
+      depends_on:
+        - config-server
+        - discovery-server
+        - mysql-feedinfo
+      restart: always
+      expose:
+        - 7001
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
 
@@ -123,7 +124,7 @@ services:
         container_name: mysql-auth
         volumes:
  #           - ./autodeploy/data/auth//var/lib/mysql
-            - ./autodeploy/data:/docker-entrypoint-initdb.d
+ #  - ./autodeploy/data:/docker-entrypoint-initdb.d
             - ./autodeploy/data/auth/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: password
@@ -134,17 +135,18 @@ services:
                 - "3306:3306"
         expose:
                  - 3306
-    mysql-feedInfo:
+    mysql-feedinfo:
         image: mariadb
         container_name: mysql-feedinfo
         volumes:
  #           - ./autodeploy/data/auth//var/lib/mysql
-            - ./autodeploy/data:/docker-entrypoint-initdb.d
+ #           - ./autodeploy/data:/docker-entrypoint-initdb.d
+            - ./autodeploy/data/feed/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: feedinfo
             MYSQL_PASSWORD: password
-            MYSQL_USER: user
+            MYSQL_USER: sa
         ports:
                 - "3308:3306"
         expose:
