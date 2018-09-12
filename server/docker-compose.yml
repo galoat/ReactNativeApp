@@ -133,8 +133,6 @@ services:
             MYSQL_USER: sa
         ports:
                 - "3306:3306"
-        expose:
-                 - 3306
     mysql-feedinfo:
         image: mariadb
         container_name: mysql-feedinfo
@@ -149,8 +147,6 @@ services:
             MYSQL_USER: sa
         ports:
                 - "3308:3306"
-        expose:
-                 - 3308
 
     portainer:
         image:  portainer/portainer
