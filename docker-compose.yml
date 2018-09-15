@@ -5,8 +5,8 @@ services:
         image: mariadb
         container_name: mysql-user 
         volumes:
-            - ./server/autodeploy/data/auth/db:/var/lib/mysql
-              #            - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+           - ./server/autodeploy/data/auth/db:/var/lib/mysql
+           - ./server/autodeploy/data/auth/dumpTest.sql:/docker-entrypoint-initdb.d/dump.sql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: test
@@ -19,6 +19,7 @@ services:
         container_name: mysql-feedInfo
         volumes:
             - ./server/autodeploy/data/feed/db:/var/lib/mysql
+            - ./server/autodeploy/data/feed/dumpTest.sql:/docker-entrypoint-initdb.d/dump.sql
               #            - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
         environment:
             MYSQL_ROOT_PASSWORD: password
