@@ -17,7 +17,6 @@ public class MainPageController
 	@RequestMapping("/mainPage")
 	String mainPage(Model model,HttpSession session ) {
 
-
 		model.addAttribute("text", new String());
 		return "mainPage"; // src/main/ressources/template/+$x+.html
 	}
@@ -26,6 +25,7 @@ public class MainPageController
 	@RequestMapping("/sendrichtext")
 	String sendRichText(@ModelAttribute("text") String text){
 		logger.info("Rich String to send "+ text);
+
 		return "mainPage";
 	}
 }
