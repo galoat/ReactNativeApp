@@ -1,51 +1,30 @@
 
 version: '2'
 services:
-#    mongo:
-#        image: "mongo:latest"
-#        volumes:
-#            - ./mongodb/db:/data/db
-#        ports:
-#            - "27017:27017"
     config-server:
         image: "galoat/config-service"
         container_name: config-server
-        expose:
-            - 8888
-        ports:
-           - 8888:8888
+        networks:
+              - discover
         restart: always
 
     discovery-server:
         image: "galoat/eurecka-service"
         container_name: discovery-server
-        ports:
-            - 8761:8761
-        expose:
-            - 8761
-        links:
-          - config-server
-        depends_on:
-          - config-server
+        networks:
+            - discover
         restart: always
-        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=120","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=120","--","java", "-jar","/app.jar"]
 
     personne-service:
       image: galoat/personne-service
       container_name: personne-service
-      ports:
-            - 8001:8001
-      links:
-        - discovery-server
-        - config-server
-      depends_on:
-        - config-server
-        - discovery-server
-        - auth-service
-      expose:
-        - 8001
+      networks:
+          - discover
+      environment:
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
       restart: always
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java","-jar","/app.jar"]
 
 
     personne-client:
@@ -53,13 +32,11 @@ services:
       container_name: personne-client
       ports:
           - 9999:9999
-      links:
-        - discovery-server
-        - config-server
-      depends_on:
-        - config-server
-        - discovery-server
-        - auth-service
+      networks:
+          - discover
+          - auth
+      environment:
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
       restart: always
       expose:
         - 9999
@@ -70,96 +47,80 @@ services:
       container_name: auth-service
       ports:
           - 9191:9191
-      links:
-        - discovery-server
-        - config-server
-      depends_on:
-        - config-server
-        - discovery-server
-        - mysql-auth
+      networks:
+           - discover
+           - auth
+           - authDb
+      environment:
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
       restart: always
       expose:
         - 9191
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java",  "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     webApp :
       image: galoat/webapp
       container_name: webapp
       ports:
           - 8008:8008
-      links:
-        - discovery-server
-        - config-server
-      depends_on:
-        - config-server
-        - discovery-server
-        - mysql-auth
+      networks:
+           - discover
+           - auth
+      environment:
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
       restart: always
       expose:
         - 8008
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-jar","/app.jar"]
 
     feedInfo:
-      image: galoat/feedinfo
-      container_name: feedInfo
-      ports:
-          - 7001:7001
-      links:
-        - discovery-server
-        - config-server
-        - mysql-feedinfo
-      depends_on:
-        - config-server
-        - discovery-server
-        - mysql-feedinfo
-      restart: always
-      expose:
-        - 7001
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        image: galoat/feedinfo
+        container_name: feedInfo
+        networks:
+                - discover
+                - auth
+                - feedDb
+        environment:
+              - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+        restart: always
+        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=300","--","java", "-jar","/app.jar"]
 
 
 
     mysql-auth:
         image: mariadb
         container_name: mysql-auth
+        networks:
+                  - authDb
         volumes:
- #           - ./autodeploy/data/auth//var/lib/mysql
- #  - ./autodeploy/data:/docker-entrypoint-initdb.d
- #    - ./autodeploy/data/auth/dumpProd.sql:/docker-entrypoint-initdb.d/dump.sql
+            - ./autodeploy/data/auth/dumpProd.sql:/docker-entrypoint-initdb.d/dump.sql
             - ./autodeploy/data/auth/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: user
             MYSQL_PASSWORD: password
             MYSQL_USER: sa
-        ports:
-                - "3306:3306"
-        expose:
-            - 3306
+
+
     mysql-feedinfo:
         image: mariadb
         container_name: mysql-feedinfo
         volumes:
             - ./autodeploy/data/feed/db:/var/lib/mysql
+        networks:
+          - feedDb
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: feedinfo
             MYSQL_PASSWORD: password
             MYSQL_USER: sa
-        ports:
-                - "3308:3306"
-        expose:
-            - 3308
 
-                  
-
-    portainer:
-        image:  portainer/portainer
-        container_name: portainer
-        expose:
-          - 9000
-        volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-        ports:
-          - 9000:9000
-        restart: always
+networks:
+  discover:
+    driver: bridge
+  auth:
+      driver: bridge
+  authDb:
+      driver: bridge
+  feedDb:
+      driver: bridge

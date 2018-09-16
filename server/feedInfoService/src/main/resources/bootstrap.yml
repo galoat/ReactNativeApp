@@ -4,11 +4,6 @@ spring:
       uri: http://localhost:8888
   application:
     name: feedinfo-service
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
 ---
 spring:
   profiles: docker
