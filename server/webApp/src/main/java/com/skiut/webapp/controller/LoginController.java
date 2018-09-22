@@ -1,6 +1,7 @@
 package com.skiut.webapp.controller;
 
 import com.skiut.webapp.Entity.Personne;
+import com.skiut.webapp.controller.constant.SessionConstant;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,12 +73,11 @@ public class LoginController
 
 			// Execute HTTP Post Request
 			HttpResponse response = httpclient.execute(httppost);
-			logger.info(response.getEntity().toString());
 			JSONObject json_auth = new JSONObject(EntityUtils.toString(response.getEntity()));
 
 			if(json_auth.has("access_token")) {
 				String token = json_auth.getString("access_token");
-				session.setAttribute("token",token);
+				session.setAttribute(SessionConstant.token,token);
 				session.setAttribute("name",personne.getName());
 				logger.info("got to mainPAge");
 				return  "mainPage";
@@ -88,7 +88,7 @@ public class LoginController
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.toString());
 		}
 
 

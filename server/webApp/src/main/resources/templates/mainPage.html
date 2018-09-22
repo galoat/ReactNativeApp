@@ -35,7 +35,24 @@
         $("#buttonsend").click(function () {
             console.log("click on button send");
 
-            console.log("rich text content", $('#froala-editor').froalaEditor('html.get'));
+
+
+            var text =$('#froala-editor').froalaEditor('html.get')
+            console.log("rich text content", text);
+
+
+            $.ajax({
+                method: "POST",
+                url: "/sendrichtext",
+                cache: false,
+                data: text,
+                dataType: 'html',
+                success: function(status){
+                    if(status) {
+                        //here you check the response from your controller and add your business logic
+                    }
+                }
+            });
         })
     })
 </script>
