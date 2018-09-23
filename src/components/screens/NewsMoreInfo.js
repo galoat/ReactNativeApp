@@ -13,6 +13,8 @@ import {
 import { GiftedChat } from 'react-native-gifted-chat'
 import HTML from 'react-native-render-html';
 
+import * as appActions from '../../actions/index';
+
 export default class NewsMoreInfo extends Component {
 
   state = {
@@ -20,6 +22,7 @@ export default class NewsMoreInfo extends Component {
    }
 
    componentWillMount() {
+    appActions.getAllFeed()
      this.setState({
        messages: [
          {

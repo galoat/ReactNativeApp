@@ -98,6 +98,34 @@ export function homeTabInit(){
 }
 
 
+export function getAllFeed(){
+  return async function(dispatch, getState){
+    console.log("index.js: request all Feed with token ", getState.token)
+     
+    fetch("http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED, {
+     method: 'GET',
+     headers: {
+        'Authorization': "bearer  "+  getState.token
+      },
+      body: formData
+    }, 10000 )
+     .then(response => {
+          return response.json();
+       })
+     .then(json => {
+        console.log("index.js: login - serverResponse ", json)
+       
+    })
+    .catch(error => {
+          console.log("index.js: login - ERROR -serverResponse ", error)
+   
+    });
+
+  }
+}
+
+
+
 export function login(nb_try, username, password) {
   return async function(dispatch, getState) {
     console.log("Login with username ", username, " password ", password)
