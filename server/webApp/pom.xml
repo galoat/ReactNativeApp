@@ -66,10 +66,6 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
