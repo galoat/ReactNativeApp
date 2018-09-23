@@ -22,7 +22,7 @@ services:
       networks:
           - discover
       environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java","-jar","/app.jar"]
 
@@ -36,7 +36,7 @@ services:
           - discover
           - auth
       environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       expose:
         - 9999
@@ -52,7 +52,7 @@ services:
            - auth
            - authDb
       environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       expose:
         - 9191
@@ -67,7 +67,7 @@ services:
            - discover
            - auth
       environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       expose:
         - 8008
@@ -81,7 +81,7 @@ services:
                 - auth
                 - feedDb
         environment:
-              - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+              - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
         restart: always
         entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=300","--","java", "-jar","/app.jar"]
 

@@ -7,9 +7,11 @@
      - copy:
            src: ../../docker-compose.yml
            dest: /app/docker
+     - name: create dir
+       file: path=/app/docker/autodeploy/data/auth state=directory
      - copy:
-          src: ../data/dump.sql
-          dest: /app/docker/autodeploy/data/
+          src: ../data/auth/dumpProd.sql
+          dest: /app/docker/autodeploy/data/auth
      -  name: execute docker commpose
         shell: docker-compose up -d
         args:
