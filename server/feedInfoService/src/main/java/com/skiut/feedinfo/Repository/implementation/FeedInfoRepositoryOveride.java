@@ -1,21 +1,23 @@
-package com.skiut.feedinfo.Repository;
+package com.skiut.feedinfo.Repository.implementation;
 
 import com.skiut.feedinfo.Entity.FeedInfo;
+import com.skiut.feedinfo.Repository.FeedInfoRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
-@RepositoryRestController(path = "feed")
+@RestController
+@RequestMapping("/feed")
 public class FeedInfoRepositoryOveride {
 
     @Getter
     @Setter
-    @Autowire
+    @Autowired
     FeedInfoRepository feedRepo;
 
 
