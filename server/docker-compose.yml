@@ -107,6 +107,7 @@ services:
         container_name: mysql-feedinfo
         volumes:
             - ./autodeploy/data/feed/db:/var/lib/mysql
+            - ./autodeploy/data/feed/dumpProd.sql:/docker-entrypoint-initdb.d/dump.sql
         networks:
           - feedDb
         environment:
