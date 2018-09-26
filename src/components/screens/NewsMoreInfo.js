@@ -22,7 +22,6 @@ export default class NewsMoreInfo extends Component {
    }
 
    componentWillMount() {
-    appActions.getAllFeed()
      this.setState({
        messages: [
          {

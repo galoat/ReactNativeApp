@@ -31,7 +31,7 @@ class Hometab extends Component {
   }
   constructor(props) {
       super(props);
-
+     
       this.state = {
         scrollY: new Animated.Value(0),
         htmlContent:''
@@ -40,14 +40,14 @@ class Hometab extends Component {
 
 componentWillMount(){
   console.log("Hometab - componentWillMount ")
-  store.dispatch(appActions.homeTabInit());
+  store.dispatch(appActions.getAllFeed());
 }
 
 onPressLearnMore(){
   appActions.returnLogin()
 }
 _onPressNews(i){
-  console.log("on press")
+  console.log("Hometab - on press on news ", i)
   appActions.goNews(i)
 }
 
@@ -207,6 +207,7 @@ row: {
 
 const mapStateToProps = (state) => {
   console.log("homeTabComponent: map state to props: ", state.newMoreInfoReducer )
+  
   return Object.assign({}, state, {
       htmlContent : state.newMoreInfoReducer.news
   });

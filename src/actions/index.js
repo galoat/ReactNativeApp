@@ -100,20 +100,20 @@ export function homeTabInit(){
 
 export function getAllFeed(){
   return async function(dispatch, getState){
-    console.log("index.js: request all Feed with token ", getState.token)
+    console.log("index.js: request all Feed with token ", getState().loginReducer.token)
      
     fetch("http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED, {
      method: 'GET',
      headers: {
-        'Authorization': "bearer  "+  getState.token
-      },
-      body: formData
+        'Authorization': "bearer  "+  getState().loginReducer.token
+      }
     }, 10000 )
      .then(response => {
           return response.json();
        })
      .then(json => {
         console.log("index.js: login - serverResponse ", json)
+        dispatch(homeTabInit());
        
     })
     .catch(error => {
@@ -159,6 +159,7 @@ export function login(nb_try, username, password) {
         } else{
           dispatch(loginOK())
           dispatch(changeToken(json.access_token))
+
         }
 
     })
