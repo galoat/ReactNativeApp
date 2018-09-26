@@ -15,8 +15,8 @@ public interface FeignFeedService {
     @RequestMapping(method =  RequestMethod.GET, value = "/feed")
     Resources<Feed> getFeeds();
 
-    @RequestMapping(method =  RequestMethod.POST, value = "/feed")
-    void sendFeed(@RequestBody Feed feed);
+    @RequestMapping(method = RequestMethod.POST, value = "/feed/postfeed")
+    boolean sendFeed(@RequestBody Feed feed);
 
 
 }

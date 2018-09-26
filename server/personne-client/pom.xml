@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.skiut</groupId>
@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.3.RELEASE</version>
+		<version>2.0.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -101,7 +101,7 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.7</version>
 		</dependency>
-    </dependencies>
+	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
@@ -122,16 +122,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-					<groupId>com.spotify</groupId>
-					<artifactId>dockerfile-maven-plugin</artifactId>
-					<version>1.4.0</version>
-					<configuration>
-							<repository>${docker.image.prefix}/${project.artifactId}</repository>
-							<buildArgs>
-									<ARTIFACT_NAME>target/${project.build.finalName}</ARTIFACT_NAME>
-									<EXPOSED_PORT>${docker.image.exposed.port}</EXPOSED_PORT>
-							</buildArgs>
-					</configuration>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<buildArgs>
+						<ARTIFACT_NAME>target/${project.build.finalName}</ARTIFACT_NAME>
+						<EXPOSED_PORT>${docker.image.exposed.port}</EXPOSED_PORT>
+					</buildArgs>
+				</configuration>
 			</plugin>
 
 		</plugins>

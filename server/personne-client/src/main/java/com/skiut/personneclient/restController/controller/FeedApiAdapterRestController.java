@@ -66,8 +66,17 @@ public class FeedApiAdapterRestController {
      *
      * @param feed the feed
      */
+
+    @HystrixCommand(fallbackMethod = "postFeed")
     @PostMapping("/feed")
-    public void addFeed(@RequestBody Feed feed) {   
-        feignFeedService.sendFeed(feed);
+    public boolean addFeed(@RequestBody Feed feed) {
+        return feignFeedService.sendFeed(feed);
     }
+
+    /**
+     * Fallback feed string.
+     *
+     * @return the string
+     */
+    public boolean postFeed(@RequestBody Feed feed){return false;}
 }
