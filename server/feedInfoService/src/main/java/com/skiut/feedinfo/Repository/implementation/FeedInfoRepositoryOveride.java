@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 @RestController
 @RequestMapping("/feed")
 public class FeedInfoRepositoryOveride {
@@ -26,7 +29,14 @@ public class FeedInfoRepositoryOveride {
 
     @RequestMapping(value = "/postfeed", method = RequestMethod.POST)
     public boolean postFeed(@RequestBody FeedInfo feedInfo) {
-       feedRepo.save(feedInfo);
-       return true;
+    
+        try {
+            feedInfo.setFeed(URLDecoder.decode( feedInfo.getFeed(), "UTF-8" ));
+        } catch (UnsupportedEncodingException e) {
+          logger.warn("can't decode feedINfo : " + feedInfo.getFeed());
+          return false;
+        }
+        feedRepo.save(feedInfo);
+        return true;
     }
 }
