@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns ="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
-    <title>mainPage</title>
+    <title>AddRichText</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
@@ -48,9 +47,16 @@
                 data: text,
                 dataType: 'html',
                 success: function(status){
-                    if(status) {
-                        //here you check the response from your controller and add your business logic
+                    console.log("esult ", status);
+                    if(status ===  "false") {
+                        $('#notsaved').show();
+
+                    }else{
+                        $('#save').show();
                     }
+                },
+                error: function() {
+                    $("#notsaved").show();
                 }
             });
         })
@@ -61,11 +67,20 @@
     <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/header :: header">
     </nav>
+
+
+    <div class="alert alert-danger" id="notsaved" style="display: none">
+        <strong>The text has not been saved </strong>
+    </div>
+    <div class="alert alert-success" id="save" style="display: none" >
+        <strong>The text has been saved </strong>
+    </div>
+
     <textarea id="froala-editor" ></textarea>
 
 
 
-    <button type="button" class="btn btn-primary" id="buttonsend">Send</button>
+    <button type="button" class="btn btn-primary" id="buttonsend">send</button>
 
 </body>
 </html>

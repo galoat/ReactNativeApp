@@ -29,7 +29,7 @@ public class FeedInfoRepositoryOveride {
 
     @RequestMapping(value = "/postfeed", method = RequestMethod.POST)
     public boolean postFeed(@RequestBody FeedInfo feedInfo) {
-    
+
         try {
             feedInfo.setFeed(URLDecoder.decode( feedInfo.getFeed(), "UTF-8" ));
         } catch (UnsupportedEncodingException e) {
