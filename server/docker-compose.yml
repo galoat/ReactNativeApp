@@ -4,6 +4,7 @@ services:
     config-server:
         image: "galoat/config-service"
         container_name: config-server
+        mem_limit: 256M
         networks:
               - discover
         restart: always
@@ -14,64 +15,61 @@ services:
         networks:
             - discover
         restart: always
-        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=120","--","java", "-jar","/app.jar"]
+        mem_limit: 256M
+        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=4000","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
 
     personne-service:
       image: galoat/personne-service
       container_name: personne-service
+      mem_limit: 256M
       networks:
           - discover
-      environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
 
 
     personne-client:
       image: galoat/personne-client
       container_name: personne-client
+      mem_limit: 256M
       ports:
           - 9999:9999
       networks:
           - discover
           - auth
-      environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       expose:
         - 9999
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     auth-service :
       image: galoat/oauth
       container_name: auth-service
+      mem_limit: 256M
       ports:
           - 9191:9191
       networks:
            - discover
            - auth
            - authDb
-      environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       expose:
         - 9191
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java",  "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java",  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
 
     webApp :
       image: galoat/webapp
       container_name: webapp
+      mem_limit: 256M
       ports:
           - 8008:8008
       networks:
            - discover
            - auth
-      environment:
-            - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
       restart: always
       expose:
         - 8008
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=120","--","java", "-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java",  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
 
     feedInfo:
         image: galoat/feedinfo
@@ -80,16 +78,15 @@ services:
                 - discover
                 - auth
                 - feedDb
-        environment:
-              - JVM_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=512m
         restart: always
-        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=300","--","java", "-jar","/app.jar"]
+        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java",  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
 
 
 
     mysql-auth:
         image: mariadb
         container_name: mysql-auth
+        mem_limit: 256M
         networks:
                   - authDb
         volumes:
@@ -105,6 +102,7 @@ services:
     mysql-feedinfo:
         image: mariadb
         container_name: mysql-feedinfo
+        mem_limit: 256M
         volumes:
             - ./autodeploy/data/feed/db:/var/lib/mysql
             - ./autodeploy/data/feed/dumpProd.sql:/docker-entrypoint-initdb.d/dump.sql
