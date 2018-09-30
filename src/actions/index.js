@@ -100,24 +100,29 @@ export function homeTabInit(){
 
 export function getAllFeed(){
   return async function(dispatch, getState){
-    console.log("index.js: request all Feed with token ", getState().loginReducer.token)
+    ipServer = "http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED
+    console.log("index.js: request to : ", ipServer, "all Feed with token ", getState().loginReducer.token)
      
-    fetch("http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED, {
+    fetch(ipServer, {
      method: 'GET',
      headers: {
         'Authorization': "bearer  "+  getState().loginReducer.token
       }
-    }, 10000 )
+    }, 1000000 )
      .then(response => {
-          return response.json();
+          text = response.text()
+          console.log("res ",text)
+          return JSON.parse(text);
        })
      .then(json => {
-        console.log("index.js: login - serverResponse ", json)
+        console.log("index.js: getAllFeed - serverResponse ", json)
         dispatch(homeTabInit());
        
     })
     .catch(error => {
-          console.log("index.js: login - ERROR -serverResponse ", error)
+          console.log("index.js: getAllFeed - ERROR -serverResponse ", error)
+          //TODO remove that (test)
+            dispatch(homeTabInit());
    
     });
 

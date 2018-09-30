@@ -6,10 +6,7 @@ const initialState = Immutable({
 
 });
 
-const htmlContent = `<p>Bonjour Comm<strong>&nbsp;</strong></p>
-<p><strong>Tett</strong></p>
-<p style="text-align: center;"><em><strong>OtherTest</strong></em></p>
-<p><strong>&nbsp;</strong></p>`;
+const htmlContent = JSON.parse(`[{"feed":"testEdge"},{"feed":"testEdge"},{"feed":"testEdge"}]`);
 
 export function newMoreInfoReducer(state = initialState, action = {}) {
 

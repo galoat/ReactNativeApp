@@ -40,7 +40,8 @@ export default class  App extends Component {
           console.log("start Login")
           Navigation.startSingleScreenApp({
                     screen: {
-                    screen: 'SkiUt.HomeTab', // unique ID registered with Navigation.registerScree
+                   screen: 'SkiUt.HomeTab', // unique ID registered with Navigation.registerScree
+                //   screen: 'SkiUt.Login',
                     headerMode: 'none',
                     navigationOptions:{ headerVisible:false },
                     navNarHidden: true,
@@ -58,6 +59,7 @@ export default class  App extends Component {
                 screen :
                 {
                     screen: 'SkiUt.Login',
+                   // screen: 'SkiUt.HomeTab',
                     headerMode: 'none',
                     navigationOptions:{ headerVisible:false },
                     navNarHidden: true,

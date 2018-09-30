@@ -34,7 +34,7 @@ class Hometab extends Component {
      
       this.state = {
         scrollY: new Animated.Value(0),
-        htmlContent:''
+        htmlContent:[]
       };
 }
 
@@ -42,7 +42,11 @@ componentWillMount(){
   console.log("Hometab - componentWillMount ")
   store.dispatch(appActions.getAllFeed());
 }
+componentWillReceiveProps(nextProps){
+    console.log("Hometab: will recive props");
 
+    this.setState(nextProps)
+}
 onPressLearnMore(){
   appActions.returnLogin()
 }
@@ -52,12 +56,13 @@ _onPressNews(i){
 }
 
 _renderScrollViewContent() {
-    const data = Array.from({ length: 2 });
+    const data = Array.from(this.state.htmlContent);
+    console.log(this.state.htmlContent)
     return (
       <View style={styles.scrollViewContent}  >
         {data.map((_, i) => (
             <TouchableHighlight onPress = {() => this._onPressNews(i)} key={i}>
-              <HTML html={  this.props.htmlContent} />
+              <HTML html={ this.state.htmlContent[i].feed} />
           </TouchableHighlight>
         ))}
       </View>
