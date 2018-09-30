@@ -105,6 +105,9 @@ export function homeTabInit(){
 
 export function getAllFeed(){
   return async function(dispatch, getState){
+console.log("feed : ",getState().newMoreInfoReducer.news)
+  if (typeof getState().newMoreInfoReducer.news === 'undefined'){
+    console.log("feed not in app load from sever" )
     ///TODO not reload if already fetch
     ipServer = "http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED
     console.log("index.js: request to : ", ipServer, "all Feed with token ", getState().loginReducer.token)
@@ -131,7 +134,10 @@ export function getAllFeed(){
             dispatch(homeTabInit());
    
     });
-
+  }else{
+     console.log("feed  in  cache" );
+      dispatch(homeTabInit());
+  }
   }
 }
 
