@@ -42,7 +42,7 @@ public class FeedApiAdapterRestController {
      *
      * @return the string
      */
-    @HystrixCommand(fallbackMethod = "fallbackFeed")
+    //@HystrixCommand(fallbackMethod = "fallbackFeed")
     @GetMapping("/getAll")
     public String allFeeds(){
         log.info("Content : "+ getFeignFeedService().getFeeds()
