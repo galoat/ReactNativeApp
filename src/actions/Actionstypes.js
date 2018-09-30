@@ -7,3 +7,6 @@ export const LOGIN_ERROR = 'SkiUt.app.LOGIN_ERROR';
 export const LOGIN_SUCESS = 'SkiUt.app.LOGIN_SUCESS';
 export const USER_INPUT = 'SkiUt.app.USER_INPUT';
 export const USER_PASSWORD = 'SkiUt.app.USER_PASSWORD';
+export const NEW_FOCUSED = 'SkiUt.app.NEW_FOCUSED';
+
+

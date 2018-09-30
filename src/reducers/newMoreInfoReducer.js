@@ -6,7 +6,7 @@ const initialState = Immutable({
 
 });
 
-const htmlContent = JSON.parse(`[{"feed":"testEdge"},{"feed":"testEdge"},{"feed":"testEdge"}]`);
+const htmlContent = JSON.parse(`[{"feed":"test0"},{"feed":"test1"},{"feed":"test2"}]`);
 
 export function newMoreInfoReducer(state = initialState, action = {}) {
 
@@ -17,7 +17,11 @@ export function newMoreInfoReducer(state = initialState, action = {}) {
           return state.merge({
              news : htmlContent
            });
-
+     case  types.NEW_FOCUSED :
+          console.log("newMoreInfoReducer: action type newFocused ",action.newFocusedId)
+          return state.merge({
+             newsFocusedId : action.newFocusedId
+           });      
     default:
       return state;
   }

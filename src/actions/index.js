@@ -14,7 +14,12 @@ export function changeAppRoot(root) {
     root: root
   };
 }
-
+export function newsFocused(id) {
+  return {
+    type: types.NEW_FOCUSED,
+    newFocusedId: id
+  };
+}
 
 export function incrementNb(nb) {
   return {
@@ -184,6 +189,7 @@ export function returnLogin(){
 }
 
 export function goNews(id){
+  store.dispatch(newsFocused(id))
   store.dispatch(changeAppRoot('moreAboutNews'));
 }
 

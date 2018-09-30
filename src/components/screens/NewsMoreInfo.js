@@ -12,18 +12,23 @@ import {
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
 import HTML from 'react-native-render-html';
-
+import {connect} from 'react-redux';
 import * as appActions from '../../actions/index';
 
-export default class NewsMoreInfo extends Component {
+const HEADER_MAX_HEIGHT = 300;
+const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-  state = {
-     messages: [],
-   }
-
-   componentWillMount() {
-     this.setState({
-       messages: [
+class NewsMoreInfo extends Component {
+    static navigationOptions = {
+      header: null,
+  }
+  constructor(props) {
+      super(props);
+     
+      this.state = {
+          htmlContentFocused:'abc',
+           messages: [
          {
            _id: 1,
            text: 'Hello developer',
@@ -35,38 +40,42 @@ export default class NewsMoreInfo extends Component {
            },
          },
        ],
-     })
-   }
+     }
+    };
+
+
 
    onSend(messages = []) {
      this.setState(previousState => ({
        messages: GiftedChat.append(previousState.messages, messages),
      }))
    }
+   
+componentWillReceiveProps(nextProps){
+    console.log("newMoreINfoComponent: will recive props");
 
+    this.setState(nextProps)
+}
    render() {
+ 
+     console.log("fioejfiojioj",this.props.htmlContentFocused)
+
      return (
          <View style={styles.container}>
-        <HTML style = {styles.html} html={`<p>Bonjour Comm<strong>&nbsp;</strong></p>
-        <p><strong>Tett</strong></p>
-        <p style="text-align: center;"><em><strong>OtherTest</strong></em></p>
-        <p><strong>&nbsp;</strong></p>`} />
+        <HTML style = {styles.html} html={this.props.htmlContentFocused} />
        <GiftedChat
          style={styles.chat}
          messages={this.state.messages}
-         onSend={messages => this.onSend(messages)}
-         user={{
-           _id: 1,
-         }}
-       />
+         onSend={messages => this.onSend(messages)}/>
        </View>
-     )
+     );
    }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: HEADER_MAX_HEIGHT,
   },
   html: {
     backgroundColor: '#D3D3D3',
@@ -77,3 +86,14 @@ const styles = StyleSheet.create({
     flex:3,
   }
 });
+
+
+const mapStateToProps = (state) => {
+  console.log("newMoreINfoComponent: map state to props: ",  state.newMoreInfoReducer.news[state.newMoreInfoReducer.newsFocusedId].feed )
+  text = state.newMoreInfoReducer.news[state.newMoreInfoReducer.newsFocusedId].feed 
+  return Object.assign({}, state, {
+      htmlContentFocused : text
+  });
+};
+
+export default connect(mapStateToProps)(NewsMoreInfo);
