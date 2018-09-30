@@ -105,6 +105,7 @@ export function homeTabInit(){
 
 export function getAllFeed(){
   return async function(dispatch, getState){
+    ///TODO not reload if already fetch
     ipServer = "http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED
     console.log("index.js: request to : ", ipServer, "all Feed with token ", getState().loginReducer.token)
      
@@ -186,6 +187,9 @@ export function afterAnimationSucess(){
 }
 export function returnLogin(){
   store.dispatch(changeAppRoot('login'));
+}
+export function returnAllFeed(){
+  store.dispatch(changeAppRoot('after-login'));
 }
 
 export function goNews(id){

@@ -9,12 +9,19 @@ import {
   Platform,
   Button,
   ScrollView,
+  Image,
+   TouchableHighlight,
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
 import HTML from 'react-native-render-html';
 import {connect} from 'react-redux';
 import * as appActions from '../../actions/index';
+import bgSrc from '../../img/back.png';
+import Dimensions from 'Dimensions';
 
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 const HEADER_MAX_HEIGHT = 300;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
@@ -56,12 +63,17 @@ componentWillReceiveProps(nextProps){
 
     this.setState(nextProps)
 }
+_onPressImmage(){
+console.log("press image")
+appActions.returnAllFeed()
+}
    render() {
- 
-     console.log("fioejfiojioj",this.props.htmlContentFocused)
 
      return (
-         <View style={styles.container}>
+      <View style={styles.container}>
+        <TouchableHighlight onPress = {() => this._onPressImmage()}>
+            <Image style={styles.picture} source={bgSrc} />
+        </TouchableHighlight>
         <HTML style = {styles.html} html={this.props.htmlContentFocused} />
        <GiftedChat
          style={styles.chat}
@@ -74,17 +86,27 @@ componentWillReceiveProps(nextProps){
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: HEADER_MAX_HEIGHT,
+     flex: 1,
+    paddingTop: 10,
   },
   html: {
+    marginTop:'200',
     backgroundColor: '#D3D3D3',
     alignItems: 'center',
     justifyContent: 'center',
   },
   chat: {
-    flex:3,
-  }
+   
+  },
+  picture: {
+   
+     top: 0, 
+     left: 0,
+    height: DEVICE_HEIGHT*10/100,
+    width:DEVICE_WIDTH *20 / 100,
+    resizeMode: 'contain',
+  },
+
 });
 
 
