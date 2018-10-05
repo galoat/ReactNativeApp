@@ -10,6 +10,7 @@ import {
   Button,
   ScrollView,
   TouchableHighlight,
+  RefreshControl,
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import PropTypes from 'prop-types';
@@ -34,7 +35,8 @@ class Hometab extends Component {
      
       this.state = {
         scrollY: new Animated.Value(0),
-        htmlContent:[]
+        htmlContent:[],
+        refreshing: false,
       };
 }
 
@@ -54,7 +56,11 @@ _onPressNews(i){
   console.log("Hometab - on press on news ", i)
   appActions.goNews(i)
 }
-
+_onRefresh = () => {
+    this.setState({refreshing: true});
+   console.log("call refresh")
+    appActions.actualizedNewsFeed()
+  }
 _renderScrollViewContent() {
     const data = Array.from(this.state.htmlContent);
     console.log(this.state.htmlContent)
@@ -107,6 +113,11 @@ _renderScrollViewContent() {
       />
 
         <Animated.ScrollView
+         refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />}
           style={styles.fill}
           scrollEventThrottle={1}
           onScroll={Animated.event(
@@ -214,7 +225,8 @@ const mapStateToProps = (state) => {
   console.log("homeTabComponent: map state to props: ", state.newMoreInfoReducer )
   
   return Object.assign({}, state, {
-      htmlContent : state.newMoreInfoReducer.news
+      htmlContent : state.newMoreInfoReducer.news,
+      refreshing:false
   });
 };
 

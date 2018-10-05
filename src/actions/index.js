@@ -2,7 +2,9 @@ import * as types from './Actionstypes';
 import * as serverConst from '../const/server';
 import FormData from 'FormData';
 import fetch from './fetchWithTimeout'
+import * as  serveurFunctions from  './serveurFunctions'
 import {store} from "../store/store"
+
 
 /*
 Action Creators
@@ -102,34 +104,38 @@ export function homeTabInit(){
   };
 }
 
-
-export function getAllFeed(){
-  return async function(dispatch, getState){
-console.log("feed : ",getState().newMoreInfoReducer.news)
-  if (typeof getState().newMoreInfoReducer.news === 'undefined'){
-    console.log("feed not in app load from sever" )
-    ///TODO not reload if already fetch
-    ipServer = "http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_EDGE_SERVICE+serverConst.SERVER_GET_ALL_FEED
-    console.log("index.js: request to : ", ipServer, "all Feed with token ", getState().loginReducer.token)
-     
-    fetch(ipServer, {
-     method: 'GET',
-     headers: {
-        'Authorization': "bearer  "+  getState().loginReducer.token
-      }
-    }, 1000000 )
-     .then(response => {
-          text = response.text()
-          console.log("res ",text)
-          return JSON.parse(text);
-       })
+export function actualizedNewsFeed(){
+  console.log("Actualise news info")
+   serveurFunctions.getFeedFromServer(getState().loginReducer.token)
      .then(json => {
-        console.log("index.js: getAllFeed - serverResponse ", json)
+        console.log("sereurFunction.js: getAllFeed - serverResponse ", json)
         dispatch(homeTabInit());
        
     })
     .catch(error => {
-          console.log("index.js: getAllFeed - ERROR -serverResponse ", error)
+          console.log("serveurFunctions.js: getAllFeed - ERROR -serverResponse ", error)
+          //TODO remove that (test)
+            dispatch(homeTabInit());
+   
+    });
+}
+
+
+export  function getAllFeed(){
+  return async function(dispatch, getState){
+  console.log("feed : ",getState().newMoreInfoReducer.news)
+  if (typeof getState().newMoreInfoReducer.news === 'undefined'){
+    console.log("feed not in app load from sever" )
+    ///TODO not reload if already fetch
+     serveurFunctions.getFeedFromServer(getState().loginReducer.token)
+     .then(json => {
+        console.log("sereurFunction.js: getAllFeed - serverResponse ", json)
+        ///TODO ADD or vent  request to init all information 
+        dispatch(homeTabInit());
+       
+    })
+    .catch(error => {
+          console.log("serveurFunctions.js: getAllFeed - ERROR -serverResponse ", error)
           //TODO remove that (test)
             dispatch(homeTabInit());
    
