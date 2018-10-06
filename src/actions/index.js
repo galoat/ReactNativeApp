@@ -153,24 +153,8 @@ export function login(nb_try, username, password) {
   return async function(dispatch, getState) {
     console.log("Login with username ", username, " password ", password)
     // user jlong password spring
-    var formData = new FormData();
-    formData.append('password', password);
-    formData.append('grant_type', 'password');
-    formData.append('username', username);
-
-    var encodeBase64 = serverConst.SERVER_BASE64
-
-    fetch("http://"+serverConst.IP_SERVER+":"+serverConst.SERVER_PORT_OAUTH+serverConst.SERVER_OAUTH_PATH, {
-     method: 'POST',
-     headers: {
-        'Authorization': "Basic "+ encodeBase64,
-        'Content-Type': 'multipart/form-data',
-      },
-      body: formData
-    }, 10000 )
-     .then(response => {
-          return response.json();
-       })
+   
+     serveurFunctions.loginFromServer(username, password)
      .then(json => {
         console.log("index.js: login - serverResponse ", json)
         if(json.hasOwnProperty('error')){
