@@ -223,9 +223,13 @@ row: {
 
 const mapStateToProps = (state) => {
   console.log("homeTabComponent: map state to props: ", state.newMoreInfoReducer )
-  
+  if (typeof state.newMoreInfoReducer.news === 'undefined') {
+    html = ""
+  }else{
+    html = state.newMoreInfoReducer.news
+  }
   return Object.assign({}, state, {
-      htmlContent : state.newMoreInfoReducer.news,
+      htmlContent : html,
       refreshing:false
   });
 };

@@ -16,12 +16,22 @@ export function changeAppRoot(root) {
     root: root
   };
 }
+
 export function newsFocused(id) {
   return {
     type: types.NEW_FOCUSED,
     newFocusedId: id
   };
 }
+
+export function newsAddNews(jsonNews) {
+  return {
+    type: types.NEWS_MORE_INFO_ADD_NEWS,
+    jsonNews: jsonNews
+  };
+}
+
+
 
 export function incrementNb(nb) {
   return {
@@ -97,6 +107,14 @@ export function loginInitialized(nb) {
     dispatch(initLogin(nb));
   };
 }
+
+export function newTabAddNews(jsonNews){
+  return async function(dispatch, getState) {
+    console.log("Action: addNews homeTab requests")
+    dispatch(newsAddNews(jsonNews));
+  };
+}
+
 export function homeTabInit(){
   return async function(dispatch, getState) {
     console.log("Action: initialization homeTab requests")
@@ -132,11 +150,14 @@ export  function getAllFeed(){
         console.log("sereurFunction.js: getAllFeed - serverResponse ", json)
         ///TODO ADD or vent  request to init all information 
         dispatch(homeTabInit());
+        dispatch(newTabAddNews(json));
        
     })
     .catch(error => {
           console.log("serveurFunctions.js: getAllFeed - ERROR -serverResponse ", error)
           //TODO remove that (test)
+
+
             dispatch(homeTabInit());
    
     });
