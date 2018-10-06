@@ -136,7 +136,7 @@ buildAndroid:
         - npm install
         - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/  
         - cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
-        - ls /builds/galoat/ReactNativeApp/app/android/build/outputs
+        - ls ./app/build/outputs/apk/
         - jarsigner -verbose -storepass "$jarsignpassword" -keystore /builds/galoat/ReactNativeApp/app/android/app/my-release-key.keystore ./app/build/outputs/apk/app-release-unsigned.apk  alias_name  
         - cd /opt/android-sdk-linux/build-tools/26.0.2
         - mkdir -p $CI_PROJECT_DIR/deliverables  
