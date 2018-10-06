@@ -1,93 +1,11 @@
-import * as types from './Actionstypes';
+
 import * as serverConst from '../const/server';
 import FormData from 'FormData';
 import fetch from './fetchWithTimeout'
 import * as  serveurFunctions from  './serveurFunctions'
 import {store} from "../store/store"
+import * as actions from './actions'
 
-
-/*
-Action Creators
-*/
-
-export function changeAppRoot(root) {
-  return {
-    type: types.ROOT_CHANGED,
-    root: root
-  };
-}
-
-export function newsFocused(id) {
-  return {
-    type: types.NEW_FOCUSED,
-    newFocusedId: id
-  };
-}
-
-export function newsAddNews(jsonNews) {
-  return {
-    type: types.NEWS_MORE_INFO_ADD_NEWS,
-    jsonNews: jsonNews
-  };
-}
-
-
-
-export function incrementNb(nb) {
-  return {
-    type: types.INCREMENT,
-    nb: nb
-  };
-}
-
-export function loginError(login_try) {
-  return {
-    type: types.LOGIN_ERROR,
-    login_try: login_try
-  };
-}
-
-export function loginOK() {
-  return {
-    type: types.LOGIN_SUCESS
-  };
-}
-
-export function changeToken(token) {
-  return {
-    type: types.CHANGETOKEN,
-    token: token
-  }
-}
-
-export function initLogin(nb) {
-  return {
-    type: types.INIT_LOGIN,
-    login_try: nb
-  };
-}
-
-export function initHomeTab() {
-  return {
-    type: types.INIT_NEW_MORE_INFO,
-  };
-}
-
-
-
-export function loginInputUserName(name) {
-  return {
-    type: types.USER_INPUT,
-    userInput: name
-  };
-}
-
-export function loginInputPassword(passwd) {
-  return {
-    type: types.USER_PASSWORD,
-    password: passwd
-  };
-}
 
 
 /*
@@ -97,28 +15,28 @@ dispatch the actionCreators
 export function appInitialized() {
   return async function(dispatch, getState) {
     console.log("Action: initialization App request")
-    dispatch(changeAppRoot('login'));
+    dispatch(actions.changeAppRoot('login'));
   };
 }
 
 export function loginInitialized(nb) {
   return async function(dispatch, getState) {
     console.log("Action: initialization Login request")
-    dispatch(initLogin(nb));
+    dispatch(actions.initLogin(nb));
   };
 }
 
 export function newTabAddNews(jsonNews){
   return async function(dispatch, getState) {
     console.log("Action: addNews homeTab requests")
-    dispatch(newsAddNews(jsonNews));
+    dispatch(actions.newsAddNews(jsonNews));
   };
 }
 
 export function homeTabInit(){
   return async function(dispatch, getState) {
     console.log("Action: initialization homeTab requests")
-    dispatch(initHomeTab());
+    dispatch(actions.initHomeTab());
   };
 }
 
@@ -181,12 +99,12 @@ export function login(nb_try, username, password) {
         if(json.hasOwnProperty('error')){
           console.log("server respond an Error")
             nb_try += 1
-            dispatch(loginError(nb_try));
+            dispatch(actions.loginError(nb_try));
           /*if(json.error_description === "Bad credentials"){
           }*/
         } else{
-          dispatch(loginOK())
-          dispatch(changeToken(json.access_token))
+          dispatch(actions.loginOK())
+          dispatch(actions.changeToken(json.access_token))
 
         }
 
@@ -194,30 +112,30 @@ export function login(nb_try, username, password) {
     .catch(error => {
           console.log("index.js: login - ERROR -serverResponse ", error)
           nb_try += 1
-          dispatch(loginError(nb_try))
+          dispatch(actions.loginError(nb_try))
     });
   }
 }
 
 export function afterAnimationSucess(){
-  store.dispatch(changeAppRoot('after-login'));
+  store.dispatch(actions.changeAppRoot('after-login'));
 }
 export function returnLogin(){
-  store.dispatch(changeAppRoot('login'));
+  store.dispatch(actions.changeAppRoot('login'));
 }
 export function returnAllFeed(){
-  store.dispatch(changeAppRoot('after-login'));
+  store.dispatch(actions.changeAppRoot('after-login'));
 }
 
 export function goNews(id){
-  store.dispatch(newsFocused(id))
-  store.dispatch(changeAppRoot('moreAboutNews'));
+  store.dispatch(actions.newsFocused(id))
+  store.dispatch(actions.changeAppRoot('moreAboutNews'));
 }
 
 export function inputChangeUser(name){
-  store.dispatch(loginInputUserName(name));
+  store.dispatch(actions.loginInputUserName(name));
 }
 
 export function inputChangePassowrd(password){
-  store.dispatch(loginInputPassword(password));
+  store.dispatch(actions.loginInputPassword(password));
 }
