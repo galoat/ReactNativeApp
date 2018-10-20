@@ -29,3 +29,18 @@ services:
         ports:
                 - "3308:3306"
 
+    mysqlChat:
+        image: mariadb
+        container_name: mysql-chat
+        volumes:
+            - ./server/autodeploy/data/chat/db:/var/lib/mysql
+              #- ./server/autodeploy/data/chat/dumpTest.sql:/docker-entrypoint-initdb.d/dump.sql
+              #            - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: test
+            MYSQL_PASSWORD: password
+            MYSQL_USER: sa
+        ports:
+                - "3310:3306"
+
