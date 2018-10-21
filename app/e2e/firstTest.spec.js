@@ -21,8 +21,4 @@ describe('login', () => {
     await element(by.id('ButtonSubmit')).tap();  
     await expect(element(by.text('Can\'t authenticate'))).toBeVisible();
   });
-
-
-
-
 })

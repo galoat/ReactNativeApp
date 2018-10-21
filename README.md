@@ -62,6 +62,11 @@ Contains all information about the chat the port is 9030.
 
 The application is tested with Detox end to end test.
 
+### Login screen
+
+![](./screenshot/loginScreen.png?raw=true)
+
+
 ## DevOps
 ### GitlabRunner
 This repo use gitlab runner in order to create and deploy all docker images and create the Android application signed(see .gitlabrunner)
