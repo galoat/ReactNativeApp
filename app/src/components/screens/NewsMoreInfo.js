@@ -34,7 +34,7 @@ class NewsMoreInfo extends Component {
       super(props);
      
       this.state = {
-          htmlContentFocused:'abc',
+          htmlContentFocused:'',
            messages: [
          {
            _id: 1,

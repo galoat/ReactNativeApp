@@ -105,7 +105,8 @@ _renderScrollViewContent() {
     });
 
     return (
-     <View style={styles.fill}>
+     <View style={styles.fill}
+      testID='homeTab'>
        <StatusBar
        translucent
        barStyle="light-content"
@@ -115,6 +116,7 @@ _renderScrollViewContent() {
         <Animated.ScrollView
          refreshControl={
           <RefreshControl
+           
             refreshing={this.state.refreshing}
             onRefresh={this._onRefresh}
           />}

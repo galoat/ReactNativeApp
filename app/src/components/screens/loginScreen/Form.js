@@ -37,7 +37,7 @@ export default class Form extends Component {
       <View style={styles.container}>
         <View   style={styles.textInput}>
           <TextField
-
+              testID='userInput'
               value={this.props.username}
               label={"Username"}
               autoCapitalize='none'
@@ -51,6 +51,7 @@ export default class Form extends Component {
           </View>
           <View   style={styles.textInput}>
             <TextField
+              testID='passwordInput'
               value={this.props.password}
               label={"Password"}
               secureTextEntry={true}

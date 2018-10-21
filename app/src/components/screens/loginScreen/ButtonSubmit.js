@@ -83,6 +83,7 @@ export default class ButtonSubmit extends Component {
       <View style={styles.container}>
         <Animated.View style={{width: changeWidth}}>
           <TouchableOpacity
+            testID='ButtonSubmit'
             style={styles.button}
             onPress={this.props.onPushLogin}
             activeOpacity={1}>
