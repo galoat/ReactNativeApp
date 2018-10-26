@@ -4,6 +4,9 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+  cloud:
+    config:
+      failFast: true
 ---
 spring:
   profiles: docker
