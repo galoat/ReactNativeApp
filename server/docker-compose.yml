@@ -12,11 +12,11 @@ services:
     discovery-server:
         image: "galoat/eurecka-service"
         container_name: discovery-server
+        mem_limit: 256M
         networks:
             - discover
         restart: always
-        mem_limit: 256M
-        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=4000","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
+        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     personne-service:
       image: galoat/personne-service
@@ -25,7 +25,7 @@ services:
       networks:
           - discover
       restart: always
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
     personne-client:
@@ -40,7 +40,7 @@ services:
       restart: always
       expose:
         - 9999
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     auth-service :
       image: galoat/oauth
@@ -55,7 +55,7 @@ services:
       restart: always
       expose:
         - 9191
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java",  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     webApp :
       image: galoat/webapp
@@ -69,17 +69,18 @@ services:
       restart: always
       expose:
         - 8008
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java",  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     feedInfo:
         image: galoat/feedinfo
         container_name: feedInfo
+        mem_limit: 256M
         networks:
                 - discover
                 - auth
                 - feedDb
         restart: always
-        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java",  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar"]
+        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
 
