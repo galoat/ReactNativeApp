@@ -21,7 +21,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>10</java.version>
+		<jaxb-api.version>2.3.0</jaxb-api.version>
 		<spring-cloud.version>Finchley.M9</spring-cloud.version>
 		<docker.image.prefix>galoat</docker.image.prefix>
 		<docker.image.exposed.port>9999</docker.image.exposed.port>
@@ -72,6 +73,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.16.22</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -100,6 +102,21 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>${jaxb-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>javax.activation-api</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 	</dependencies>
 
@@ -131,6 +148,21 @@
 						<ARTIFACT_NAME>target/${project.build.finalName}</ARTIFACT_NAME>
 						<EXPOSED_PORT>${docker.image.exposed.port}</EXPOSED_PORT>
 					</buildArgs>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>javax.activation</groupId>
+						<artifactId>activation</artifactId>
+						<version>1.1.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>10</release>
 				</configuration>
 			</plugin>
 

@@ -7,7 +7,7 @@ services:
         mem_limit: 256M
         networks:
               - discover
-        restart: always
+        restart:  on-failure
 
     discovery-server:
         image: "galoat/eurecka-service"
@@ -15,32 +15,32 @@ services:
         mem_limit: 256M
         networks:
             - discover
-        restart: always
-        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        restart:  on-failure
+        entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=90", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
-    personne-service:
-      image: galoat/personne-service
-      container_name: personne-service
-      mem_limit: 256M
-      networks:
-          - discover
-      restart: always
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
-
-
+#   personne-service:
+#     image: galoat/personne-service
+#     container_name: personne-service
+#     mem_limit: 256M
+#     networks:
+#         - discover
+#     restart:  on-failure
+#     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#
+#
     personne-client:
       image: galoat/personne-client
       container_name: personne-client
-      mem_limit: 256M
+      mem_limit: 300M
       ports:
           - 9999:9999
       networks:
           - discover
           - auth
-      restart: always
+      restart:  on-failure
       expose:
         - 9999
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=90", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
     auth-service :
       image: galoat/oauth
@@ -52,35 +52,35 @@ services:
            - discover
            - auth
            - authDb
-      restart: always
+      restart:  on-failure
       expose:
         - 9191
       entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
-    webApp :
-      image: galoat/webapp
-      container_name: webapp
-      mem_limit: 256M
-      ports:
-          - 8008:8008
-      networks:
-           - discover
-           - auth
-      restart: always
-      expose:
-        - 8008
-      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
-
+#    webApp :
+#      image: galoat/webapp
+#      container_name: webapp
+#      mem_limit: 256M
+#      ports:
+#          - 8008:8008
+#      networks:
+#           - discover
+#           - auth
+#      restart:  on-failure
+#      expose:
+#        - 8008
+#      entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#
     feedInfo:
         image: galoat/feedinfo
         container_name: feedInfo
-        mem_limit: 256M
+        mem_limit: 300M
         networks:
                 - discover
                 - auth
                 - feedDb
-        restart: always
-        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=70", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        restart:  on-failure
+        entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=4000","--","java", "-XshowSettings:vm","-XX:MaxRAMPercentage=90", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
 
