@@ -18,15 +18,16 @@ stages:
 build_auth-service:
     stage: build
     script:
+        - echo $JAVA_HOME    
         - docker login -u "$user_docker" -p "$password_docker"
         - cd server/auth-service
+        - ./mvnw clean package -DskipTests=true dockerfile:build
 
 build_configServer:
     stage: build
     script:
         - docker login -u "$user_docker" -p "$password_docker"
         - cd server/configServer
-        - ./mvnw clean package -DskipTests=true dockerfile:build
         - ./mvnw clean package -DskipTests=true dockerfile:build
           
 build_eurecka:
