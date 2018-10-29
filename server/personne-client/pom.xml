@@ -26,6 +26,7 @@
 		<spring-cloud.version>Finchley.M9</spring-cloud.version>
 		<docker.image.prefix>galoat</docker.image.prefix>
 		<docker.image.exposed.port>9999</docker.image.exposed.port>
+		<jaxb-api.version>2.3.0</jaxb-api.version>
 	</properties>
 
 	<dependencies>
