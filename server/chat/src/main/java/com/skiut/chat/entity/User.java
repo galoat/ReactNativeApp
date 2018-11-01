@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -23,4 +24,19 @@ public class User {
     @OneToMany
     private List<Message> messages;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getUrlAvatar(), user.getUrlAvatar()) &&
+                Objects.equals(getMessages(), user.getMessages());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getUrlAvatar(), getMessages());
+    }
 }

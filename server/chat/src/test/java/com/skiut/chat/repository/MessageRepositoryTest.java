@@ -14,19 +14,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MessageRepositoryTest {
 
-    @Setter
-    @Getter
     @Autowired
     private NewsRepository repository;
+
     @Test
     public void saveNews() {
         int nbListElement = 10;
-        News news = new News();
+        News  news= new News();
         List<Message> listMessages = new ArrayList();
         news.setMessages(listMessages);
         for (int i = 0; i < nbListElement; i++) {
@@ -37,7 +37,17 @@ public class MessageRepositoryTest {
         Assert.assertFalse("The news have not been saved with an ID", news.getId() == 0);
         Long id = news.getId();
         // check result
-        news = repository.getOne(id);
-        Assert.assertTrue("The two array are not equals", news.getMessages().equals(listMessages));
+        Optional<News> newsInDb = repository.findById(id);
+        Assert.assertTrue("News in DB is empty", newsInDb.isPresent());
+
+        Assert.assertTrue("The two array are not equals : "+news.getMessages().toString() + "\n\n "+listMessages.toString(), newsInDb.get().equals(news));
+    }
+
+    public void setRepository(NewsRepository repository) {
+        this.repository = repository;
+    }
+
+    public NewsRepository getRepository() {
+        return repository;
     }
 }

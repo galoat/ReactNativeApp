@@ -33,13 +33,13 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return Objects.equals(getId(), message.getId()) &&
-                Objects.equals(getText(), message.getText()) &&
-                Objects.equals(getUser(), message.getUser());
+        return Objects.equals(id, message.id) &&
+                Objects.equals(text, message.text) &&
+                Objects.equals(user, message.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getText(), getUser());
+        return Objects.hash(id, text, user);
     }
 }

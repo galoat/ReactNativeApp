@@ -1,0 +1,4 @@
+##Transactional
+
+Hibernate set to flushMOde auto => Hibernate decide when to send query to Db
+
