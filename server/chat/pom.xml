@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.6.RELEASE</version>
+		<version>2.0.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -26,6 +26,7 @@
 		<docker.image.prefix>galoat</docker.image.prefix>
 		<docker.image.exposed.port>9030</docker.image.exposed.port>
 		<jaxb-api.version>2.3.0</jaxb-api.version>
+		<springfox-swagger.version>3.0.0-SNAPSHOT</springfox-swagger.version>
 	</properties>
 
 	<dependencies>
@@ -95,23 +96,39 @@
 		<version>1.2.0</version>
 	</dependency>
 
+		<!-- The following is needed when you chose to use in memory database -->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.0</version>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-data-rest</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-	</dependencies>
 
+		<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger-ui</artifactId>
+		<version>${springfox-swagger.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger2</artifactId>
+		<version>${springfox-swagger.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-data-rest</artifactId>
+		<version>${springfox-swagger.version}</version>
+		<scope>compile</scope>
+	</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>jcenter-snapshots</id>
+			<name>jcenter</name>
+			<url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+		</repository>
+	</repositories>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

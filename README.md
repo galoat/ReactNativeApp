@@ -55,6 +55,12 @@ Contains all information about personnes: custome end point using repositoryRest
 
 * < yourIp > : < port>/personnes/search/existsByName?name=< NameToTest >
 
+##### ChatService
+This service is reponsible of all the caht exchange in the news.
+
+There is a swagger describing this service at at the url : 
+* < yourIp > : < port>/swagger-ui.html
+
 ##### chat
 Contains all information about the chat the port is 9030.
 
