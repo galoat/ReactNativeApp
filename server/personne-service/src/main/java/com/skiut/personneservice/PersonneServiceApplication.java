@@ -45,6 +45,5 @@ class SampleDataCLR implements ApplicationRunner {
 				.flatMap(personneRepository::save)
 				.thenMany(personneRepository.findAll())
 				.subscribe(name -> System.out.println(name.toString()));
-
 	}
 }

@@ -1,15 +1,21 @@
 package com.skiut.personneservice.RestApi;
 
+import com.skiut.personneservice.Entity.Personne;
 import com.skiut.personneservice.Repository.PersonneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/personne")
 public class PersonneApi
 {
+	private final PersonneRepository personneRepository;
+
 	@Autowired
-	PersonneRepository personneRepository;
+	public PersonneApi(PersonneRepository personneRepository) {
+		this.personneRepository = personneRepository;
+	}
 
 	@ResponseBody
 	@RequestMapping(value ="canlogin", method = RequestMethod.GET, produces = "application/json")
@@ -23,5 +29,9 @@ public class PersonneApi
 			return false;
 		}
 
+	}
+
+	Flux<Personne> getPersonnes(){
+		return personneRepository.findAll();
 	}
 }
