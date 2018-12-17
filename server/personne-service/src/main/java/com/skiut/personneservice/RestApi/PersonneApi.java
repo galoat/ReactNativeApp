@@ -30,8 +30,4 @@ public class PersonneApi
 		}
 
 	}
-
-	Flux<Personne> getPersonnes(){
-		return personneRepository.findAll();
-	}
 }

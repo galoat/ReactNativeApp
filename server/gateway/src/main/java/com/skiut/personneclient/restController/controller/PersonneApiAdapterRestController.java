@@ -44,6 +44,8 @@ public class PersonneApiAdapterRestController {
                 .collect(Collectors.toList());
     }
 
+
+
     @GetMapping("/login")
     public Boolean canLogIn(@RequestParam(value = "name") String name, @RequestParam(value = "password") String password) {
         return feignPersonneService.canLogIn(name, password);
