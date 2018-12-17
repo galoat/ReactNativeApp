@@ -34,7 +34,7 @@ public class PersonneServiceResourceTest {
         String name = "myName";
 
         Personne personne = new Personne();
-        personne.setId((long) 1);
+        personne.setId("10");
         personne.setName(name);
 
         given(personneRepository.existsByName(name)).willReturn(true);
