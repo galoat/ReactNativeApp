@@ -13,10 +13,8 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.router
 
-class RouterPath{
+class RouterPathPersonneService{
     companion object {
-
-
         val bean = beans {
             bean {
                 WebClient.builder().filter(ref<LoadBalancerExchangeFilterFunction>()).build()
