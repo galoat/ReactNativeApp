@@ -69,3 +69,4 @@ buck-out/
 *.ibd
 */target/*
 /data
+*/.mvnw
