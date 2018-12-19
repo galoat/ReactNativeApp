@@ -39,7 +39,6 @@ class SampleDataCLR implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		System.out.println("ijojiojoijiojiojiojio");
 		personneRepository.deleteAll().thenMany(Flux.just("Florian", "Anaël"))
 				.map(personne -> new Personne(personne))
 				.flatMap(personneRepository::save)
