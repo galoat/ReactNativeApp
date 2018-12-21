@@ -2,6 +2,16 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+    stream:
+      bindings:
+        input:
+          destination: requests
+        output:
+          destination: replies
+        request:
+          destination: requests
+        reply:
+          destination: replies
   application:
     name: personne-service
 ---

@@ -7,7 +7,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.messaging.Source
 
 @SpringBootApplication
-class GatewayApplication
+ class GatewayApplication
 
 val beans = RouterPathPersonneService.bean
 

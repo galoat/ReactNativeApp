@@ -6,11 +6,18 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
+import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.SubscribableChannel;
+import org.springframework.messaging.handler.annotation.SendTo;
 import reactor.core.publisher.Flux;
 
-@EnableBinding(Sink.class)
+import org.springframework.integration.support.MessageBuilder;
+@EnableBinding(Processor.class)
 public class PersonneMessage {
 
     @Setter
@@ -21,12 +28,20 @@ public class PersonneMessage {
         this.personneRepository = personneRepository;
     }
 
-    @StreamListener
-    public void process(@Input(Sink.INPUT) Flux<String> incoming){
+ /*   @StreamListener(Processor.INPUT)
+    @SendTo(Processor.OUTPUT)
+    public Message process(@Input(Sink.INPUT) Flux<String> incoming){
         incoming.map(s-> new Personne(null, s))
-        .flatMap(s -> personneRepository.save(s))
-                .subscribe(it -> System.out.println("saved "+ it.getName() +" withId" + it.getId()));
+                .flatMap(personneRepository::save
+        return MessageBuilder.withPayload( false).copyHeaders()
+    }*/
 
 
+    @StreamListener(Processor.INPUT)
+    @SendTo(Processor.OUTPUT)
+    public Message test(Message<String> message){
+        return MessageBuilder.withPayload(false)
+                .copyHeaders(message.getHeaders())
+                .build();
     }
 }
