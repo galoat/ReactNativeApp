@@ -50,10 +50,10 @@ class RouterPathPersonneService {
                                 .map { reply.sendMessage(it.name!!) }
                                .map{it}
                         ServerResponse.ok().body(send)*/
-
+                        System.out.println("received $it")
                         val sent: Publisher<Boolean> = it.bodyToFlux<Personne>()
-
                                 .map { it -> src.process(it.name ?: "test") }
+
 
                         ServerResponse.ok().body(sent)
                     }
@@ -71,7 +71,7 @@ class CloudStreamGatewayApplication {
 
     @Bean
     fun headerEnricherFlow(): IntegrationFlow {
-        return IntegrationFlows.from("requests")
+        return IntegrationFlows.from("request")
                 .enrichHeaders(Consumer<HeaderEnricherSpec> { it.headerChannelsToString() })
                 .channel(GatewayChannels.REQUEST)
                 .get()
@@ -81,7 +81,7 @@ class CloudStreamGatewayApplication {
     @MessagingGateway
     interface StreamGateway {
 
-        @Gateway( replyChannel = GatewayChannels.REPLY)
+        @Gateway( requestChannel=GatewayChannels.REQUEST, replyChannel = GatewayChannels.REPLY)
         fun process(payload: String): Boolean?
 
     }

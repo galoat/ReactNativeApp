@@ -5,11 +5,11 @@ spring:
     stream:
       bindings:
         input:
-          destination: requests
+          destination: personne
         output:
           destination: replies
         request:
-          destination: requests
+          destination: personne
         reply:
           destination: replies
   application:

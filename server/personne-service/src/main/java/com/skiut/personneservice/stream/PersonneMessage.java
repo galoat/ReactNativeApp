@@ -6,15 +6,14 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
+
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.SubscribableChannel;
+
 import org.springframework.messaging.handler.annotation.SendTo;
-import reactor.core.publisher.Flux;
+
 
 import org.springframework.integration.support.MessageBuilder;
 @EnableBinding(Processor.class)
@@ -40,6 +39,7 @@ public class PersonneMessage {
     @StreamListener(Processor.INPUT)
     @SendTo(Processor.OUTPUT)
     public Message test(Message<String> message){
+        System.out.println("received message "+message.getPayload());
         return MessageBuilder.withPayload(false)
                 .copyHeaders(message.getHeaders())
                 .build();
