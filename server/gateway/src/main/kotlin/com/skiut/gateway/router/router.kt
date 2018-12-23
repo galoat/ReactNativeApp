@@ -26,8 +26,10 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.bodyToFlux
 import org.springframework.web.reactive.function.server.router
+import org.xerial.snappy.Snappy
+import java.io.ByteArrayOutputStream
 
-@EnableBinding(Processor::class, CloudStreamGatewayApplication.GatewayChannels::class )
+@EnableBinding(GatewayChannels::class )
 class RouterPathPersonneService {
 
     companion object {
@@ -39,7 +41,7 @@ class RouterPathPersonneService {
 
             bean {
 
-                val src = ref<CloudStreamGatewayApplication.StreamGateway>()
+                val src = ref<StreamGateway>()
                 //  val reply = ref<Producer>()
                 val client = ref<WebClient>()
 
@@ -51,8 +53,10 @@ class RouterPathPersonneService {
                                .map{it}
                         ServerResponse.ok().body(send)*/
                         System.out.println("received $it")
+                        src.process("mnfienin")
                         val sent: Publisher<Boolean> = it.bodyToFlux<Personne>()
-                                .map { it -> src.process(it.name ?: "test") }
+                                .map {src.process(it.name ?: "test") }
+                                .map{ Snappy.isValidCompressedBuffer(it) }
 
 
                         ServerResponse.ok().body(sent)
@@ -65,13 +69,12 @@ class RouterPathPersonneService {
             }
         }
     }
-}
 
-class CloudStreamGatewayApplication {
+
 
     @Bean
     fun headerEnricherFlow(): IntegrationFlow {
-        return IntegrationFlows.from("request")
+        return IntegrationFlows.from(GatewayChannels.ENRICH)
                 .enrichHeaders(Consumer<HeaderEnricherSpec> { it.headerChannelsToString() })
                 .channel(GatewayChannels.REQUEST)
                 .get()
@@ -81,10 +84,12 @@ class CloudStreamGatewayApplication {
     @MessagingGateway
     interface StreamGateway {
 
-        @Gateway( requestChannel=GatewayChannels.REQUEST, replyChannel = GatewayChannels.REPLY)
-        fun process(payload: String): Boolean?
-
+        @Gateway( requestChannel= GatewayChannels.ENRICH , replyChannel = GatewayChannels.REPLY)
+        fun process(payload: String): ByteArray?
     }
+}
+
+
 
 
     internal interface GatewayChannels {
@@ -95,12 +100,15 @@ class CloudStreamGatewayApplication {
         @Input(REPLY)
         fun reply(): SubscribableChannel
 
+
+
         companion object {
 
             const val REQUEST = "request"
 
 
             const val REPLY = "reply"
+
+            const val ENRICH = "enrich"
         }
     }
-}
